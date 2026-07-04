@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>cardlio — digital business card</title>
+<meta name="description" content="A business card shared with cardlio. Tap to add the contact — no app needed.">
+<meta property="og:title" content="cardlio — digital business card">
+<meta property="og:description" content="Tap to add this contact to your address book.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%234F46E5'/%3E%3Cstop offset='1' stop-color='%238B5CF6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='url(%23g)'/%3E%3Crect x='12' y='20' width='40' height='26' rx='5' fill='white' transform='rotate(-6 32 33)'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --indigo: #4F46E5;
+    --violet: #8B5CF6;
+    --ink: #1c1d22;
+    --muted: #6b6f7b;
+    --card-bg: #ffffff;
+    --page-grad-a: #eef0fd;
+    --page-grad-b: #f4effd;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ink: #f2f2f6;
+      --muted: #a3a7b3;
+      --card-bg: #1e1f26;
+      --page-grad-a: #171822;
+      --page-grad-b: #1d1930;
+    }
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+    color: var(--ink);
+    background:
+      radial-gradient(1000px 600px at 20% 0%, rgba(79,70,229,0.18), transparent 60%),
+      radial-gradient(900px 700px at 90% 90%, rgba(139,92,246,0.16), transparent 60%),
+      linear-gradient(135deg, var(--page-grad-a), var(--page-grad-b));
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .card {
+    width: 100%; max-width: 400px;
+    background: var(--card-bg);
+    border-radius: 24px;
+    padding: 32px 26px 26px;
+    box-shadow: 0 18px 50px rgba(20, 16, 70, 0.18);
+    text-align: center;
+  }
+  .avatar {
+    width: 88px; height: 88px; border-radius: 50%;
+    margin: 0 auto 14px;
+    background: linear-gradient(135deg, var(--indigo), var(--violet));
+    color: #fff; font-size: 32px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    background-size: cover; background-position: center;
+    box-shadow: 0 6px 18px rgba(79,70,229,0.35);
+  }
+  h1 { font-size: 24px; letter-spacing: -0.02em; }
+  .role { color: var(--muted); font-size: 15px; margin-top: 4px; }
+  .addr { color: var(--muted); font-size: 13px; margin-top: 14px; white-space: pre-line; }
+  .add {
+    display: block; width: 100%;
+    margin-top: 22px; padding: 15px;
+    border: 0; border-radius: 14px;
+    background: linear-gradient(135deg, var(--indigo), var(--violet));
+    color: #fff; font-size: 17px; font-weight: 600;
+    cursor: pointer; text-decoration: none;
+  }
+  .add:active { filter: brightness(0.92); }
+  .row { display: flex; gap: 10px; margin-top: 12px; }
+  .row a {
+    flex: 1; padding: 11px 4px;
+    border-radius: 12px;
+    background: rgba(99, 91, 230, 0.10);
+    color: var(--indigo);
+    font-size: 14px; font-weight: 600;
+    text-decoration: none;
+  }
+  @media (prefers-color-scheme: dark) {
+    .row a { background: rgba(139,92,246,0.16); color: #b9aefc; }
+  }
+  .brand { margin-top: 26px; font-size: 12.5px; color: var(--muted); }
+  .brand b {
+    background: linear-gradient(135deg, var(--indigo), var(--violet));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .landing h1 { margin-top: 6px; }
+  .landing p { color: var(--muted); font-size: 15px; margin-top: 10px; line-height: 1.5; }
+  .glyph {
+    width: 74px; height: 50px; margin: 6px auto 16px;
+    border-radius: 9px; background: #fff;
+    box-shadow: 0 8px 22px rgba(20,16,70,0.25);
+    transform: rotate(-6deg);
+    border: 1px solid rgba(0,0,0,0.06);
+    position: relative;
+  }
+  .glyph::before {
+    content: ""; position: absolute; left: 8px; top: 8px;
+    width: 14px; height: 14px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--indigo), var(--violet));
+  }
+  .glyph::after {
+    content: ""; position: absolute; left: 28px; top: 11px;
+    width: 32px; height: 7px; border-radius: 4px; background: #d9dbe3;
+  }
+  .err { color: var(--muted); font-size: 14px; margin-top: 12px; }
+</style>
+</head>
+<body>
+<main class="card" id="root" hidden></main>
+
+<script>
+"use strict";
+
+// ---- fragment → vCard text -------------------------------------------
+// The link format is  #1.<base64url(deflate-raw(vCard))> ; the payload
+// never leaves this browser (fragments aren't sent in HTTP requests).
+async function decodeFragment(hash) {
+  if (!hash || !hash.startsWith("#1.")) return null;
+  let b64 = hash.slice(3).replace(/-/g, "+").replace(/_/g, "/");
+  b64 += "=".repeat((4 - (b64.length % 4)) % 4);
+  const bin = atob(b64);
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  const stream = new Blob([bytes]).stream()
+    .pipeThrough(new DecompressionStream("deflate-raw"));
+  const buffer = await new Response(stream).arrayBuffer();
+  return new TextDecoder("utf-8").decode(buffer);
+}
+
+// ---- tiny vCard 3.0 reader (display only; download stays byte-exact) --
+function parseVCard(text) {
+  const unfolded = text.replace(/\r\n[ \t]/g, "").replace(/\n[ \t]/g, "");
+  const unesc = s => s.replace(/\\n/gi, "\n").replace(/\\,/g, ",")
+                      .replace(/\\;/g, ";").replace(/\\\\/g, "\\");
+  const card = { tels: [] };
+  for (const line of unfolded.split(/\r?\n/)) {
+    const idx = line.indexOf(":");
+    if (idx < 0) continue;
+    const left = line.slice(0, idx);
+    const value = line.slice(idx + 1);
+    const [prop, ...params] = left.split(";");
+    const key = prop.toUpperCase();
+    if (key === "FN") card.name = unesc(value);
+    else if (key === "TITLE") card.title = unesc(value);
+    else if (key === "ORG") card.org = unesc(value.split(/(?<!\\);/)[0]);
+    else if (key === "EMAIL" && !card.email) card.email = unesc(value);
+    else if (key === "URL" && !card.url) card.url = unesc(value);
+    else if (key === "TEL") {
+      const kind = /CELL/i.test(left) ? "mobile" : "phone";
+      card.tels.push({ kind, value: unesc(value) });
+    } else if (key === "ADR") {
+      const parts = value.split(/(?<!\\);/).map(unesc);
+      card.address = [parts[2], [parts[5], parts[3]].filter(Boolean).join(" "), parts[6]]
+        .map(s => (s || "").trim()).filter(Boolean).join("\n");
+    } else if (key === "PHOTO" && /ENCODING=B|BASE64/i.test(left)) {
+      const mime = /PNG/i.test(left) ? "image/png" : "image/jpeg";
+      card.photo = `data:${mime};base64,${value.replace(/\s/g, "")}`;
+    }
+  }
+  return card;
+}
+
+// ---- rendering ---------------------------------------------------------
+function esc(s) {
+  return (s || "").replace(/[&<>"']/g,
+    c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+
+function initials(name) {
+  return (name || "").split(/\s+/).filter(Boolean).slice(0, 2)
+    .map(w => w[0].toUpperCase()).join("") || "☺";
+}
+
+function renderCard(root, card, rawVCard) {
+  const avatarStyle = card.photo
+    ? `style="background-image:url('${card.photo}')"`
+    : "";
+  const roleBits = [card.title, card.org].filter(Boolean).join(" · ");
+  const tel = card.tels.find(t => t.kind === "mobile") || card.tels[0];
+  let actions = "";
+  if (tel) actions += `<a href="tel:${esc(tel.value.replace(/[^\d+]/g, ""))}">Call</a>`;
+  if (card.email) actions += `<a href="mailto:${esc(card.email)}">Email</a>`;
+  if (card.url) {
+    const href = /^https?:\/\//i.test(card.url) ? card.url : "https://" + card.url;
+    actions += `<a href="${esc(href)}" target="_blank" rel="noopener">Website</a>`;
+  }
+  root.innerHTML = `
+    <div class="avatar" ${avatarStyle}>${card.photo ? "" : esc(initials(card.name))}</div>
+    <h1>${esc(card.name || "Contact")}</h1>
+    ${roleBits ? `<div class="role">${esc(roleBits)}</div>` : ""}
+    ${card.address ? `<div class="addr">${esc(card.address)}</div>` : ""}
+    <button class="add" id="addBtn">Add to Contacts</button>
+    ${actions ? `<div class="row">${actions}</div>` : ""}
+    <div class="brand">Shared with <b>cardlio</b> — business cards, done.</div>`;
+  document.getElementById("addBtn").addEventListener("click", () => {
+    const blob = new Blob([rawVCard], { type: "text/vcard;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const fileName = (card.name || "contact").replace(/[\/\\:]/g, "-") + ".vcf";
+    if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+      // iOS Safari shows the native contact-import preview when
+      // navigating to a vCard blob; the download attribute would send
+      // it to the Files app instead.
+      window.location.href = url;
+    } else {
+      const a = document.createElement("a");
+      a.href = url; a.download = fileName;
+      document.body.appendChild(a); a.click(); a.remove();
+    }
+    setTimeout(() => URL.revokeObjectURL(url), 60_000);
+  });
+}
+
+function renderLanding(root, message) {
+  root.innerHTML = `
+    <div class="landing">
+      <div class="glyph"></div>
+      <h1><b style="background:linear-gradient(135deg,var(--indigo),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent">cardlio</b></h1>
+      <p>Business cards, done. Scan any card into a clean contact, keep your network in your pocket, and share your own card as a link, QR, or NFC tap.</p>
+      ${message ? `<div class="err">${esc(message)}</div>` : ""}
+      <div class="brand">cardlio for iPhone &amp; Mac — coming to the App Store</div>
+    </div>`;
+}
+
+// ---- entry -------------------------------------------------------------
+(async function main() {
+  const root = document.getElementById("root");
+  root.hidden = false;
+  try {
+    const vcard = await decodeFragment(location.hash);
+    if (vcard && /BEGIN:VCARD/i.test(vcard)) {
+      const card = parseVCard(vcard);
+      renderCard(root, card, vcard);
+      if (card.name) document.title = `${card.name} — cardlio`;
+      // Exposed for the automated render check; carries no extra data.
+      window.__cardlio = { state: "card", name: card.name || "", hasPhoto: !!card.photo };
+    } else {
+      renderLanding(root, location.hash ? "This link doesn't contain a card." : "");
+      window.__cardlio = { state: "landing" };
+    }
+  } catch (e) {
+    renderLanding(root, "This link couldn't be read.");
+    window.__cardlio = { state: "error", detail: String(e) };
+  }
+})();
+</script>
+</body>
+</html>
