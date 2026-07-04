@@ -1,0 +1,8 @@
+name = "cardlio-pass"
+main = "src/index.js"
+compatibility_date = "2026-06-01"
+
+[vars]
+PASS_TYPE_ID = "pass.me.gruenitz.cardlio.mycard"
+TEAM_ID = "9HEE4Z2498"
+ORG_NAME = "cardlio"
