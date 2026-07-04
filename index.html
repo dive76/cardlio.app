@@ -3,118 +3,299 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>cardlio — digital business card</title>
-<meta name="description" content="A business card shared with cardlio. Tap to add the contact — no app needed.">
-<meta property="og:title" content="cardlio — digital business card">
-<meta property="og:description" content="Tap to add this contact to your address book.">
+<title>cardlio — business cards, done. Scanner & digital card for iPhone and Mac</title>
+<meta name="description" content="Scan any business card into a clean contact. Share yours as a link, QR, NFC tap, or Apple Wallet pass. Private by design — on iPhone and Mac.">
+<meta property="og:title" content="cardlio — business cards, done.">
+<meta property="og:description" content="Scan any card into a clean contact. Share yours as a link, QR, NFC tap, or Wallet pass. Private by design.">
+<meta property="og:url" content="https://cardlio.app/">
+<link rel="stylesheet" href="site.css">
+<noscript><style>.reveal { opacity: 1 !important; transform: none !important; }</style></noscript>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%234F46E5'/%3E%3Cstop offset='1' stop-color='%238B5CF6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='url(%23g)'/%3E%3Crect x='12' y='20' width='40' height='26' rx='5' fill='white' transform='rotate(-6 32 33)'/%3E%3C/svg%3E">
 <style>
+  /* ---- card-link view (shown only when the URL carries a card) ---- */
   :root {
-    --indigo: #4F46E5;
-    --violet: #8B5CF6;
-    --ink: #1c1d22;
-    --muted: #6b6f7b;
-    --card-bg: #ffffff;
-    --page-grad-a: #eef0fd;
-    --page-grad-b: #f4effd;
+    --cv-indigo: #4F46E5;
+    --cv-violet: #8B5CF6;
+    --cv-ink: #1c1d22;
+    --cv-muted: #6b6f7b;
+    --cv-card-bg: #ffffff;
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --ink: #f2f2f6;
-      --muted: #a3a7b3;
-      --card-bg: #1e1f26;
-      --page-grad-a: #171822;
-      --page-grad-b: #1d1930;
+      --cv-ink: #f2f2f6;
+      --cv-muted: #a3a7b3;
+      --cv-card-bg: #1e1f26;
     }
   }
-  * { box-sizing: border-box; margin: 0; }
-  html, body { height: 100%; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
-    color: var(--ink);
+  body.card-mode {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px;
     background:
       radial-gradient(1000px 600px at 20% 0%, rgba(79,70,229,0.18), transparent 60%),
       radial-gradient(900px 700px at 90% 90%, rgba(139,92,246,0.16), transparent 60%),
-      linear-gradient(135deg, var(--page-grad-a), var(--page-grad-b));
-    display: flex; align-items: center; justify-content: center;
-    padding: 24px;
+      linear-gradient(135deg, #eef0fd, #f4effd);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
   }
-  .card {
+  @media (prefers-color-scheme: dark) {
+    body.card-mode {
+      background:
+        radial-gradient(1000px 600px at 20% 0%, rgba(79,70,229,0.25), transparent 60%),
+        radial-gradient(900px 700px at 90% 90%, rgba(139,92,246,0.22), transparent 60%),
+        linear-gradient(135deg, #171822, #1d1930);
+    }
+  }
+  .cardview {
     width: 100%; max-width: 400px;
-    background: var(--card-bg);
-    border-radius: 24px;
-    padding: 32px 26px 26px;
+    background: var(--cv-card-bg); color: var(--cv-ink);
+    border-radius: 24px; padding: 32px 26px 26px;
     box-shadow: 0 18px 50px rgba(20, 16, 70, 0.18);
     text-align: center;
   }
-  .avatar {
+  .cardview .avatar {
     width: 88px; height: 88px; border-radius: 50%;
     margin: 0 auto 14px;
-    background: linear-gradient(135deg, var(--indigo), var(--violet));
+    background: linear-gradient(135deg, var(--cv-indigo), var(--cv-violet));
     color: #fff; font-size: 32px; font-weight: 700;
     display: flex; align-items: center; justify-content: center;
     background-size: cover; background-position: center;
     box-shadow: 0 6px 18px rgba(79,70,229,0.35);
   }
-  h1 { font-size: 24px; letter-spacing: -0.02em; }
-  .role { color: var(--muted); font-size: 15px; margin-top: 4px; }
-  .addr { color: var(--muted); font-size: 13px; margin-top: 14px; white-space: pre-line; }
-  .add {
+  .cardview h1 { font-size: 24px; letter-spacing: -0.02em; margin: 0; }
+  .cardview .role { color: var(--cv-muted); font-size: 15px; margin-top: 4px; }
+  .cardview .addr { color: var(--cv-muted); font-size: 13px; margin-top: 14px; white-space: pre-line; }
+  .cardview .add {
     display: block; width: 100%;
     margin-top: 22px; padding: 15px;
     border: 0; border-radius: 14px;
-    background: linear-gradient(135deg, var(--indigo), var(--violet));
+    background: linear-gradient(135deg, var(--cv-indigo), var(--cv-violet));
     color: #fff; font-size: 17px; font-weight: 600;
     cursor: pointer; text-decoration: none;
   }
-  .add:active { filter: brightness(0.92); }
-  .row { display: flex; gap: 10px; margin-top: 12px; }
-  .row a {
-    flex: 1; padding: 11px 4px;
-    border-radius: 12px;
-    background: rgba(99, 91, 230, 0.10);
-    color: var(--indigo);
-    font-size: 14px; font-weight: 600;
-    text-decoration: none;
+  .cardview .add:active { filter: brightness(0.92); }
+  .cardview .row { display: flex; gap: 10px; margin-top: 12px; }
+  .cardview .row a {
+    flex: 1; padding: 11px 4px; border-radius: 12px;
+    background: rgba(99, 91, 230, 0.10); color: var(--cv-indigo);
+    font-size: 14px; font-weight: 600; text-decoration: none;
   }
   @media (prefers-color-scheme: dark) {
-    .row a { background: rgba(139,92,246,0.16); color: #b9aefc; }
+    .cardview .row a { background: rgba(139,92,246,0.16); color: #b9aefc; }
   }
-  .brand { margin-top: 26px; font-size: 12.5px; color: var(--muted); }
-  .brand b {
-    background: linear-gradient(135deg, var(--indigo), var(--violet));
+  .cardview .brand { margin-top: 26px; font-size: 12.5px; color: var(--cv-muted); }
+  .cardview .brand a {
+    background: linear-gradient(135deg, var(--cv-indigo), var(--cv-violet));
     -webkit-background-clip: text; background-clip: text; color: transparent;
+    font-weight: 700; text-decoration: none;
   }
-  .landing h1 { margin-top: 6px; }
-  .landing p { color: var(--muted); font-size: 15px; margin-top: 10px; line-height: 1.5; }
-  .glyph {
-    width: 74px; height: 50px; margin: 6px auto 16px;
-    border-radius: 9px; background: #fff;
-    box-shadow: 0 8px 22px rgba(20,16,70,0.25);
-    transform: rotate(-6deg);
-    border: 1px solid rgba(0,0,0,0.06);
-    position: relative;
-  }
-  .glyph::before {
-    content: ""; position: absolute; left: 8px; top: 8px;
-    width: 14px; height: 14px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--indigo), var(--violet));
-  }
-  .glyph::after {
-    content: ""; position: absolute; left: 28px; top: 11px;
-    width: 32px; height: 7px; border-radius: 4px; background: #d9dbe3;
-  }
-  .err { color: var(--muted); font-size: 14px; margin-top: 12px; }
 </style>
 </head>
-<body>
-<main class="card" id="root" hidden></main>
+<body class="site-body">
+
+<main class="cardview" id="cardRoot" hidden></main>
+
+<div id="site">
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="wordmark" href="/">cardlio</a>
+      <span class="spacer"></span>
+      <a class="link" href="#scan">Features</a>
+      <a class="link" href="#privacy-section">Privacy</a>
+      <a class="link" href="support.html">Support</a>
+    </div>
+  </nav>
+
+  <!-- ============================ hero ============================ -->
+  <header class="hero">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="wrap hero-grid">
+      <div>
+        <h1>Business cards,<br><span class="grad">done.</span></h1>
+        <p class="sub">Scan any card into a clean contact in seconds. Share yours as a link, a QR code, an NFC tap, or an Apple&nbsp;Wallet pass. Private by design — on iPhone and Mac.</p>
+        <div class="badges">
+          <span class="badge soon">
+            <small>Download on the</small>
+            <b>App Store</b>
+            <span class="soon-tag">coming soon</span>
+          </span>
+          <span class="badge soon">
+            <small>Download on the</small>
+            <b>Mac App Store</b>
+            <span class="soon-tag">coming soon</span>
+          </span>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <img class="float-card float-1" src="assets/hero-card-1.png" alt="Sample business card for Elena Vargas of Solstice Design Co." loading="lazy">
+        <div class="phone">
+          <div class="screen">
+            <img src="assets/review-phone.png" alt="cardlio on iPhone reviewing a freshly scanned business card with validated fields">
+          </div>
+        </div>
+        <img class="float-card float-2" src="assets/hero-card-2.png" alt="Sample business card for Yuki Hamasaki of Kaito Marine K.K." loading="lazy">
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================ scan ============================ -->
+  <section class="section" id="scan">
+    <div class="wrap split">
+      <div class="reveal">
+        <div class="kicker">Capture</div>
+        <h2>Scan anything with a card on it.</h2>
+        <p class="lead">Point the camera and cardlio finds the card, straightens it, and reads it — even several cards at once.</p>
+        <ul class="checks">
+          <li><span><b>Live camera</b> with on-device card detection</span></li>
+          <li><span><b>Photos & PDFs</b> — import whole stacks at once</span></li>
+          <li><span><b>Email signatures</b> — paste text, get a contact</span></li>
+          <li><span><b>Review before saving</b> — every field checked and editable</span></li>
+        </ul>
+      </div>
+      <div class="visual reveal">
+        <div class="demo-stack">
+          <img src="assets/hero-card-2.png" alt="Business card being parsed" loading="lazy">
+          <div class="chips">
+            <span class="chip">Name&nbsp;· Yuki Hamasaki</span>
+            <span class="chip">Company&nbsp;· Kaito Marine K.K.</span>
+            <span class="chip">Title&nbsp;· Fleet Manager</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ parsing ============================ -->
+  <section class="section alt">
+    <div class="wrap split rev">
+      <div class="visual reveal">
+        <img class="shot" src="assets/review-phone.png" alt="Review screen with validated contact fields" loading="lazy" style="max-width:340px;margin:0 auto;">
+      </div>
+      <div class="reveal">
+        <div class="kicker">Understanding</div>
+        <h2>Reads cards like a person would.</h2>
+        <p class="lead">cardlio looks at the layout, not just the letters — the big name up top, the department under it, the company by the logo.</p>
+        <ul class="checks">
+          <li><span><b>Layout-aware</b> — size and position decide who's the person and what's the company</span></li>
+          <li><span><b>Japanese cards</b> — romaji addresses, prefectures, multi-office cards</span></li>
+          <li><span><b>Fixes OCR quirks</b> — ALL-CAPS names, spaced-out emails, split addresses</span></li>
+          <li><span><b>Verified addresses</b> — checked against Apple&nbsp;Maps with a pin on the map</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ network ============================ -->
+  <section class="section">
+    <div class="wrap split">
+      <div class="reveal">
+        <div class="kicker">Your network</div>
+        <h2>See who you know — and where.</h2>
+        <p class="lead">Every card becomes part of a picture: contacts on a world map, industries and countries at a glance, growth over time.</p>
+        <ul class="checks">
+          <li><span><b>Map view</b> with your contacts' card photos as pins</span></li>
+          <li><span><b>Network stats</b> — countries, industries, companies</span></li>
+          <li><span><b>Search that filters</b> — tap suggestions like <i>Country: Japan</i></span></li>
+          <li><span><b>Exports</b> — vCard, CSV, Outlook, Salesforce-ready</span></li>
+        </ul>
+      </div>
+      <div class="visual reveal">
+        <img class="shot" src="assets/stats.png" alt="cardlio network statistics with donut charts by industry and country" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ share ============================ -->
+  <section class="section alt" id="share">
+    <div class="wrap">
+      <div class="reveal" style="text-align:center;max-width:640px;margin:0 auto;">
+        <div class="kicker">Your card</div>
+        <h2>Hand out your card without the card.</h2>
+        <p class="lead" style="margin-left:auto;margin-right:auto;">Set up My Card once. Share it any way the moment calls for — the other person never needs the app.</p>
+      </div>
+      <div class="tiles">
+        <div class="tile reveal">
+          <div class="icon">🔗</div>
+          <h3>A link</h3>
+          <p>Your whole card travels inside one link. Opens in any browser — Add to Contacts in one tap.</p>
+        </div>
+        <div class="tile reveal">
+          <div class="icon">▦</div>
+          <h3>A QR code</h3>
+          <p>On your screen, on a slide, on a poster. Any phone camera imports you instantly.</p>
+        </div>
+        <div class="tile reveal">
+          <div class="icon">〰️</div>
+          <h3>An NFC tap</h3>
+          <p>Write your card to a tag. iPhones and Androids tap it and open your card — like magic.</p>
+        </div>
+        <div class="tile reveal">
+          <div class="icon">👝</div>
+          <h3>Apple Wallet</h3>
+          <p>Your card as a Wallet pass, QR included — always two clicks from the lock screen.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ privacy ============================ -->
+  <section class="section dark" id="privacy-section">
+    <div class="wrap split">
+      <div class="reveal">
+        <div class="kicker" style="background:linear-gradient(120deg,#a5b4fc,#e9d5ff);-webkit-background-clip:text;background-clip:text;">Private by design</div>
+        <h2>Your network is nobody's business.</h2>
+        <p class="lead">cardlio was built the old-fashioned way: your data is yours. No accounts, no tracking, no servers reading your contacts.</p>
+        <ul class="checks">
+          <li><span><b>On-device</b> — scanning, reading, and organizing happen on your phone or Mac</span></li>
+          <li><span><b>Your private iCloud</b> — sync uses Apple's cloud, encrypted for you alone</span></li>
+          <li><span><b>Links with nothing behind them</b> — a shared card lives inside the link itself, never on a server</span></li>
+          <li><span><b>No analytics</b> — not in the app, not on this website</span></li>
+        </ul>
+        <p class="lead" style="margin-top:22px;"><a href="privacy.html" style="color:#c7bdff;">Read the full privacy policy →</a></p>
+      </div>
+      <div class="visual reveal">
+        <img class="macframe" src="assets/mac-gallery.png" alt="cardlio on the Mac showing a gallery of scanned business cards" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ platforms ============================ -->
+  <section class="section">
+    <div class="wrap reveal" style="text-align:center;max-width:660px;margin:0 auto;">
+      <div class="kicker">iPhone + Mac</div>
+      <h2>One library. Every machine.</h2>
+      <p class="lead" style="margin-left:auto;margin-right:auto;">Scan on your iPhone at the conference, tidy up on your Mac at your desk. Same cards, everywhere, instantly.</p>
+      <div class="badges" style="justify-content:center;">
+        <span class="badge soon" style="border-color:rgba(79,70,229,0.4);color:var(--ink);background:var(--panel);">
+          <small style="color:var(--muted);">Download on the</small>
+          <b>App Store</b>
+          <span class="soon-tag" style="color:var(--indigo);">coming soon</span>
+        </span>
+        <span class="badge soon" style="border-color:rgba(79,70,229,0.4);color:var(--ink);background:var(--panel);">
+          <small style="color:var(--muted);">Download on the</small>
+          <b>Mac App Store</b>
+          <span class="soon-tag" style="color:var(--indigo);">coming soon</span>
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap">
+      <span>© 2026 cardlio</span>
+      <span class="spacer"></span>
+      <a href="privacy.html">Privacy</a>
+      <a href="support.html">Support</a>
+    </div>
+  </footer>
+</div>
 
 <script>
 "use strict";
 
-// ---- fragment → vCard text -------------------------------------------
+// ==================== card-link decoder ====================
 // The link format is  #1.<base64url(deflate-raw(vCard))> ; the payload
 // never leaves this browser (fragments aren't sent in HTTP requests).
 async function decodeFragment(hash) {
@@ -130,7 +311,6 @@ async function decodeFragment(hash) {
   return new TextDecoder("utf-8").decode(buffer);
 }
 
-// ---- tiny vCard 3.0 reader (display only; download stays byte-exact) --
 function parseVCard(text) {
   const unfolded = text.replace(/\r\n[ \t]/g, "").replace(/\n[ \t]/g, "");
   const unesc = s => s.replace(/\\n/gi, "\n").replace(/\\,/g, ",")
@@ -141,7 +321,7 @@ function parseVCard(text) {
     if (idx < 0) continue;
     const left = line.slice(0, idx);
     const value = line.slice(idx + 1);
-    const [prop, ...params] = left.split(";");
+    const [prop] = left.split(";");
     const key = prop.toUpperCase();
     if (key === "FN") card.name = unesc(value);
     else if (key === "TITLE") card.title = unesc(value);
@@ -163,7 +343,6 @@ function parseVCard(text) {
   return card;
 }
 
-// ---- rendering ---------------------------------------------------------
 function esc(s) {
   return (s || "").replace(/[&<>"']/g,
     c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -175,9 +354,7 @@ function initials(name) {
 }
 
 function renderCard(root, card, rawVCard) {
-  const avatarStyle = card.photo
-    ? `style="background-image:url('${card.photo}')"`
-    : "";
+  const avatarStyle = card.photo ? `style="background-image:url('${card.photo}')"` : "";
   const roleBits = [card.title, card.org].filter(Boolean).join(" · ");
   const tel = card.tels.find(t => t.kind === "mobile") || card.tels[0];
   let actions = "";
@@ -194,15 +371,12 @@ function renderCard(root, card, rawVCard) {
     ${card.address ? `<div class="addr">${esc(card.address)}</div>` : ""}
     <button class="add" id="addBtn">Add to Contacts</button>
     ${actions ? `<div class="row">${actions}</div>` : ""}
-    <div class="brand">Shared with <b>cardlio</b> — business cards, done.</div>`;
+    <div class="brand">Shared with <a href="/">cardlio</a> — business cards, done.</div>`;
   document.getElementById("addBtn").addEventListener("click", () => {
     const blob = new Blob([rawVCard], { type: "text/vcard;charset=utf-8" });
     const url = URL.createObjectURL(blob);
     const fileName = (card.name || "contact").replace(/[\/\\:]/g, "-") + ".vcf";
     if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
-      // iOS Safari shows the native contact-import preview when
-      // navigating to a vCard blob; the download attribute would send
-      // it to the Files app instead.
       window.location.href = url;
     } else {
       const a = document.createElement("a");
@@ -213,37 +387,60 @@ function renderCard(root, card, rawVCard) {
   });
 }
 
-function renderLanding(root, message) {
+function renderCardError(root, message) {
   root.innerHTML = `
-    <div class="landing">
-      <div class="glyph"></div>
-      <h1><b style="background:linear-gradient(135deg,var(--indigo),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent">cardlio</b></h1>
-      <p>Business cards, done. Scan any card into a clean contact, keep your network in your pocket, and share your own card as a link, QR, or NFC tap.</p>
-      ${message ? `<div class="err">${esc(message)}</div>` : ""}
-      <div class="brand">cardlio for iPhone &amp; Mac — coming to the App Store</div>
-    </div>`;
+    <div class="avatar">!</div>
+    <h1>cardlio</h1>
+    <div class="role">${esc(message)}</div>
+    <a class="add" href="/">About cardlio</a>`;
 }
 
-// ---- entry -------------------------------------------------------------
+// ==================== entry ====================
 (async function main() {
-  const root = document.getElementById("root");
-  root.hidden = false;
-  try {
-    const vcard = await decodeFragment(location.hash);
-    if (vcard && /BEGIN:VCARD/i.test(vcard)) {
-      const card = parseVCard(vcard);
-      renderCard(root, card, vcard);
-      if (card.name) document.title = `${card.name} — cardlio`;
-      // Exposed for the automated render check; carries no extra data.
-      window.__cardlio = { state: "card", name: card.name || "", hasPhoto: !!card.photo };
-    } else {
-      renderLanding(root, location.hash ? "This link doesn't contain a card." : "");
-      window.__cardlio = { state: "landing" };
+  const cardRoot = document.getElementById("cardRoot");
+  const site = document.getElementById("site");
+  // Only "#1.…" fragments are card payloads — in-page anchors like
+  // "#scan" stay on the marketing page.
+  const hasCard = location.hash.startsWith("#1.");
+
+  if (hasCard) {
+    document.body.classList.remove("site-body");
+    document.body.classList.add("card-mode");
+    site.hidden = true;
+    cardRoot.hidden = false;
+    try {
+      const vcard = await decodeFragment(location.hash);
+      if (vcard && /BEGIN:VCARD/i.test(vcard)) {
+        const card = parseVCard(vcard);
+        renderCard(cardRoot, card, vcard);
+        if (card.name) document.title = `${card.name} — cardlio`;
+        window.__cardlio = { state: "card", name: card.name || "", hasPhoto: !!card.photo };
+      } else {
+        renderCardError(cardRoot, "This link doesn't contain a card.");
+        window.__cardlio = { state: "error" };
+      }
+    } catch (e) {
+      renderCardError(cardRoot, "This link couldn't be read.");
+      window.__cardlio = { state: "error", detail: String(e) };
     }
-  } catch (e) {
-    renderLanding(root, "This link couldn't be read.");
-    window.__cardlio = { state: "error", detail: String(e) };
+    return;
   }
+
+  // Marketing page: reveal-on-scroll.
+  window.__cardlio = { state: "landing" };
+  if (!("IntersectionObserver" in window)) {
+    document.querySelectorAll(".reveal").forEach(el => el.classList.add("in"));
+    return;
+  }
+  const observer = new IntersectionObserver(entries => {
+    for (const entry of entries) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("in");
+        observer.unobserve(entry.target);
+      }
+    }
+  }, { threshold: 0.15 });
+  document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
 })();
 </script>
 </body>
