@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>cardlio — business cards, done. Scanner & digital card for iPhone and Mac</title>
-<meta name="description" content="Scan any business card into a clean contact. Share yours as a link, QR, NFC tap, or Apple Wallet pass. Private by design — on iPhone and Mac.">
+<meta name="description" content="Scan any business card into a clean contact. Sync to Outlook & Office 365, or share yours as a link, QR code, NFC tap, or Apple Wallet pass. Private by design — on iPhone and Mac.">
 <meta property="og:title" content="cardlio — business cards, done.">
-<meta property="og:description" content="Scan any card into a clean contact. Share yours as a link, QR, NFC tap, or Wallet pass. Private by design.">
+<meta property="og:description" content="Scan any card into a clean contact. Sync to Outlook & Office 365, or share yours as a link, QR, NFC tap, or Wallet pass. Private by design.">
 <meta property="og:url" content="https://cardlio.app/">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://cardlio.app/assets/og.jpg">
@@ -107,6 +107,8 @@
       <a class="wordmark" href="/">cardlio</a>
       <span class="spacer"></span>
       <a class="link" href="#scan">Features</a>
+      <a class="link" href="#sync">Sync</a>
+      <a class="link" href="#share">Sharing</a>
       <a class="link" href="#privacy-section">Privacy</a>
       <a class="link" href="support.html">Support</a>
     </div>
@@ -155,10 +157,11 @@
       <span>AR live capture</span>
       <span>Whole PDF stacks</span>
       <span>Pasted email signatures</span>
-      <span>ALL-CAPS names</span>
-      <span>Japanese addresses</span>
+      <span>Sync to Office 365</span>
+      <span>Apple Wallet passes</span>
+      <span>NFC &amp; QR sharing</span>
+      <span>Addresses worldwide</span>
       <span>Multi-office cards</span>
-      <span>Spaced-out emails</span>
       <span>Verified addresses</span>
       <span>Duplicate merge</span>
       <span>Salesforce-ready CSV</span>
@@ -181,11 +184,11 @@
       </div>
       <div class="visual reveal">
         <div class="demo-stack">
-          <img src="assets/hero-card-2.png" alt="Business card being parsed" loading="lazy">
+          <img src="assets/hero-card-1.png" alt="Business card being parsed into structured fields" loading="lazy">
           <div class="chips">
-            <span class="chip">Name&nbsp;· Yuki Hamasaki</span>
-            <span class="chip">Company&nbsp;· Kaito Marine K.K.</span>
-            <span class="chip">Title&nbsp;· Fleet Manager</span>
+            <span class="chip">Name&nbsp;· Elena Vargas</span>
+            <span class="chip">Company&nbsp;· Solstice Design Co.</span>
+            <span class="chip">Address&nbsp;· verified ✓</span>
           </div>
         </div>
       </div>
@@ -204,7 +207,7 @@
         <p class="lead">cardlio looks at the layout, not just the letters — the big name up top, the department under it, the company by the logo.</p>
         <ul class="checks">
           <li><span><b>Layout-aware</b> — size and position decide who's the person and what's the company</span></li>
-          <li><span><b>Japanese cards</b> — romaji addresses, prefectures, multi-office cards</span></li>
+          <li><span><b>Addresses from any country</b> — reads international formats, multi-office cards, and normalizes city, postal code &amp; country</span></li>
           <li><span><b>Fixes OCR quirks</b> — ALL-CAPS names, spaced-out emails, split addresses</span></li>
           <li><span><b>Verified addresses</b> — checked against Apple&nbsp;Maps with a pin on the map</span></li>
         </ul>
@@ -222,8 +225,8 @@
         <ul class="checks">
           <li><span><b>Map view</b> with your contacts' card photos as pins</span></li>
           <li><span><b>Network stats</b> — countries, industries, companies</span></li>
-          <li><span><b>Search that filters</b> — tap suggestions like <i>Country: Japan</i></span></li>
-          <li><span><b>Exports</b> — vCard, CSV, Outlook, Salesforce-ready</span></li>
+          <li><span><b>Search that filters</b> — tap suggestions like <i>Industry: Finance</i> or <i>Country: Germany</i></span></li>
+          <li><span><b>Exports &amp; sync</b> — vCard, CSV, Salesforce, and one-click Office&nbsp;365</span></li>
         </ul>
       </div>
       <div class="visual reveal">
@@ -232,8 +235,33 @@
     </div>
   </section>
 
+  <!-- ============================ sync ============================ -->
+  <section class="section alt" id="sync">
+    <div class="wrap reveal" style="text-align:center;max-width:660px;margin:0 auto;">
+      <div class="kicker">Sync</div>
+      <h2>Straight into Outlook &amp; Office&nbsp;365.</h2>
+      <p class="lead" style="margin-left:auto;margin-right:auto;">Connect your Microsoft account once, then push your whole library into Office&nbsp;365 contacts with a single click — no CSV files, no copy-paste.</p>
+    </div>
+    <div class="wrap split" style="margin-top:36px;align-items:center;">
+      <div class="reveal">
+        <ul class="checks">
+          <li><span><b>One click, both ways of tidy</b> — new cards are added, edits update, removed cards drop off</span></li>
+          <li><span><b>No duplicates</b> — every contact is matched by a hidden ID, even after a reinstall or a new Mac</span></li>
+          <li><span><b>Every field mapped</b> — name, company, title, emails, phones, Business Fax, and full postal address</span></li>
+        </ul>
+      </div>
+      <div class="reveal">
+        <ul class="checks">
+          <li><span><b>Your account only</b> — contacts go to your own Microsoft&nbsp;365 mailbox, nowhere else</span></li>
+          <li><span><b>Works from iPhone &amp; Mac</b> — the same Sync&nbsp;to&nbsp;Office&nbsp;365 action on both</span></li>
+          <li><span><b>Still love a file?</b> — vCard, CSV, Outlook CSV and Salesforce exports are all still there</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
   <!-- ============================ share ============================ -->
-  <section class="section alt" id="share">
+  <section class="section" id="share">
     <div class="wrap">
       <div class="reveal" style="text-align:center;max-width:640px;margin:0 auto;">
         <div class="kicker">Your card</div>
@@ -249,17 +277,17 @@
         <div class="tile tile-qr reveal" style="--d:0.1s">
           <div class="icon">▦</div>
           <h3>A QR code</h3>
-          <p>On your screen, on a slide, on a poster. Any phone camera imports you instantly.</p>
+          <p>On your screen, a slide, or a poster. Any phone's camera imports you instantly — and it works fully offline.</p>
         </div>
         <div class="tile tile-nfc reveal" style="--d:0.2s">
           <div class="icon">〰️</div>
           <h3>An NFC tap</h3>
-          <p>Write your card to a tag. iPhones and Androids tap it and open your card — like magic.</p>
+          <p>Write your card to a reusable tag. iPhone or Android taps it and your card opens straight from the lock screen — no app needed.</p>
         </div>
         <div class="tile tile-wallet reveal" style="--d:0.3s">
           <div class="icon">👝</div>
           <h3>Apple Wallet</h3>
-          <p>Your card as a Wallet pass, QR included — always two clicks from the lock screen.</p>
+          <p>Add your card to Wallet with the QR on the front — two clicks from the lock screen, and it works offline forever.</p>
         </div>
       </div>
     </div>
@@ -270,7 +298,7 @@
     <div class="wrap grid reveal">
       <div><div class="num"><span data-count="100">100</span>%</div><div class="lbl">on-device recognition</div></div>
       <div><div class="num"><span data-count="0">0</span></div><div class="lbl">accounts, ads, or trackers</div></div>
-      <div><div class="num"><span data-count="4">4</span></div><div class="lbl">export formats</div></div>
+      <div><div class="num"><span data-count="5">5</span></div><div class="lbl">ways to export &amp; sync</div></div>
       <div><div class="num"><span data-count="1">1</span></div><div class="lbl">tap to share your card</div></div>
     </div>
   </section>
