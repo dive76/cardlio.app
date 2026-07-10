@@ -14,6 +14,7 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://cardlio.app/assets/og.jpg">
+<link rel="preload" href="assets/fonts/space-grotesk-vf.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="site.css">
 <noscript><style>.reveal, .reveal .checks li, .reveal .chip { opacity: 1 !important; transform: none !important; filter: none !important; }</style></noscript>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%234F46E5'/%3E%3Cstop offset='1' stop-color='%238B5CF6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='url(%23g)'/%3E%3Crect x='12' y='20' width='40' height='26' rx='5' fill='white' transform='rotate(-6 32 33)'/%3E%3C/svg%3E">
@@ -136,6 +137,7 @@
             <span class="soon-tag">coming soon</span>
           </span>
         </div>
+        <a class="demo-link rise" style="--d:0.42s" href="/#1.ZZBRS8MwEMffA_kOeRe6lrWoOQRrmo1i1kradewx1DCDNRlJED--ce5B8O24-93vuP8T37YdnVgtG4wmLoe27-g6yzHadJQv2ioyKX9SAaOEXSq4tAEAo15u6eCWEM2sSaODOVnCXIbR2I6CU-a1iuYzjYzXc3QeI76rWwHj8YU_HHr5TPWP6zFcHZn-Uh_nRScBv1KMC0FvClIWFamqiuTFusRoLwV9i_Ec6Gr1f7lu5J8TAOUd2ZkQjLNEuvmdDBEGZcnGKzubMDtgNdyXRX4Le2uifk2Aijq9zLvmN5tv" target="_blank" rel="noopener">See a live card link — the receiver needs no app <span class="arr">→</span></a>
       </div>
       <div class="hero-visual rise" style="--d:0.32s">
         <div class="hero-glow"></div>
@@ -151,86 +153,66 @@
     <a class="scroll-cue" href="#scan" aria-label="Scroll to features"></a>
   </header>
 
-  <!-- capabilities marquee -->
-  <div class="marquee" aria-label="Things cardlio handles automatically">
-    <div class="marquee-track" id="marqueeTrack">
-      <span>AR live capture</span>
-      <span>Whole PDF stacks</span>
-      <span>Pasted email signatures</span>
-      <span>Sync to Office 365</span>
-      <span>Apple Wallet passes</span>
-      <span>NFC &amp; QR sharing</span>
-      <span>Addresses worldwide</span>
-      <span>Multi-office cards</span>
-      <span>Verified addresses</span>
-      <span>Duplicate merge</span>
-      <span>Salesforce-ready CSV</span>
-    </div>
-  </div>
-
-  <!-- ============================ scan ============================ -->
+  <!-- ============================ features bento ============================ -->
   <section class="section" id="scan">
-    <div class="wrap split">
-      <div class="reveal">
-        <div class="kicker">Capture</div>
-        <h2>Scan anything with a card on it.</h2>
-        <p class="lead">Point the camera and cardlio finds the card, straightens it, and reads it — even several cards at once.</p>
-        <ul class="checks">
-          <li><span><b>Live camera</b> with on-device card detection</span></li>
-          <li><span><b>Photos & PDFs</b> — import whole stacks at once</span></li>
-          <li><span><b>Email signatures</b> — paste text, get a contact</span></li>
-          <li><span><b>Review before saving</b> — every field checked and editable</span></li>
-        </ul>
+    <div class="wrap">
+      <div class="reveal" style="text-align:center;max-width:640px;margin:0 auto 44px;">
+        <div class="kicker">Capture to contact</div>
+        <h2>Everything a card throws at you.</h2>
+        <p class="lead" style="margin-left:auto;margin-right:auto;">Point the camera — cardlio finds the card, straightens it, reads it, and files it. Review every field before it's saved.</p>
       </div>
-      <div class="visual reveal">
-        <div class="demo-stack">
-          <img src="assets/hero-card-1.png" alt="Business card being parsed into structured fields" loading="lazy">
-          <div class="chips">
-            <span class="chip">Name&nbsp;· Elena Vargas</span>
-            <span class="chip">Company&nbsp;· Solstice Design Co.</span>
-            <span class="chip">Address&nbsp;· verified ✓</span>
+      <div class="bento">
+        <div class="cell cell-scan reveal">
+          <h3>Scan anything with a card on it.</h3>
+          <p>Live camera with on-device detection — even several cards at once, or whole photo imports.</p>
+          <div class="demo-stack">
+            <img src="assets/hero-card-1.png" alt="Business card being parsed into structured fields" loading="lazy">
+            <div class="chips">
+              <span class="chip">Name&nbsp;· Elena Vargas</span>
+              <span class="chip">Company&nbsp;· Solstice Design Co.</span>
+              <span class="chip">Address&nbsp;· verified ✓</span>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================ parsing ============================ -->
-  <section class="section alt">
-    <div class="wrap split rev">
-      <div class="visual reveal">
-        <img class="shot" src="assets/review-phone.png" alt="Review screen with validated contact fields" loading="lazy" style="max-width:340px;margin:0 auto;">
-      </div>
-      <div class="reveal">
-        <div class="kicker">Understanding</div>
-        <h2>Reads cards like a person would.</h2>
-        <p class="lead">cardlio looks at the layout, not just the letters — the big name up top, the department under it, the company by the logo.</p>
-        <ul class="checks">
-          <li><span><b>Layout-aware</b> — size and position decide who's the person and what's the company</span></li>
-          <li><span><b>Addresses from any country</b> — reads international formats, multi-office cards, and normalizes city, postal code &amp; country</span></li>
-          <li><span><b>Fixes OCR quirks</b> — ALL-CAPS names, spaced-out emails, split addresses</span></li>
-          <li><span><b>Verified addresses</b> — checked against Apple&nbsp;Maps with a pin on the map</span></li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================ network ============================ -->
-  <section class="section">
-    <div class="wrap split">
-      <div class="reveal">
-        <div class="kicker">Your network</div>
-        <h2>See who you know — and where.</h2>
-        <p class="lead">Every card becomes part of a picture: contacts on a world map, industries and countries at a glance, growth over time.</p>
-        <ul class="checks">
-          <li><span><b>Map view</b> with your contacts' card photos as pins</span></li>
-          <li><span><b>Network stats</b> — countries, industries, companies</span></li>
-          <li><span><b>Search that filters</b> — tap suggestions like <i>Industry: Finance</i> or <i>Country: Germany</i></span></li>
-          <li><span><b>Exports &amp; sync</b> — vCard, CSV, Salesforce, and one-click Office&nbsp;365</span></li>
-        </ul>
-      </div>
-      <div class="visual reveal">
-        <img class="shot" src="assets/stats.png" alt="cardlio network statistics with donut charts by industry and country" loading="lazy">
+        <div class="cell cell-phone reveal" style="--d:0.08s">
+          <h3>Reads cards like a person would.</h3>
+          <p>Layout decides who's the person and what's the company — ALL-CAPS names, spaced-out emails, and split addresses fixed on the way.</p>
+          <div class="phone-crop">
+            <img src="assets/review-phone.png" alt="Review screen with validated contact fields" loading="lazy">
+          </div>
+        </div>
+        <div class="cell cell-sig reveal" style="--d:0.16s">
+          <h3>Email signatures too.</h3>
+          <p>Paste the text, get a contact.</p>
+          <div class="mini sig-mini" aria-hidden="true">
+            <i></i><i></i><i style="width:62%"></i>
+            <span class="chip">Ines Bauer · CFO</span>
+          </div>
+        </div>
+        <div class="cell cell-pdf reveal" style="--d:0.24s">
+          <h3>Whole PDF stacks.</h3>
+          <p>Import a folder of scans in one go.</p>
+          <div class="mini pdf-mini" aria-hidden="true">
+            <span class="page"></span><span class="page"></span><span class="page"></span>
+            <span class="chip">12 cards found</span>
+          </div>
+        </div>
+        <div class="cell cell-stats reveal" style="--d:0.1s">
+          <h3>See who you know — and where.</h3>
+          <p>Contacts on a world map, industries and countries at a glance, growth over time. Search filters like <i>Industry: Finance</i>.</p>
+          <img class="stats-img" src="assets/stats.png" alt="cardlio network statistics with donut charts by industry and country" loading="lazy">
+        </div>
+        <div class="cell cell-addr reveal" style="--d:0.18s">
+          <h3>Addresses from any country.</h3>
+          <p>International formats and multi-office cards normalized — city, postal code and country — then checked against Apple&nbsp;Maps.</p>
+          <div class="mini addr-mini" aria-hidden="true">
+            <i style="width:70%"></i><i style="width:52%"></i><i style="width:60%"></i>
+            <div class="addr-row">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-5.4-6.5-10a6.5 6.5 0 0 1 13 0c0 4.6-6.5 10-6.5 10z"/><circle cx="12" cy="10.6" r="2.3"/></svg>
+              <span class="chip">Verified on Apple Maps</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -270,22 +252,22 @@
       </div>
       <div class="tiles">
         <div class="tile tile-link reveal">
-          <div class="icon">🔗</div>
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.2 13.8a4.6 4.6 0 0 0 6.9.5l2.8-2.8a4.6 4.6 0 0 0-6.5-6.5l-1.6 1.6"/><path d="M13.8 10.2a4.6 4.6 0 0 0-6.9-.5l-2.8 2.8a4.6 4.6 0 0 0 6.5 6.5l1.6-1.6"/></svg></div>
           <h3>A link</h3>
           <p>Your whole card travels inside one link. Opens in any browser — Add to Contacts in one tap.</p>
         </div>
         <div class="tile tile-qr reveal" style="--d:0.1s">
-          <div class="icon">▦</div>
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><path d="M13.5 13.5h3.2v3.2h-3.2z"/><path d="M20.5 13.5v3.2"/><path d="M13.5 20.5h3.2"/><path d="M20.5 20.5h.01"/></svg></div>
           <h3>A QR code</h3>
           <p>On your screen, a slide, or a poster. Any phone's camera imports you instantly — and it works fully offline.</p>
         </div>
         <div class="tile tile-nfc reveal" style="--d:0.2s">
-          <div class="icon">〰️</div>
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M8.6 15.4a4.8 4.8 0 0 1 0-6.8"/><path d="M5.8 18.2a8.8 8.8 0 0 1 0-12.4"/><path d="M15.4 8.6a4.8 4.8 0 0 1 0 6.8"/><path d="M18.2 5.8a8.8 8.8 0 0 1 0 12.4"/><circle cx="12" cy="12" r="1.3" fill="currentColor" stroke="none"/></svg></div>
           <h3>An NFC tap</h3>
           <p>Write your card to a reusable tag. iPhone or Android taps it and your card opens straight from the lock screen — no app needed.</p>
         </div>
         <div class="tile tile-wallet reveal" style="--d:0.3s">
-          <div class="icon">👝</div>
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19.5 7.5V7a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 7v.5"/><rect x="3.5" y="7.5" width="17" height="11.5" rx="2.5"/><path d="M14.5 12.75h3"/></svg></div>
           <h3>Apple Wallet</h3>
           <p>Add your card to Wallet with the QR on the front — two clicks from the lock screen, and it works offline forever.</p>
         </div>
@@ -498,15 +480,6 @@ function renderCardError(root, message) {
   document.documentElement.classList.add("anim");
 
   const noMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  // Marquee: clone the row so the -50% translate loops seamlessly.
-  const track = document.getElementById("marqueeTrack");
-  if (track) {
-    const clone = track.cloneNode(true);
-    clone.removeAttribute("id");
-    clone.setAttribute("aria-hidden", "true");
-    while (clone.firstChild) track.appendChild(clone.firstChild);
-  }
 
   // Nav condenses after the page scrolls a bit.
   const nav = document.querySelector(".nav");

@@ -2,7 +2,18 @@
    Indigo #4F46E5 → violet #8B5CF6 on deep indigo-black; glassy panels;
    dark-mode aware; motion respects prefers-reduced-motion. */
 
+/* Display face: Space Grotesk (variable, self-hosted — no third-party
+   requests, keeping the "no analytics, not on this website" promise). */
+@font-face {
+  font-family: "Space Grotesk";
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url("assets/fonts/space-grotesk-vf.woff2") format("woff2-variations");
+}
+
 :root {
+  --font-display: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --indigo: #4F46E5;
   --violet: #8B5CF6;
   --hero-bg: #12101f;
@@ -52,7 +63,8 @@ a { color: var(--indigo); }
   display: flex; align-items: center; gap: 26px;
 }
 .nav .wordmark {
-  font-weight: 800; font-size: 19px; letter-spacing: -0.02em;
+  font-family: var(--font-display);
+  font-weight: 700; font-size: 20px; letter-spacing: -0.02em;
   background: linear-gradient(120deg, #a5b4fc, #d8b4fe);
   -webkit-background-clip: text; background-clip: text; color: transparent;
   text-decoration: none;
@@ -91,8 +103,10 @@ a { color: var(--indigo); }
 }
 @media (max-width: 860px) { .hero-grid { grid-template-columns: 1fr; } }
 .hero h1 {
-  font-size: clamp(40px, 6vw, 64px); line-height: 1.04;
-  letter-spacing: -0.03em; font-weight: 800;
+  font-family: var(--font-display);
+  font-size: clamp(44px, 5.5vw, 70px); line-height: 1.02;
+  letter-spacing: -0.035em; font-weight: 700;
+  text-wrap: balance;
 }
 .hero h1 .grad {
   background: linear-gradient(120deg, #a5b4fc, #e9d5ff);
@@ -100,6 +114,7 @@ a { color: var(--indigo); }
 }
 .hero p.sub {
   margin-top: 18px; font-size: 19px; color: #c6c9dd; max-width: 46ch;
+  text-wrap: pretty;
 }
 .badges { display: flex; gap: 12px; margin-top: 30px; flex-wrap: wrap; }
 .badge {
@@ -115,6 +130,17 @@ a { color: var(--indigo); }
 .badge .soon-tag {
   font-size: 10px; color: #c4b5fd; letter-spacing: 0.06em; text-transform: uppercase;
 }
+
+/* hero: live card-link demo */
+.demo-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin-top: 22px;
+  color: #c7bdff; font-size: 15px; font-weight: 600;
+  text-decoration: none;
+}
+.demo-link .arr { transition: translate 0.3s var(--ease-out); }
+.demo-link:hover { color: #fff; }
+.demo-link:hover .arr { translate: 4px 0; }
 
 /* hero visual: CSS phone frame + floating cards */
 .hero-visual { position: relative; min-height: 560px; }
@@ -144,16 +170,19 @@ a { color: var(--indigo); }
 .section { padding: 96px 0; }
 .section.alt { background: var(--bg-alt); }
 .section h2 {
-  font-size: clamp(28px, 4vw, 40px); letter-spacing: -0.02em;
-  font-weight: 750; line-height: 1.1;
+  font-family: var(--font-display);
+  font-size: clamp(30px, 4.4vw, 44px); letter-spacing: -0.025em;
+  font-weight: 700; line-height: 1.08;
+  text-wrap: balance;
 }
 .section .kicker {
-  font-size: 13px; font-weight: 700; letter-spacing: 0.09em;
+  font-family: var(--font-display);
+  font-size: 13px; font-weight: 600; letter-spacing: 0.1em;
   text-transform: uppercase; margin-bottom: 12px;
   background: linear-gradient(120deg, var(--indigo), var(--violet));
   -webkit-background-clip: text; background-clip: text; color: transparent;
 }
-.section p.lead { margin-top: 14px; color: var(--muted); font-size: 17.5px; max-width: 54ch; }
+.section p.lead { margin-top: 14px; color: var(--muted); font-size: 17.5px; max-width: 54ch; text-wrap: pretty; }
 .split {
   display: grid; gap: 56px; align-items: center;
   grid-template-columns: 1fr 1fr;
@@ -174,6 +203,97 @@ a { color: var(--indigo); }
   border-radius: var(--radius); overflow: hidden;
   border: 1px solid var(--panel-border);
   box-shadow: 0 30px 70px rgba(20, 16, 70, 0.18);
+}
+
+/* ---------- features bento ---------- */
+.bento {
+  display: grid; gap: 16px;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-areas:
+    "scan scan scan scan phone phone"
+    "sig  sig  pdf  pdf  phone phone"
+    "stats stats stats addr addr addr";
+}
+.cell-scan { grid-area: scan; }
+.cell-phone { grid-area: phone; }
+.cell-sig { grid-area: sig; }
+.cell-pdf { grid-area: pdf; }
+.cell-stats { grid-area: stats; }
+.cell-addr { grid-area: addr; }
+@media (max-width: 860px) {
+  .bento {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "scan scan"
+      "phone phone"
+      "sig  pdf"
+      "stats stats"
+      "addr addr";
+  }
+}
+@media (max-width: 560px) {
+  .bento {
+    grid-template-columns: 1fr;
+    grid-template-areas: "scan" "phone" "sig" "pdf" "stats" "addr";
+  }
+}
+.cell {
+  position: relative; overflow: hidden;
+  display: flex; flex-direction: column;
+  background: var(--panel); border: 1px solid var(--panel-border);
+  border-radius: var(--radius); padding: 26px 24px;
+  box-shadow: 0 14px 34px rgba(20,16,70,0.07);
+  transition: transform 0.45s var(--ease-out), box-shadow 0.45s var(--ease-out);
+}
+.cell::before {
+  content: ""; position: absolute; inset: -1px; border-radius: var(--radius);
+  padding: 1px; opacity: 0;
+  background: linear-gradient(135deg, var(--indigo), var(--violet));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  transition: opacity 0.45s ease;
+  pointer-events: none;
+}
+.cell:hover { transform: translateY(-6px); box-shadow: 0 26px 54px rgba(20,16,70,0.14); }
+.cell:hover::before { opacity: 1; }
+.cell h3 {
+  font-family: var(--font-display); font-weight: 600;
+  font-size: 19px; letter-spacing: -0.015em; text-wrap: balance;
+}
+.cell > p { margin-top: 8px; color: var(--muted); font-size: 14.5px; text-wrap: pretty; }
+.cell .demo-stack { margin: 26px 12px 6px 0; }
+.cell-phone .phone-crop {
+  margin: 24px -4px -26px; flex: 1; min-height: 220px;
+  border-radius: 18px 18px 0 0; overflow: hidden;
+  border: 1px solid var(--panel-border); border-bottom: 0;
+  box-shadow: 0 -10px 40px rgba(20,16,70,0.12);
+}
+.cell-phone .phone-crop img { width: 100%; }
+.cell .mini {
+  margin-top: auto; padding-top: 22px;
+  display: grid; gap: 7px; justify-items: start;
+}
+.mini i {
+  display: block; height: 8px; width: 80%; border-radius: 4px;
+  background: var(--bg-alt);
+}
+@media (prefers-color-scheme: dark) { .mini i { background: rgba(255,255,255,0.08); } }
+.sig-mini .chip, .pdf-mini .chip { margin-top: 8px; }
+.pdf-mini { position: relative; }
+.pdf-mini .page {
+  display: block; height: 10px; width: 72%; border-radius: 4px;
+  background: var(--bg-alt); border: 1px solid var(--panel-border);
+}
+@media (prefers-color-scheme: dark) { .pdf-mini .page { background: rgba(255,255,255,0.08); } }
+.pdf-mini .page:nth-child(2) { width: 64%; }
+.pdf-mini .page:nth-child(3) { width: 56%; }
+.addr-mini .addr-row { display: flex; align-items: center; gap: 12px; margin-top: 10px; }
+.addr-mini svg { width: 30px; height: 30px; color: var(--indigo); flex: none; }
+.cell .stats-img {
+  margin: 24px -4px -26px; border-radius: 14px 14px 0 0;
+  border: 1px solid var(--panel-border); border-bottom: 0;
+  max-height: 300px; width: calc(100% + 8px);
+  object-fit: cover; object-position: top;
 }
 
 /* parsed-fields demo chips */
@@ -201,9 +321,10 @@ a { color: var(--indigo); }
   width: 42px; height: 42px; border-radius: 12px; margin-bottom: 14px;
   display: flex; align-items: center; justify-content: center;
   background: linear-gradient(135deg, var(--indigo), var(--violet));
-  color: #fff; font-size: 20px;
+  color: #fff;
 }
-.tile h3 { font-size: 17px; margin-bottom: 6px; }
+.tile .icon svg { width: 22px; height: 22px; display: block; }
+.tile h3 { font-family: var(--font-display); font-weight: 600; font-size: 17.5px; margin-bottom: 6px; }
 .tile p { color: var(--muted); font-size: 14.5px; }
 
 /* privacy (dark) */
@@ -244,9 +365,9 @@ a { color: var(--indigo); }
 
 /* subpages */
 .doc { max-width: 720px; margin: 0 auto; padding: 130px 24px 80px; }
-.doc h1 { font-size: 34px; letter-spacing: -0.02em; margin-bottom: 8px; }
+.doc h1 { font-family: var(--font-display); font-weight: 700; font-size: 34px; letter-spacing: -0.02em; margin-bottom: 8px; text-wrap: balance; }
 .doc .updated { color: var(--muted); font-size: 14px; margin-bottom: 34px; }
-.doc h2 { font-size: 21px; margin: 34px 0 10px; }
+.doc h2 { font-family: var(--font-display); font-weight: 600; font-size: 21px; margin: 34px 0 10px; text-wrap: balance; }
 .doc p, .doc li { color: var(--ink); font-size: 16px; }
 .doc ul { padding-left: 22px; }
 .doc .note { color: var(--muted); }
@@ -336,33 +457,6 @@ a { color: var(--indigo); }
   }
 }
 @media (max-width: 860px) { .scroll-cue { display: none; } }
-
-/* ---------- capabilities marquee ---------- */
-.marquee {
-  position: relative; overflow: hidden; padding: 17px 0;
-  background: var(--hero-bg);
-  border-top: 1px solid rgba(255,255,255,0.07);
-}
-.marquee::before, .marquee::after {
-  content: ""; position: absolute; top: 0; bottom: 0; width: 90px; z-index: 2;
-  pointer-events: none;
-}
-.marquee::before { left: 0; background: linear-gradient(90deg, var(--hero-bg), transparent); }
-.marquee::after { right: 0; background: linear-gradient(-90deg, var(--hero-bg), transparent); }
-.marquee-track {
-  display: flex; gap: 34px; width: max-content;
-  font-size: 13.5px; font-weight: 600; letter-spacing: 0.02em;
-  color: #b9bcd8; white-space: nowrap;
-}
-.marquee-track span { display: flex; align-items: center; gap: 9px; }
-.marquee-track span::before {
-  content: "✓"; color: #a5b4fc; font-weight: 800;
-}
-@media (prefers-reduced-motion: no-preference) {
-  .marquee-track { animation: marquee 36s linear infinite; }
-  .marquee:hover .marquee-track { animation-play-state: paused; }
-  @keyframes marquee { to { transform: translateX(-50%); } }
-}
 
 /* ---------- reveals v2: blur + scale + per-item stagger ---------- */
 .reveal {
@@ -474,7 +568,8 @@ a { color: var(--indigo); }
 }
 @media (max-width: 860px) { .numbers .grid { grid-template-columns: repeat(2, 1fr); gap: 30px 14px; } }
 .numbers .num {
-  font-size: clamp(38px, 5vw, 56px); font-weight: 800; letter-spacing: -0.03em;
+  font-family: var(--font-display);
+  font-size: clamp(38px, 5vw, 56px); font-weight: 700; letter-spacing: -0.03em;
   background: linear-gradient(120deg, var(--indigo), var(--violet));
   -webkit-background-clip: text; background-clip: text; color: transparent;
   font-variant-numeric: tabular-nums;
