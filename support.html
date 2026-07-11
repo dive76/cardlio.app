@@ -5,6 +5,61 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Support — cardlio</title>
 <meta name="description" content="Help and frequently asked questions for cardlio on iPhone and Mac.">
+<meta name="theme-color" content="#12101f">
+<link rel="canonical" href="https://cardlio.app/support.html">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "A card scanned with a wrong name or company — what now?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Tap the field on the review screen and correct it; the fix saves immediately. Recognition improves regularly, and already-saved cards can be re-parsed on the Mac with the wand button next to the address." }
+    },
+    {
+      "@type": "Question",
+      "name": "Which NFC tags work for sharing my card?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Use NTAG216 tags — they have enough memory for your card link. Smaller tags (NTAG213/215) usually don't fit and the app will tell you. A written tag works when tapped by both iPhones (XS and newer) and Android phones." }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does my shared tag or link show a placeholder avatar instead of my photo?",
+      "acceptedAnswer": { "@type": "Answer", "text": "That's by design: NFC tags and QR codes carry a compact version of your card without the photo (tags are tiny). Links you share from the Share Link button include your photo." }
+    },
+    {
+      "@type": "Question",
+      "name": "My cards aren't syncing between iPhone and Mac.",
+      "acceptedAnswer": { "@type": "Answer", "text": "Check that both devices are signed into the same Apple ID and that iCloud Drive is enabled in System Settings. Sync usually catches up within a minute of opening the app; pull down on the card list to refresh." }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I get my card into Apple Wallet?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Open My Card, fill in your details, and tap Add to Apple Wallet. Creating the pass needs an internet connection; the pass itself works offline forever after." }
+    },
+    {
+      "@type": "Question",
+      "name": "Which export formats are supported?",
+      "acceptedAnswer": { "@type": "Answer", "text": "vCard (.vcf) for Apple/Google/Outlook contacts, a generic CSV, an Outlook-ready CSV, and a Salesforce-ready CSV that maps automatically in Salesforce's Data Import Wizard. You can also sync directly to Office 365." }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I sync my cards to Outlook / Office 365?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Connect your Microsoft account under Settings → Office 365 (on iPhone/iPad it's in Settings), then choose Sync to Office 365 from the Export menu. cardlio adds new cards, updates changed ones, and removes deleted ones in your own Outlook contacts. Each contact is matched by a hidden identifier, so running the sync again never creates duplicates — even after a reinstall. Your contacts go only to your own Microsoft 365 mailbox; we never see them." }
+    },
+    {
+      "@type": "Question",
+      "name": "Does cardlio work offline?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes — scanning, recognition, and your library are fully offline. Only address verification (Apple Maps), optional cloud AI, sync, and Wallet pass creation need a connection." }
+    },
+    {
+      "@type": "Question",
+      "name": "Where is my data stored?",
+      "acceptedAnswer": { "@type": "Answer", "text": "On your devices and in your private iCloud. We run no servers that ever see your contacts." }
+    }
+  ]
+}
+</script>
 <link rel="stylesheet" href="site.css">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%234F46E5'/%3E%3Cstop offset='1' stop-color='%238B5CF6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='url(%23g)'/%3E%3Crect x='12' y='20' width='40' height='26' rx='5' fill='white' transform='rotate(-6 32 33)'/%3E%3C/svg%3E">
 </head>
