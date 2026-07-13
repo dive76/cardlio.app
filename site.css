@@ -368,6 +368,7 @@ a { color: var(--indigo); }
 .doc h1 { font-family: var(--font-display); font-weight: 700; font-size: 34px; letter-spacing: -0.02em; margin-bottom: 8px; text-wrap: balance; }
 .doc .updated { color: var(--muted); font-size: 14px; margin-bottom: 34px; }
 .doc h2 { font-family: var(--font-display); font-weight: 600; font-size: 21px; margin: 34px 0 10px; text-wrap: balance; }
+.doc h3 { font-family: var(--font-display); font-weight: 600; font-size: 17px; margin: 26px 0 8px; text-wrap: balance; }
 .doc p, .doc li { color: var(--ink); font-size: 16px; }
 .doc ul { padding-left: 22px; }
 .doc .note { color: var(--muted); }
