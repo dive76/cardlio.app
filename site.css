@@ -274,17 +274,25 @@ a { color: var(--indigo); }
   display: grid; gap: 7px; justify-items: start;
 }
 .mini i {
-  display: block; height: 8px; width: 80%; border-radius: 4px;
-  background: var(--bg-alt);
+  display: block; height: 9px; width: 80%; border-radius: 4px;
+  background: rgba(20, 16, 70, 0.13);
 }
-@media (prefers-color-scheme: dark) { .mini i { background: rgba(255,255,255,0.08); } }
+@media (prefers-color-scheme: dark) { .mini i { background: rgba(255,255,255,0.16); } }
+/* frame the redacted-text bars as a pasted-snippet panel so the cell
+   reads as a deliberate mockup, not an empty box */
+.sig-mini, .pdf-mini {
+  width: 88%;
+  background: var(--bg-alt);
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  padding: 16px 16px 14px;
+}
 .sig-mini .chip, .pdf-mini .chip { margin-top: 8px; }
 .pdf-mini { position: relative; }
 .pdf-mini .page {
   display: block; height: 10px; width: 72%; border-radius: 4px;
-  background: var(--bg-alt); border: 1px solid var(--panel-border);
+  background: var(--panel); border: 1px solid var(--panel-border);
 }
-@media (prefers-color-scheme: dark) { .pdf-mini .page { background: rgba(255,255,255,0.08); } }
 .pdf-mini .page:nth-child(2) { width: 64%; }
 .pdf-mini .page:nth-child(3) { width: 56%; }
 .addr-mini .addr-row { display: flex; align-items: center; gap: 12px; margin-top: 10px; }
