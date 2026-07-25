@@ -53,6 +53,9 @@ patch the href with a script and round-trip-decode to verify.
 - Scroll-driven "scan story" section (CSS `animation-timeline: view()`),
   the last item from the redesign plan.
 - Mobile nav overflows at 375px (Privacy/Support clipped) — pre-existing.
-- When the apps ship: swap "coming soon" badges for real App Store links
-  and consider promoting the hero demo link to a secondary button.
+- Mac badge DONE (2026-07-25): official Apple SVG (self-hosted at
+  `assets/mac-app-store-badge.svg`, `.store-badge` in site.css) links to
+  https://apps.apple.com/app/id6786612800 in hero + platforms section.
+  When iOS ships: same treatment for the iOS "coming soon" pill; consider
+  promoting the hero demo link to a secondary button.
 - Idea (not committed to): email waitlist while badges are disabled.
