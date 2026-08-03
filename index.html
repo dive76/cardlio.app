@@ -142,6 +142,9 @@
     flex: 1; padding: 11px 4px; border-radius: 12px;
     background: var(--pg-g1); color: var(--cv-a1);
     font-size: 14px; font-weight: 600; text-decoration: none;
+    /* Explicit: the chips used to INHERIT centering from the classic
+       card's text-align — the left-aligned Banner layout exposed that. */
+    text-align: center;
   }
   @media (prefers-color-scheme: dark) {
     .cardview .row a { background: var(--pg-g2); color: #fff; }
