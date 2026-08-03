@@ -59,10 +59,18 @@
 <noscript><style>.reveal, .reveal .checks li, .reveal .chip { opacity: 1 !important; transform: none !important; filter: none !important; }</style></noscript>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%234F46E5'/%3E%3Cstop offset='1' stop-color='%238B5CF6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='url(%23g)'/%3E%3Crect x='12' y='20' width='40' height='26' rx='5' fill='white' transform='rotate(-6 32 33)'/%3E%3C/svg%3E">
 <style>
-  /* ---- card-link view (shown only when the URL carries a card) ---- */
+  /* ---- card-link view (shown only when the URL carries a card) ----
+     Accent/layout come from the link's X-CARDLIO-STYLE line (applyStyle
+     overrides the accent and page-glow custom properties and adds a
+     lay-… class). Defaults below ARE the classic indigo look, so
+     unstyled links render exactly as they always have. */
   :root {
     --cv-indigo: #4F46E5;
     --cv-violet: #8B5CF6;
+    --cv-a1: #4F46E5;
+    --cv-a2: #8B5CF6;
+    --pg-g1: rgba(79,70,229,0.18);
+    --pg-g2: rgba(139,92,246,0.16);
     --cv-ink: #1c1d22;
     --cv-muted: #6b6f7b;
     --cv-card-bg: #ffffff;
@@ -79,8 +87,8 @@
     display: flex; align-items: center; justify-content: center;
     padding: 24px;
     background:
-      radial-gradient(1000px 600px at 20% 0%, rgba(79,70,229,0.18), transparent 60%),
-      radial-gradient(900px 700px at 90% 90%, rgba(139,92,246,0.16), transparent 60%),
+      radial-gradient(1000px 600px at 20% 0%, var(--pg-g1), transparent 60%),
+      radial-gradient(900px 700px at 90% 90%, var(--pg-g2), transparent 60%),
       linear-gradient(135deg, #eef0fd, #f4effd);
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -88,10 +96,18 @@
   @media (prefers-color-scheme: dark) {
     body.card-mode {
       background:
-        radial-gradient(1000px 600px at 20% 0%, rgba(79,70,229,0.25), transparent 60%),
-        radial-gradient(900px 700px at 90% 90%, rgba(139,92,246,0.22), transparent 60%),
+        radial-gradient(1000px 600px at 20% 0%, var(--pg-g1), transparent 60%),
+        radial-gradient(900px 700px at 90% 90%, var(--pg-g2), transparent 60%),
         linear-gradient(135deg, #171822, #1d1930);
     }
+  }
+  /* Bold layout brings its own night — the page goes dark in BOTH schemes. */
+  body.card-mode.bold-page,
+  body.card-mode.bold-page * { color-scheme: dark; }
+  body.card-mode.bold-page {
+    background:
+      radial-gradient(1000px 600px at 20% 0%, var(--pg-g1), transparent 60%),
+      linear-gradient(160deg, #101018, #17131f);
   }
   .cardview {
     width: 100%; max-width: 400px;
@@ -103,11 +119,11 @@
   .cardview .avatar {
     width: 88px; height: 88px; border-radius: 50%;
     margin: 0 auto 14px;
-    background: linear-gradient(135deg, var(--cv-indigo), var(--cv-violet));
+    background: linear-gradient(135deg, var(--cv-a1), var(--cv-a2));
     color: #fff; font-size: 32px; font-weight: 700;
     display: flex; align-items: center; justify-content: center;
     background-size: cover; background-position: center;
-    box-shadow: 0 6px 18px rgba(79,70,229,0.35);
+    box-shadow: 0 6px 18px var(--pg-g1);
   }
   .cardview h1 { font-size: 24px; letter-spacing: -0.02em; margin: 0; }
   .cardview .role { color: var(--cv-muted); font-size: 15px; margin-top: 4px; }
@@ -116,7 +132,7 @@
     display: block; width: 100%;
     margin-top: 22px; padding: 15px;
     border: 0; border-radius: 14px;
-    background: linear-gradient(135deg, var(--cv-indigo), var(--cv-violet));
+    background: linear-gradient(135deg, var(--cv-a1), var(--cv-a2));
     color: #fff; font-size: 17px; font-weight: 600;
     cursor: pointer; text-decoration: none;
   }
@@ -124,17 +140,92 @@
   .cardview .row { display: flex; gap: 10px; margin-top: 12px; }
   .cardview .row a {
     flex: 1; padding: 11px 4px; border-radius: 12px;
-    background: rgba(99, 91, 230, 0.10); color: var(--cv-indigo);
+    background: var(--pg-g1); color: var(--cv-a1);
     font-size: 14px; font-weight: 600; text-decoration: none;
   }
   @media (prefers-color-scheme: dark) {
-    .cardview .row a { background: rgba(139,92,246,0.16); color: #b9aefc; }
+    .cardview .row a { background: var(--pg-g2); color: #fff; }
   }
   .cardview .brand { margin-top: 26px; font-size: 12.5px; color: var(--cv-muted); }
   .cardview .brand a {
-    background: linear-gradient(135deg, var(--cv-indigo), var(--cv-violet));
+    background: linear-gradient(135deg, var(--cv-a1), var(--cv-a2));
     -webkit-background-clip: text; background-clip: text; color: transparent;
     font-weight: 700; text-decoration: none;
+  }
+
+  /* ---- layouts (lay-* class set by applyStyle) ---- */
+
+  /* Banner: colored band + overlapping avatar, left-aligned. The dot
+     texture is CSS — the payload only NAMES the layout. */
+  .cardview.lay-banner { text-align: left; padding-top: 0; overflow: hidden; }
+  .cardview.lay-banner::before {
+    content: ""; display: block; height: 92px;
+    margin: 0 -26px 0;
+    background:
+      radial-gradient(rgba(255,255,255,0.25) 1.2px, transparent 1.6px),
+      linear-gradient(120deg, var(--cv-a1), var(--cv-a2));
+    background-size: 14px 14px, auto;
+  }
+  .cardview.lay-banner .avatar {
+    margin: -44px 0 12px;
+    border: 3px solid var(--cv-card-bg);
+  }
+  .cardview.lay-banner .brand { text-align: center; }
+
+  /* Minimal: typographic, monochrome — accent-independent on purpose. */
+  .cardview.lay-mono { border: 1px solid rgba(0,0,0,0.09); box-shadow: 0 8px 24px rgba(0,0,0,0.05); }
+  .cardview.lay-mono .avatar {
+    border-radius: 22px;
+    background: var(--cv-ink); box-shadow: none;
+    font-weight: 600;
+  }
+  .cardview.lay-mono .role {
+    text-transform: uppercase; letter-spacing: 0.09em; font-size: 12px; margin-top: 8px;
+  }
+  .cardview.lay-mono .addr {
+    border-top: 1px solid rgba(0,0,0,0.08); padding-top: 12px;
+  }
+  .cardview.lay-mono .add { background: var(--cv-ink); color: var(--cv-card-bg); border-radius: 11px; }
+  .cardview.lay-mono .row a {
+    background: transparent; border: 1px solid rgba(0,0,0,0.16);
+    color: var(--cv-ink); border-radius: 10px;
+  }
+  .cardview.lay-mono .brand a {
+    background: none; -webkit-background-clip: initial; background-clip: initial;
+    color: var(--cv-ink);
+  }
+  @media (prefers-color-scheme: dark) {
+    .cardview.lay-mono { border-color: rgba(255,255,255,0.12); }
+    .cardview.lay-mono .avatar { background: #f2f2f6; color: #17181c; }
+    .cardview.lay-mono .addr { border-top-color: rgba(255,255,255,0.12); }
+    .cardview.lay-mono .add { background: #f2f2f6; color: #17181c; }
+    .cardview.lay-mono .row a { border-color: rgba(255,255,255,0.22); }
+  }
+
+  /* Bold: full-bleed accent gradient card, always dark (bold-page pairs
+     with it on <body>). --cv-b1/--cv-b2 are the darkened accent pair,
+     set by applyStyle. */
+  .cardview.lay-bold {
+    background: linear-gradient(150deg, var(--cv-b1, #332ea0), var(--cv-b2, #5b3f96));
+    color: #f5f4fa;
+    box-shadow: 0 18px 44px rgba(0,0,0,0.55), inset 0 0 0 1px rgba(255,255,255,0.12);
+  }
+  .cardview.lay-bold .role { color: rgba(255,255,255,0.78); }
+  .cardview.lay-bold .addr { color: rgba(255,255,255,0.62); }
+  .cardview.lay-bold .avatar {
+    background: rgba(255,255,255,0.14);
+    border: 1px solid rgba(255,255,255,0.25);
+    box-shadow: none;
+  }
+  .cardview.lay-bold .add { background: #fff; color: #191624; }
+  .cardview.lay-bold .row a {
+    background: rgba(255,255,255,0.13); color: #fff;
+    border: 1px solid rgba(255,255,255,0.18);
+  }
+  .cardview.lay-bold .brand { color: rgba(255,255,255,0.6); }
+  .cardview.lay-bold .brand a {
+    background: none; -webkit-background-clip: initial; background-clip: initial;
+    color: #fff;
   }
 </style>
 </head>
@@ -421,9 +512,58 @@ function parseVCard(text) {
     } else if (key === "PHOTO" && /ENCODING=B|BASE64/i.test(left)) {
       const mime = /PNG/i.test(left) ? "image/png" : "image/jpeg";
       card.photo = `data:${mime};base64,${value.replace(/\s/g, "")}`;
+    } else if (key === "X-CARDLIO-STYLE") {
+      // Sender-chosen page style, e.g. "a=ocean;l=banner". Values are
+      // resolved against the whitelists in applyStyle — an unknown name
+      // (a future app talking to this older page) falls back to classic.
+      card.style = value;
     }
   }
   return card;
+}
+
+// Accent pairs mirror MyCardStyle.swift exactly; d1/d2 are the darkened
+// pair the Bold layout uses; g is the page-glow alpha color.
+const ACCENTS = {
+  ocean:    { a1: "#0891b2", a2: "#22d3ee", d1: "#075e73", d2: "#12808f",
+              g1: "rgba(8,145,178,0.18)",  g2: "rgba(34,211,238,0.15)" },
+  sunset:   { a1: "#ea580c", a2: "#f59e0b", d1: "#96380a", d2: "#9c6407",
+              g1: "rgba(234,88,12,0.16)",  g2: "rgba(245,158,11,0.15)" },
+  forest:   { a1: "#059669", a2: "#34d399", d1: "#04614a", d2: "#1f8a62",
+              g1: "rgba(5,150,105,0.16)",  g2: "rgba(52,211,153,0.15)" },
+  graphite: { a1: "#334155", a2: "#64748b", d1: "#222b39", d2: "#414e5e",
+              g1: "rgba(51,65,85,0.18)",   g2: "rgba(100,116,139,0.14)" },
+  // indigo is the CSS default — no override needed, and old links carry
+  // no style line at all.
+};
+const LAYOUTS = new Set(["banner", "mono", "bold"]);
+// Bold darkens the default indigo when no accent override is present.
+const INDIGO_BOLD = { d1: "#332ea0", d2: "#5b3f96" };
+
+function applyStyle(root, styleValue) {
+  if (!styleValue) return;
+  let accent = null, layout = null;
+  for (const bit of styleValue.split(";")) {
+    const [k, v] = bit.split("=").map(s => (s || "").trim().toLowerCase());
+    if (k === "a" && ACCENTS[v]) accent = ACCENTS[v];
+    if (k === "l" && LAYOUTS.has(v)) layout = v;
+  }
+  const css = document.documentElement.style;
+  if (accent) {
+    css.setProperty("--cv-a1", accent.a1);
+    css.setProperty("--cv-a2", accent.a2);
+    css.setProperty("--pg-g1", accent.g1);
+    css.setProperty("--pg-g2", accent.g2);
+  }
+  if (layout) {
+    root.classList.add("lay-" + layout);
+    if (layout === "bold") {
+      const bold = accent || INDIGO_BOLD;
+      css.setProperty("--cv-b1", bold.d1);
+      css.setProperty("--cv-b2", bold.d2);
+      document.body.classList.add("bold-page");
+    }
+  }
 }
 
 function esc(s) {
@@ -495,6 +635,7 @@ function renderCardError(root, message) {
       const vcard = await decodeFragment(location.hash);
       if (vcard && /BEGIN:VCARD/i.test(vcard)) {
         const card = parseVCard(vcard);
+        applyStyle(cardRoot, card.style);
         renderCard(cardRoot, card, vcard);
         if (card.name) document.title = `${card.name} — cardlio`;
         window.__cardlio = { state: "card", name: card.name || "", hasPhoto: !!card.photo };
