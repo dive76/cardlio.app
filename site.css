@@ -117,22 +117,9 @@ a { color: var(--indigo); }
   text-wrap: pretty;
 }
 .badges { display: flex; gap: 12px; margin-top: 30px; flex-wrap: wrap; }
-.badge {
-  display: inline-flex; flex-direction: column; justify-content: center;
-  padding: 9px 18px; border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0.25); color: #fff;
-  text-decoration: none; line-height: 1.2; min-width: 168px;
-  background: rgba(255,255,255,0.06);
-}
-.badge small { font-size: 10.5px; opacity: 0.75; letter-spacing: 0.02em; }
-.badge b { font-size: 16.5px; font-weight: 600; }
-.badge.soon { opacity: 0.75; }
-.badge .soon-tag {
-  font-size: 10px; color: #c4b5fd; letter-spacing: 0.06em; text-transform: uppercase;
-}
-
-/* Official Apple store badge (local SVG — no third-party requests).
-   Height matches the hand-styled "coming soon" badges beside it. */
+/* Official Apple store badges (local SVGs — no third-party requests).
+   Both are rendered at height 50; Apple's artwork differs in width, so
+   the Mac badge is 197 and the iOS one 150 to keep the heights equal. */
 .store-badge { display: inline-flex; align-items: center; }
 .store-badge img { display: block; height: 50px; width: auto; }
 .store-badge:hover { transform: translateY(-1px); }
@@ -617,14 +604,3 @@ a { color: var(--indigo); }
   }
 }
 
-/* ---------- badges: hover lift + sheen ---------- */
-.badge { position: relative; overflow: hidden; transition: transform 0.35s var(--ease-out), border-color 0.35s ease; }
-.badge:hover { transform: translateY(-3px); border-color: rgba(199,189,255,0.6); }
-.badge::after {
-  content: ""; position: absolute; top: 0; bottom: 0; width: 40%;
-  left: -60%; transform: skewX(-20deg);
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
-  transition: left 0.6s ease;
-  pointer-events: none;
-}
-.badge:hover::after { left: 130%; }
