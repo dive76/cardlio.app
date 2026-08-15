@@ -16,6 +16,10 @@
 <meta name="twitter:image" content="https://cardlio.app/assets/og.jpg">
 <meta name="theme-color" content="#12101f">
 <link rel="canonical" href="https://cardlio.app/">
+<!-- Smart App Banner: Safari on iPhone shows a native install strip for the
+     iOS app. Only meaningful now that it is actually on the store — before
+     that it renders nothing. -->
+<meta name="apple-itunes-app" content="app-id=6773151080">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -36,19 +40,43 @@
       "logo": "https://cardlio.app/assets/og.jpg"
     },
     {
-      "@type": "SoftwareApplication",
+      "@type": "MobileApplication",
+      "@id": "https://cardlio.app/#ios",
       "name": "cardlio",
-      "operatingSystem": "iOS, macOS",
+      "operatingSystem": "iOS 26.5",
       "applicationCategory": "BusinessApplication",
+      "applicationSubCategory": "Business card scanner",
       "url": "https://cardlio.app/",
-      "description": "Business card scanner for iPhone and Mac: scan any card into a clean contact, sync to Outlook & Office 365, share yours as a QR code, NFC tap, or Apple Wallet pass. Private, on-device, no account.",
+      "downloadUrl": "https://apps.apple.com/app/id6773151080",
+      "installUrl": "https://apps.apple.com/app/id6773151080",
+      "description": "Business card scanner for iPhone: scan any card into a clean contact, sync to Outlook & Office 365, share yours as a QR code, NFC tap, or Apple Wallet pass. Private, on-device, no account.",
       "image": "https://cardlio.app/assets/og.jpg",
       "publisher": { "@id": "https://cardlio.app/#org" },
       "offers": {
         "@type": "Offer",
         "price": "0",
         "priceCurrency": "USD",
-        "description": "Free to scan up to 10 cards; one-time in-app purchase unlocks unlimited cards, exports, and Office 365 sync."
+        "description": "Free for your first 10 cards. A one-time purchase — not a subscription — unlocks unlimited cards, every export, Office 365 sync, Save to Contacts, and NFC & Apple Wallet for your own card. Sold separately per platform."
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://cardlio.app/#mac",
+      "name": "cardlio",
+      "operatingSystem": "macOS 26.5",
+      "applicationCategory": "BusinessApplication",
+      "applicationSubCategory": "Business card scanner",
+      "url": "https://cardlio.app/",
+      "downloadUrl": "https://apps.apple.com/app/id6786612800",
+      "installUrl": "https://apps.apple.com/app/id6786612800",
+      "description": "Business card scanner for Mac: scan any card into a clean contact, sync to Outlook & Office 365, share yours as a QR code or Apple Wallet pass. Private, on-device, no account.",
+      "image": "https://cardlio.app/assets/og.jpg",
+      "publisher": { "@id": "https://cardlio.app/#org" },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "description": "Free for your first 10 cards. A one-time purchase — not a subscription — unlocks unlimited cards, every export, Office 365 sync, Save to Contacts, and Apple Wallet for your own card. Sold separately per platform."
       }
     }
   ]
@@ -417,7 +445,7 @@
 
   <!-- ============================ follow-ups (2.5) ============================ -->
   <section class="section">
-    <div class="wrap reveal" style="max-width:760px;margin:0 auto;">
+    <div class="wrap reveal prose" style="max-width:760px;margin:0 auto;">
       <div class="kicker">New in 2.5</div>
       <h2>The card was never the point. The email after it was.</h2>
       <p class="lead">Mark the people you owe an email while you're still reviewing the scan &mdash; one tap, and only for the ones that mattered. cardlio never guesses who was important; you decide, at the one moment you still remember the conversation.</p>
@@ -426,6 +454,13 @@
       <p>Tap Translate on a Chinese or Japanese card and the job title, company and address arrive in your language &mdash; on your own device, with the card keeping exactly what was printed on it. Names stay as they were written, and become searchable in the Latin alphabet: typing &ldquo;shiquan&rdquo; finds &#40658;&#22763;&#37795;.</p>
       <h3>A copy that's yours</h3>
       <p>Back up your whole library to one zip &mdash; photos, both sides, every field, plus a vCard per contact &mdash; and restore it on any Mac or iPhone. Open formats, so even without cardlio the photos are photos and the contacts are contacts.</p>
+
+      <div class="soon">
+        <div class="soon-tag">Coming to iPhone in the next update</div>
+        <h3>The phone rings, and you know who it is.</h3>
+        <p>Scan someone's card and their number stops arriving as a stranger. When they call, iOS shows their name and company on the incoming-call screen &mdash; the same place a saved contact would appear, without adding anyone to your address book.</p>
+        <p>It works the way the rest of cardlio does: the numbers stay on your iPhone, handed to iOS through Apple's own Call&nbsp;Directory. Nothing is uploaded, no lookup service ever sees who calls you, and you can switch it off in Settings whenever you like. iPhone only.</p>
+      </div>
     </div>
   </section>
 
@@ -466,6 +501,24 @@
         <a class="store-badge" href="https://apps.apple.com/app/id6773151080" target="_blank" rel="noopener" aria-label="Download cardlio on the App Store">
           <img src="assets/app-store-badge.svg" alt="Download on the App Store" width="150" height="50">
         </a>
+      </div>
+      <p class="store-note">Requires iOS&nbsp;26.5 or macOS&nbsp;26.5.</p>
+    </div>
+
+    <div class="wrap reveal">
+      <div class="pricing">
+        <div class="price-head">
+          <span class="price-tag">Free for your first 10 cards</span>
+          <h3>One purchase. Not a subscription.</h3>
+          <p>Try it on ten real cards before paying anything. After that a single unlock lifts the limit for good &mdash; no monthly fee, no renewal, nothing to cancel.</p>
+        </div>
+        <ul class="checks price-perks">
+          <li><span><b>Unlimited cards</b> &mdash; the 10-card limit is gone</span></li>
+          <li><span><b>Every export</b> &mdash; vCard, CSV, Outlook CSV and Salesforce</span></li>
+          <li><span><b>Office&nbsp;365 sync</b> and Save to Contacts</span></li>
+          <li><span><b>Your own card</b> on an NFC tag and in Apple&nbsp;Wallet</span></li>
+        </ul>
+        <p class="price-fine">The iPhone and Mac apps are sold separately, so each is unlocked on its own. Your library syncs between them either way, through your own iCloud.</p>
       </div>
     </div>
   </section>
