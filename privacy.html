@@ -64,6 +64,11 @@
   <h2>Office 365 sync</h2>
   <p>If you connect a Microsoft&nbsp;365 account, cardlio can push your cards into your own Outlook contacts. This is entirely optional and off until you connect it. When you tap Sync, your card details are sent directly to Microsoft under your own account, using permissions you grant at sign-in; they are stored in <em>your</em> Microsoft mailbox, not on any server we operate. Sign-in uses Microsoft's standard OAuth flow, and the resulting token is kept in your device's Keychain. Disconnecting the account in Settings removes that token. We never see your Microsoft credentials or your contacts.</p>
 
+  <h2>Webhooks (CRM &amp; automation)</h2>
+  <p>You can give cardlio a web address of your choosing &mdash; a Zapier or Make catch-hook, or your own server &mdash; and each card you save is then posted to it as JSON so it can reach a CRM. This is <strong>off until you turn it on</strong>, and there is no default or suggested destination: the address is one you enter.</p>
+  <p>While it is on, the card&rsquo;s fields leave your device and go to <em>that</em> address, and what happens next is governed by whoever operates it, not by us &mdash; we never see it and operate no server in the path. The card photo is never sent. The &ldquo;Send test&rdquo; button posts a made-up contact rather than one of yours, so you can set up a workflow without sending anyone&rsquo;s real details. Turning the switch off stops it immediately; clearing the address removes it from the device.</p>
+  <p>Treat the address as a secret: services like Zapier put a token in the URL, which is why cardlio accepts <code>https://</code> addresses only.</p>
+
   <h2>This website</h2>
   <p>cardlio.app uses no cookies, no analytics, and no tracking of any kind. It is a static site.</p>
 
