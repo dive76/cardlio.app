@@ -183,6 +183,13 @@
     -webkit-background-clip: text; background-clip: text; color: transparent;
     font-weight: 700; text-decoration: none;
   }
+  /* The only thing on this page that talks to someone who does NOT have
+     cardlio — every shared link, NFC tap and Wallet QR lands a stranger
+     here. Deliberately ONE quiet line and not a banner: this is somebody's
+     professional card, and an advert across it would embarrass the person
+     who shared it. Nested inside .brand so the per-layout overrides below
+     (banner centres, mono inks, bold whitens) apply to it unchanged. */
+  .cardview .brand .getit { display: block; margin-top: 7px; }
 
   /* ---- layouts (lay-* class set by applyStyle) ---- */
 
@@ -679,7 +686,13 @@ function renderCard(root, card, rawVCard) {
     ${card.address ? `<div class="addr">${esc(card.address)}</div>` : ""}
     <button class="add" id="addBtn">Add to Contacts</button>
     ${actions ? `<div class="row">${actions}</div>` : ""}
-    <div class="brand">Shared with <a href="/">cardlio</a> — business cards, done.</div>`;
+    <div class="brand">Shared with <a href="/">cardlio</a> — business cards, done.
+      <span class="getit"><a id="getLink" href="/">Make your own card, free →</a></span>
+    </div>`;
+  // Send them where they can actually act. A visitor on a device with no
+  // cardlio app gets the homepage rather than a store page they cannot use.
+  const gl = document.getElementById("getLink");
+  if (gl) gl.href = storeLinkForThisDevice();
   document.getElementById("addBtn").addEventListener("click", () => {
     const blob = new Blob([rawVCard], { type: "text/vcard;charset=utf-8" });
     const url = URL.createObjectURL(blob);
@@ -693,6 +706,15 @@ function renderCard(root, card, rawVCard) {
     }
     setTimeout(() => URL.revokeObjectURL(url), 60_000);
   });
+}
+
+function storeLinkForThisDevice() {
+  const ua = navigator.userAgent, plat = navigator.platform || "";
+  const touch = navigator.maxTouchPoints || 0;
+  const isIOS = /iPad|iPhone|iPod/.test(ua) || (plat === "MacIntel" && touch > 1);
+  if (isIOS) return "https://apps.apple.com/app/id6773151080";
+  if (/Mac/.test(plat) && touch <= 1) return "https://apps.apple.com/app/id6786612800";
+  return "/";
 }
 
 function renderCardError(root, message) {
