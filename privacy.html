@@ -22,7 +22,7 @@
 
 <main class="doc">
   <h1>Privacy Policy</h1>
-  <p class="updated">Last updated: August 26, 2026</p>
+  <p class="updated">Last updated: August 27, 2026</p>
 
   <p>cardlio is built so that your contacts stay yours. This policy describes what the app and this website do with data — which is very little, by design.</p>
 
@@ -68,11 +68,31 @@
   <p>If you connect a Google account, cardlio can write your cards into your own Google&nbsp;Contacts. This is entirely optional and off until you connect it. Your card details go from your device straight to Google under your own account, using permissions you grant at sign-in; they are stored in <em>your</em> Google account, not on any server we operate. Sign-in uses Google&rsquo;s standard OAuth flow and the resulting token is kept in your device&rsquo;s Keychain. Disconnecting the account in Settings removes that token, and the contacts already in your Google account stay exactly as they are.</p>
   <p>cardlio reads back <strong>only the contacts it created itself</strong>, identified by a marker it wrote, so that syncing the same card again updates that contact instead of adding a duplicate. It does not read, store or analyse the rest of your Google&nbsp;Contacts, and no Google user data reaches us or any service we run. Removing a contact is limited the same way: a contact you created yourself cannot be deleted by a cardlio sync.</p>
   <p>The card photo is never sent. Sync is one-way &mdash; cardlio to Google &mdash; and runs only when you ask for it.</p>
+  <p>The sign-in token is held in your device&rsquo;s Keychain, the connection to Google uses HTTPS with TLS, and no copy of this data reaches any server we operate. See <a href="#security">How your data is protected</a> for the full detail.</p>
 
   <h3>Limited Use</h3>
   <p>cardlio&rsquo;s use of information received from Google APIs adheres to the <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, including the Limited Use requirements. The use of raw or derived user data received from Workspace APIs will adhere to the Google User Data Policy, including the Limited Use requirements.</p>
   <p>Concretely: cardlio does not transfer this data to anyone, does not use it for advertising or any form of profiling, and no human at cardlio reads it &mdash; we operate no server in the path, so it never reaches us at all.</p>
   <p><strong>No AI or machine-learning model is trained on, or given access to, data received from Google APIs.</strong> cardlio&rsquo;s on-device text recognition reads the business cards <em>you</em> photograph, and never anything returned by Google. In fact the only data cardlio receives back from Google is the identifier and change-tag of contacts cardlio itself created, plus the email address of the connected account so the settings screen can show which account is in use; your other contacts&rsquo; names, numbers, addresses and photos are never requested and never received.</p>
+
+  <h2 id="security">How your data is protected</h2>
+  <p>Contact details are sensitive, and cardlio&rsquo;s main protection is structural: <strong>we operate no server that receives them.</strong> There is no cardlio account, no cardlio database and no cardlio backup of your contacts, so there is no copy of your data for us to lose, sell or be compelled to hand over. Everything below describes how the data is protected on the paths it does travel.</p>
+
+  <p><strong>Encryption in transit.</strong> Every network request cardlio makes uses HTTPS with TLS, enforced by Apple&rsquo;s App Transport Security &mdash; the app declares no exemptions, so plain HTTP connections are refused by the operating system rather than merely discouraged. Webhook destinations you enter are additionally restricted to <code>https://</code> addresses in the app&rsquo;s own code, and an <code>http://</code> address is rejected outright.</p>
+
+  <p><strong>Encryption at rest.</strong> Card data lives in the app&rsquo;s own container on your device, protected by the operating system&rsquo;s file protection and by whatever device encryption you have enabled (Data Protection on iPhone, FileVault on Mac). Anything secret &mdash; your Google and Microsoft sign-in tokens, and any AI API key you choose to add &mdash; is stored in the system <strong>Keychain</strong>, never in ordinary files, never in preferences and never in our source. Keychain items are marked so they are unavailable until the device has been unlocked at least once after restart.</p>
+
+  <p><strong>Access control.</strong> When iCloud sync is on, your cards are mirrored into the <em>private</em> CloudKit database of your own Apple&nbsp;ID. A private database is readable only by the account that owns it: not by other cardlio users, and not by us &mdash; we have no administrative console, no credentials and no technical means to read it. Data you sync to Google or Microsoft is likewise held in your own account, under permissions you granted and can revoke.</p>
+
+  <p><strong>Data minimisation.</strong> cardlio asks third-party services for as little as it can. From the Google People API it requests only contact <em>metadata</em> &mdash; resource identifiers and change-tags &mdash; plus its own marker on contacts it created, and the email address of the connected account so the settings screen can show which one is in use. Your other contacts are never requested and never received. Card photographs are never sent to Google, Microsoft or a webhook.</p>
+
+  <p><strong>Retention and deletion.</strong> Because we store nothing, deletion is immediate and in your hands. Deleting a card removes it from the device and, through iCloud, from your other devices. Disconnecting a Google or Microsoft account deletes the stored token from the Keychain. Removing a webhook address removes it from the device. Contacts already written into your Google or Microsoft account remain yours and are unaffected &mdash; cardlio will not delete them.</p>
+
+  <p><strong>No third parties in the path.</strong> cardlio contains no analytics, advertising, tracking or crash-reporting SDKs of any kind. Diagnostic reports are written to a local file, are never uploaded automatically, and leave the device only if you choose to share them with us. No human at cardlio reads your contacts, and no AI or machine-learning model is trained on them.</p>
+
+  <p><strong>Optional features are off until you turn them on.</strong> Google sync, Microsoft&nbsp;365 sync, webhooks and cloud AI refinement each require an explicit action from you, and each can be switched off again, which stops the corresponding data flow immediately.</p>
+
+  <p>If you believe you have found a security problem in cardlio, please write to <a href="mailto:support@cardlio.app">support@cardlio.app</a> and we will respond.</p>
 
   <h2>Webhooks (CRM &amp; automation)</h2>
   <p>You can give cardlio a web address of your choosing &mdash; a Zapier or Make catch-hook, or your own server &mdash; and each card you save is then posted to it as JSON so it can reach a CRM. This is <strong>off until you turn it on</strong>, and there is no default or suggested destination: the address is one you enter.</p>
