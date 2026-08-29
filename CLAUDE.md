@@ -49,6 +49,58 @@ patch the href with a script and round-trip-decode to verify.
 ## Local dev
 `python3 -m http.server 4173 --directory <repo>` — then http://localhost:4173/
 
+## ⚠️ Google Contacts is on the page but NOT yet downloadable (2026-08-29)
+
+A `.soon` block sits at the END of the `#sync` section announcing Google
+Contacts sync. The tag reads **"In the next update"** because that is the
+literal truth: the feature is built, Google approved the OAuth verification
+on 2026-08-29 and it is verified against the live People API, but it ships
+in app **2.5.14**, which at the time of writing is on TestFlight and not
+yet submitted. The live store version is 2.5.13.
+
+**TO PROMOTE IT once 2.5.14 is RELEASED on both stores** (check with
+`itunes.apple.com/lookup?id=6773151080` — do not go by memory):
+
+  1. Delete the `<div class="soon-tag">In the next update</div>` line.
+  2. Fold the two paragraphs into the section body, and extend the `#sync`
+     `<h2>` — it still says "into Outlook &amp; Office 365" — to name
+     Google Contacts as well.
+  3. The two `.checks` columns say "Your account only — contacts go to your
+     own Microsoft 365 mailbox" and "the same Sync to Office 365 action on
+     both". Both need Google adding.
+
+⚠️ **THE `.soon` CLASS NOW CARRIES TWO MEANINGS.** Its CSS comment says
+"a feature that is real but not downloadable yet", which is this block. The
+OTHER one on the page — Caller ID, in the "New in 2.5" section — is
+SHIPPED, and its tag was repurposed to read "On iPhone" as a platform
+label. Do not read that block as unreleased and do not delete it.
+
+⚠️ `privacy.html` ALREADY COVERS GOOGLE FULLY and nothing is owed there —
+the Google Contacts section, the Limited Use statement and the
+`#security` disclosures all went live for the verification rounds. Do not
+edit the Limited Use text; it is what Google accepted.
+
+⚠️ The handbook PDF on this site is NOT to be refreshed yet. The app repo's
+handbook has a Google Contacts chapter, and copying it here would document
+a feature nobody can download.
+
+### How this block was verified — reuse this, screenshots were useless
+
+The Browser pane was HIDDEN, so every `screenshot` came back a blank white
+frame while the page was in fact rendering perfectly. Do not debug the page
+on the strength of that. What settled it was reading COMPUTED STYLES from
+the SERVED page (`preview_start` → `cardlio-site`, never `file://`) and
+comparing them field-by-field against the known-good sibling block:
+
+    google == knownGoodCallerID  ->  identical: true
+    (wrapMaxWidth 760px, box 712px, padding 26px 26px 24px, radius 22px,
+     dashed border, p margin-TOP 12px, p 16.5px, h3 20px)
+
+The `margin-TOP` reading is the one that matters: `.prose` spaces with
+margin-top, so probing `marginBottom` reads 0px even when everything is
+fine. And the block MUST live inside a `.prose` wrapper — the global
+`* { margin: 0 }` reset would otherwise collapse it into one wall of text.
+
 ## Agreed roadmap / known issues (not yet done)
 - Scroll-driven "scan story" section (CSS `animation-timeline: view()`),
   the last item from the redesign plan.
