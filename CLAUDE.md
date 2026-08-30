@@ -51,26 +51,42 @@ patch the href with a script and round-trip-decode to verify.
 
 ## The "N ways to export & sync" counter has a BASIS — keep it (2026-08-29)
 
-The stat cell went **5 → 6** when Google Contacts shipped, and the number
-is not decorative. It counts what the page's OWN sync section enumerates,
-so a visitor can add it up and get the same answer:
+The stat cell reads **8**, and it is not decorative. It counts the second
+`.checks` column in `#sync`, which exists to be added up:
 
-    4 file formats   vCard · CSV · Outlook CSV · Salesforce CSV
-  + 2 sync targets   Office 365 · Google Contacts
-  = 6
+    Two address books   Google Contacts · Office 365 / Outlook   2
+    Apple Contacts too                                           1
+    Four file formats   vCard · CSV · Outlook CSV · Salesforce   4
+    Or your own CRM     the webhook                              1
+                                                                 = 8
 
-⚠️ **UPDATE IT WHENEVER A DESTINATION OR FORMAT SHIPS**, and update the
-`.checks` list in `#sync` in the same commit — the counter is only
-checkable because that list is what it counts. Both the `data-count`
-attribute AND the fallback text inside the span must change; the number
-animates from `data-count`, but with JS off the span's text is what shows.
+⚠️ **THE SECOND COLUMN IS THE COUNTER'S SOURCE — CHANGE THEM TOGETHER.**
+It was rewritten from value-props into an enumeration precisely so the
+number is checkable by a visitor. If a destination or format ships, add
+it there and bump the counter in the same commit. The first column keeps
+the value-props ("no duplicates", "every field mapped", "works from
+iPhone & Mac") so nothing was lost in the trade.
 
-⚠️ **THE COUNT IS DELIBERATELY CONSERVATIVE.** Save-to-Apple-Contacts and
-the CRM webhook are also ways to get cards out, which would justify 8.
-They are excluded because they are not in the sync section's list, and a
-number a visitor cannot reconstruct from the page is worse than a smaller
-one they can. If they are ever added to that list, the counter goes up in
-the same commit.
+⚠️ **BOTH the `data-count` attribute AND the span's own text must change.**
+The number animates from `data-count`, but with JS off the text inside
+the span is what renders. Changing only one ships a stale number to
+exactly the visitors who cannot see the animation.
+
+⚠️ **EVERY CLAIM IN THAT COLUMN WAS VERIFIED AGAINST THE CODE**, not
+assumed, because two of them are cross-platform claims of the kind this
+project has already got wrong:
+
+  * **Apple Contacts on BOTH** — `ContactsSync.swift` is `#if os(macOS)`
+    for its whole 900 lines, which looks damning until you find
+    `CardActionBar.addToContacts()`, which branches: macOS through
+    `ContactsSync`, iOS through the contact view controller. The bar is
+    used by `ContentView` AND `iOSContentView`. The claim holds.
+  * **The webhook on BOTH** — `WebhookSettingsSection` is reached from
+    `CardPDFScannerApp.swift` (Mac settings) and `iOSContentView.swift`.
+
+It went 5 → 6 → 8 in one evening: 6 was the conservative count of what
+the page then listed, and 8 is what the app actually does once the list
+names Apple Contacts and the webhook too.
 
 ## ✅ CALLER ID IS A REAL SECTION NOW — device-verified (2026-08-29)
 
