@@ -49,6 +49,29 @@ patch the href with a script and round-trip-decode to verify.
 ## Local dev
 `python3 -m http.server 4173 --directory <repo>` — then http://localhost:4173/
 
+## The "N ways to export & sync" counter has a BASIS — keep it (2026-08-29)
+
+The stat cell went **5 → 6** when Google Contacts shipped, and the number
+is not decorative. It counts what the page's OWN sync section enumerates,
+so a visitor can add it up and get the same answer:
+
+    4 file formats   vCard · CSV · Outlook CSV · Salesforce CSV
+  + 2 sync targets   Office 365 · Google Contacts
+  = 6
+
+⚠️ **UPDATE IT WHENEVER A DESTINATION OR FORMAT SHIPS**, and update the
+`.checks` list in `#sync` in the same commit — the counter is only
+checkable because that list is what it counts. Both the `data-count`
+attribute AND the fallback text inside the span must change; the number
+animates from `data-count`, but with JS off the span's text is what shows.
+
+⚠️ **THE COUNT IS DELIBERATELY CONSERVATIVE.** Save-to-Apple-Contacts and
+the CRM webhook are also ways to get cards out, which would justify 8.
+They are excluded because they are not in the sync section's list, and a
+number a visitor cannot reconstruct from the page is worse than a smaller
+one they can. If they are ever added to that list, the counter goes up in
+the same commit.
+
 ## ✅ CALLER ID IS A REAL SECTION NOW — device-verified (2026-08-29)
 
 The owner confirmed Caller ID working on an actual incoming call. That
