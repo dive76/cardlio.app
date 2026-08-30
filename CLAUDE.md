@@ -49,6 +49,37 @@ patch the href with a script and round-trip-decode to verify.
 ## Local dev
 `python3 -m http.server 4173 --directory <repo>` — then http://localhost:4173/
 
+## ✅ CALLER ID IS A REAL SECTION NOW — device-verified (2026-08-29)
+
+The owner confirmed Caller ID working on an actual incoming call. That
+had been the project's OLDEST open item, unverified since 9 August, and
+the site had been hedging about it ever since.
+
+It was a `.soon` box at the BOTTOM of the "New in 2.5" section. It is now
+its own `.section alt` between "Ask your network" and "New in 2.5", built
+on the same shape as the Ask section — kicker, h2, lead, prose — and
+verified to match it exactly (760px wrap, h2 44px Space Grotesk, lead
+margin-TOP 14px, p 12px/16.5px).
+
+The copy was rewritten rather than moved. The old box explained the
+mechanism; the section now leads with the thing that actually
+differentiates it: **every other caller-ID app sends your calls to a
+server to be looked up, and cardlio does not.** That argument was sitting
+unmade on the page while the feature was tagged as unproven.
+
+⚠️ **"iPhone only" IS STILL STATED, and must stay.** macOS has no Call
+Directory API. Claiming it on the Mac listing was called out in the app
+repo as the mistake to avoid, and the same applies here.
+
+⚠️ **NO NAV ENTRY WAS ADDED**, deliberately — the mobile nav already
+overflows at 375px (Privacy/Support clipped, pre-existing), so a fifth
+link would make a known problem worse to no benefit.
+
+⚠️ **`.soon` IN `site.css` IS NOW UNUSED AND IS KEPT ON PURPOSE.** Both
+of its users were promoted the day they shipped. It is the house pattern
+for "real but not downloadable yet"; the CSS carries a note saying so.
+Do not delete it as dead code.
+
 ## ✅ Google Contacts is LIVE and the page says so (2026-08-29)
 
 2.5.14 reached **Ready for Distribution on both platforms**, so the

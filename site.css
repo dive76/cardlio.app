@@ -239,7 +239,14 @@ a { color: var(--indigo); }
 .prose p { margin-top: 12px; color: var(--muted); font-size: 16.5px; text-wrap: pretty; }
 
 /* A feature that is real but not downloadable yet. Deliberately set apart
-   from the shipped copy around it — the tag is the point, not decoration. */
+   from the shipped copy around it — the tag is the point, not decoration.
+
+   ⚠️ CURRENTLY UNUSED, AND KEPT ON PURPOSE (2026-08-29). Its last two
+   users were promoted the day they shipped: Google Contacts and then
+   Caller ID. Do not delete it as dead code — it is the house pattern for
+   announcing something built but not yet downloadable, and re-deriving it
+   costs more than the ~20 lines. Using it means the claim is NOT true
+   yet; promoting is deleting the wrapper and the tag div. */
 .soon {
   margin-top: 34px; padding: 26px 26px 24px;
   border-radius: var(--radius);
