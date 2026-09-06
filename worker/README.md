@@ -23,3 +23,15 @@ openssl pkcs12 -in Certificates.p12 -nocerts -nodes -legacy -out pass-key.pem
 curl -sO https://www.apple.com/certificateauthority/AppleWWDRCAG4.cer
 openssl x509 -inform der -in AppleWWDRCAG4.cer -out AppleWWDRCAG4.pem
 ```
+
+## Caller authentication (added 2026-09-06)
+
+`/sign` requires `Authorization: Bearer <SIGN_TOKEN>` once the secret is set:
+
+    wrangler secret put SIGN_TOKEN
+
+The app carries the same token (`WalletPassService.signToken`). Enforcement
+is off while the secret is unset, so deploy the Worker first and set the
+secret only after the app build that sends the token is the one users run —
+otherwise "Add to Wallet" fails with 401 on older builds. A per-IP rate
+limit (`[[ratelimits]]` in wrangler.toml, 30/min) applies in any case.

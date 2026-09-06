@@ -574,8 +574,16 @@
 // ==================== card-link decoder ====================
 // The link format is  #1.<base64url(deflate-raw(vCard))> ; the payload
 // never leaves this browser (fragments aren't sent in HTTP requests).
+// Bounds (audit, 2026-09-06): deflate reaches ~1000:1 on repetitive input,
+// so an unbounded fragment could inflate to hundreds of MB and take the tab
+// down. A real card link is a few hundred bytes; a card with a photo is
+// under 100 KB compressed. Both ends are capped; the catch in the caller
+// renders the error card.
+const MAX_FRAGMENT_CHARS = 256 * 1024;
+const MAX_VCARD_BYTES = 2 * 1024 * 1024;
 async function decodeFragment(hash) {
   if (!hash || !hash.startsWith("#1.")) return null;
+  if (hash.length > MAX_FRAGMENT_CHARS) throw new Error("link too large");
   let b64 = hash.slice(3).replace(/-/g, "+").replace(/_/g, "/");
   b64 += "=".repeat((4 - (b64.length % 4)) % 4);
   const bin = atob(b64);
@@ -583,8 +591,20 @@ async function decodeFragment(hash) {
   for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
   const stream = new Blob([bytes]).stream()
     .pipeThrough(new DecompressionStream("deflate-raw"));
-  const buffer = await new Response(stream).arrayBuffer();
-  return new TextDecoder("utf-8").decode(buffer);
+  const reader = stream.getReader();
+  const chunks = [];
+  let total = 0;
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    total += value.length;
+    if (total > MAX_VCARD_BYTES) { reader.cancel(); throw new Error("card too large"); }
+    chunks.push(value);
+  }
+  const out = new Uint8Array(total);
+  let off = 0;
+  for (const c of chunks) { out.set(c, off); off += c.length; }
+  return new TextDecoder("utf-8").decode(out);
 }
 
 function parseVCard(text) {
@@ -612,8 +632,15 @@ function parseVCard(text) {
       card.address = [parts[2], [parts[5], parts[3]].filter(Boolean).join(" "), parts[6]]
         .map(s => (s || "").trim()).filter(Boolean).join("\n");
     } else if (key === "PHOTO" && /ENCODING=B|BASE64/i.test(left)) {
+      // The payload is untrusted. Accept nothing but base64 here, and note
+      // that renderCard sets the image as a style PROPERTY, never through
+      // markup: this field used to be the one value that reached innerHTML
+      // unescaped (audit, 2026-09-06).
       const mime = /PNG/i.test(left) ? "image/png" : "image/jpeg";
-      card.photo = `data:${mime};base64,${value.replace(/\s/g, "")}`;
+      const b64 = value.replace(/\s/g, "");
+      if (b64.length <= 2 * 1024 * 1024 && /^[A-Za-z0-9+/]+={0,2}$/.test(b64)) {
+        card.photo = `data:${mime};base64,${b64}`;
+      }
     } else if (key === "X-CARDLIO-STYLE") {
       // Sender-chosen page style, e.g. "a=ocean;l=banner". Values are
       // resolved against the whitelists in applyStyle — an unknown name
@@ -679,7 +706,6 @@ function initials(name) {
 }
 
 function renderCard(root, card, rawVCard) {
-  const avatarStyle = card.photo ? `style="background-image:url('${card.photo}')"` : "";
   const roleBits = [card.title, card.org].filter(Boolean).join(" · ");
   const tel = card.tels.find(t => t.kind === "mobile") || card.tels[0];
   let actions = "";
@@ -690,7 +716,7 @@ function renderCard(root, card, rawVCard) {
     actions += `<a href="${esc(href)}" target="_blank" rel="noopener">Website</a>`;
   }
   root.innerHTML = `
-    <div class="avatar" ${avatarStyle}>${card.photo ? "" : esc(initials(card.name))}</div>
+    <div class="avatar">${card.photo ? "" : esc(initials(card.name))}</div>
     <h1>${esc(card.name || "Contact")}</h1>
     ${roleBits ? `<div class="role">${esc(roleBits)}</div>` : ""}
     ${card.address ? `<div class="addr">${esc(card.address)}</div>` : ""}
@@ -699,6 +725,9 @@ function renderCard(root, card, rawVCard) {
     <div class="brand">Shared with <a href="/">cardlio</a> — business cards, done.
       <span class="getit"><a id="getLink" href="/">Make your own card, free →</a></span>
     </div>`;
+  // The photo goes in as a CSS property on the rendered element — a value
+  // set this way cannot escape into markup, whatever the payload holds.
+  if (card.photo) root.querySelector(".avatar").style.backgroundImage = `url("${card.photo}")`;
   // Send them where they can actually act. A visitor on a device with no
   // cardlio app gets the homepage rather than a store page they cannot use.
   const gl = document.getElementById("getLink");

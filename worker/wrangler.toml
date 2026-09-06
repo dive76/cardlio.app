@@ -6,3 +6,10 @@ compatibility_date = "2026-06-01"
 PASS_TYPE_ID = "pass.me.gruenitz.cardlio.mycard"
 TEAM_ID = "9HEE4Z2498"
 ORG_NAME = "cardlio"
+
+# Per-IP rate limit for /sign (Workers Rate Limiting binding). 30 signings a
+# minute per address is far above any real use of "Add to Wallet".
+[[ratelimits]]
+name = "SIGN_LIMIT"
+namespace_id = "1001"
+simple = { limit = 30, period = 60 }

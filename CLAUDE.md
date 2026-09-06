@@ -162,3 +162,31 @@ verification rounds.
   When iOS ships: same treatment for the iOS "coming soon" pill; consider
   promoting the hero demo link to a secondary button.
 - Idea (not committed to): email waitlist while badges are disabled.
+
+## 2026-09-06 — security audit (OWASP Top 10) and the three fixes shipped
+
+Audit of the site and the Worker found: CRITICAL DOM XSS through the vCard
+`PHOTO` field (the one value that reached `innerHTML` unescaped, via a
+`style="background-image:url('…')"` attribute); HIGH: `/sign` on the
+pass-signing Worker answered anyone (no token, no rate limit — the URL is
+in the app binary); MEDIUM: unbounded decompression of the link fragment,
+no security headers from GitHub Pages, a bypassable body-size check on
+the Worker; LOW: internal error text returned, `mailto:` parameter
+injection through EMAIL, unvalidated pass photo bytes, no Worker logging.
+
+Fixed the same day (this commit):
+  * PHOTO: accepted only if it is base64 (regex, 2 MB cap) and set as a
+    style PROPERTY after render — never through markup. Verified in a
+    browser with a crafted link: renders as a plain card, nothing injected.
+  * Fragment bounds: 256 KB of URL, 2 MB decompressed, streamed; a 40 MB
+    bomb now lands on the error card in < 5 s.
+  * Worker: `Authorization: Bearer <SIGN_TOKEN>` enforced when the secret
+    is set (constant-time compare), per-IP `[[ratelimits]]` 30/min, body
+    measured after reading, fixed error text. ⚠️ ROLLOUT ORDER: deploy the
+    Worker, ship the app build that sends the token (2.6.x), THEN
+    `wrangler secret put SIGN_TOKEN` — setting it earlier breaks "Add to
+    Wallet" on every older app build. wrangler is not installed on this
+    Mac; deployment is the owner's step.
+Still open from the audit: security headers (needs the inline script moved
+to a file + Cloudflare Transform Rules or a meta CSP), the `mailto:`
+parameter strip, pass photo magic-byte check, Worker request counting.

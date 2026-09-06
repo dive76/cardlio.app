@@ -28,19 +28,49 @@ export default {
     const cors = {
       "Access-Control-Allow-Origin": "https://cardlio.app",
       "Access-Control-Allow-Methods": "POST, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type",
+      "Access-Control-Allow-Headers": "Content-Type, Authorization",
     };
     if (request.method === "OPTIONS") return new Response(null, { headers: cors });
     if (request.method !== "POST" || new URL(request.url).pathname !== "/sign") {
       return new Response("cardlio pass signer", { status: 404, headers: cors });
     }
-    if ((request.headers.get("content-length") | 0) > MAX_BODY) {
-      return new Response("payload too large", { status: 413, headers: cors });
+
+    // Caller authentication (audit, 2026-09-06). This endpoint signs with the
+    // cardlio Pass Type ID certificate; before this it answered anyone who
+    // knew the URL — which is in the app binary. The app sends
+    // `Authorization: Bearer <SIGN_TOKEN>`; the token lives in a Worker
+    // secret. Enforcement switches on when the secret is SET, so the code
+    // can deploy before the app build that carries the token ships.
+    if (env.SIGN_TOKEN) {
+      const auth = request.headers.get("authorization") || "";
+      const presented = auth.startsWith("Bearer ") ? auth.slice(7).trim() : "";
+      if (!timingSafeEqual(presented, env.SIGN_TOKEN)) {
+        return new Response("unauthorized", { status: 401, headers: cors });
+      }
     }
 
+    // Per-IP rate limit when the binding is configured (wrangler.toml
+    // [[ratelimits]]); RSA signing per request is not free.
+    if (env.SIGN_LIMIT) {
+      const ip = request.headers.get("cf-connecting-ip") || "unknown";
+      const { success } = await env.SIGN_LIMIT.limit({ key: ip });
+      if (!success) return new Response("rate limited", { status: 429, headers: cors });
+    }
+
+    // Measure the body that was actually read: Content-Length is absent on a
+    // chunked request and `null | 0` used to pass as zero.
+    let raw;
+    try {
+      raw = await request.text();
+    } catch {
+      return new Response("bad body", { status: 400, headers: cors });
+    }
+    if (raw.length > MAX_BODY) {
+      return new Response("payload too large", { status: 413, headers: cors });
+    }
     let card;
     try {
-      card = await request.json();
+      card = JSON.parse(raw);
     } catch {
       return new Response("bad json", { status: 400, headers: cors });
     }
@@ -59,10 +89,20 @@ export default {
         },
       });
     } catch (e) {
-      return new Response(`signing failed: ${e.message}`, { status: 500, headers: cors });
+      // Fixed text: node-forge's PEM/ASN.1 messages describe the secrets' state.
+      return new Response("signing failed", { status: 500, headers: cors });
     }
   },
 };
+
+/** Constant-time string comparison for the bearer token. */
+function timingSafeEqual(a, b) {
+  const ea = new TextEncoder().encode(a), eb = new TextEncoder().encode(b);
+  if (ea.length !== eb.length) return false;
+  let diff = 0;
+  for (let i = 0; i < ea.length; i++) diff |= ea[i] ^ eb[i];
+  return diff === 0;
+}
 
 // ---------------------------------------------------------------- pass.json
 
