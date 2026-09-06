@@ -190,3 +190,10 @@ Fixed the same day (this commit):
 Still open from the audit: security headers (needs the inline script moved
 to a file + Cloudflare Transform Rules or a meta CSP), the `mailto:`
 parameter strip, pass photo magic-byte check, Worker request counting.
+
+Worker DEPLOYED by the owner 2026-09-06 evening (version 39f8fb8f):
+rate-limit binding live, certificate secrets intact — verified from the
+outside with an empty body (400 "name required", token check dormant)
+and a fictional card (200, a signed 40 KB .pkpass with manifest and
+signature). `SIGN_TOKEN` is NOT set yet: set it once 2.6.2 is live and
+users are on it (`npx wrangler secret put SIGN_TOKEN` in worker/).
