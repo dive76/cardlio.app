@@ -195,5 +195,9 @@ Worker DEPLOYED by the owner 2026-09-06 evening (version 39f8fb8f):
 rate-limit binding live, certificate secrets intact — verified from the
 outside with an empty body (400 "name required", token check dormant)
 and a fictional card (200, a signed 40 KB .pkpass with manifest and
-signature). `SIGN_TOKEN` is NOT set yet: set it once 2.6.2 is live and
-users are on it (`npx wrangler secret put SIGN_TOKEN` in worker/).
+signature). ✅ `SIGN_TOKEN` SET 2026-09-09 (2.6.2 live since 09-06, 2.6.4
+in review). Verified live: POST /sign with no token → 401, wrong token →
+401, the app's token → 400 "name required" (past auth). Builds older
+than 2.6.2 now get 401 on Add to Wallet — expected. The token is the
+constant `WalletPassService.signToken` in the app; to rotate, change
+both and set the secret AFTER the new build is what users run.
