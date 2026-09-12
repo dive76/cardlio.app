@@ -459,7 +459,7 @@
   <!-- ============================ ask your network (2.5.11) ============================ -->
   <section class="section">
     <div class="wrap reveal prose" style="max-width:760px;margin:0 auto;">
-      <div class="kicker">New</div>
+      <div class="kicker">Ask</div>
       <h2>Ask your network a question.</h2>
       <p class="lead">&ldquo;Who did I meet in Singapore who works in shipping?&rdquo; Ask it the way you'd say it out loud, and cardlio answers &mdash; and lists the cards the answer came from, so you can check it rather than take its word.</p>
       <p>It never asks a model to <em>find</em> the person. Your question becomes search terms, your own device does the searching, and only cards it actually found are handed back to be written up. An invented colleague has no card to attach to, so one can't appear. Names, job titles, companies, cities, industries, event tags and the notes you wrote yourself are all searched.</p>
@@ -470,6 +470,35 @@
 
       <h3>Tag the event afterwards</h3>
       <p>Most people scan the stack on the flight home, long after the moment to switch on Event mode has gone. Now you can select a pile of cards and tag them all at once &mdash; on the Mac from the right-click menu, on iPhone and iPad from Select Multiple.</p>
+    </div>
+  </section>
+
+  <!-- ============================ iOS 27 / macOS 27 (2.6) ============================ -->
+  <section class="section alt">
+    <div class="wrap reveal prose" style="max-width:760px;margin:0 auto;">
+      <div class="kicker">Made for iOS&nbsp;27 and macOS&nbsp;27</div>
+      <h2>Ask Siri about the people you met.</h2>
+      <p class="lead">Siri now knows your cards as people. Ask &ldquo;who did I meet at the expo who does logistics?&rdquo; and it answers from your library; say &ldquo;text the person from Tristar&rdquo; and the card goes straight to Messages, or to Mail on the Mac. It's the same index Spotlight already keeps &mdash; nothing leaves your device.</p>
+      <h3>Point the camera at a card</h3>
+      <p>On iPhone, hold the Camera Control or open visual intelligence, tap Search, and cardlio appears with the name and company already read. Tap it and the review sheet opens with every card on that frame &mdash; nothing is saved until you've looked at it.</p>
+      <h3>Apple's Private Cloud Compute, no key needed</h3>
+      <p>Refine name, title and company with Apple's much larger model &mdash; no API key, no account, and Apple's servers keep nothing: the request is encrypted to the machines that answer it and erased when they're done. Pick it as the provider in Settings and it runs the Refine button, the pronunciation guide, industry tags and the automatic polish. Apple sets a daily allowance per person; cardlio shows where you stand, and when it's reached the polish simply carries on on your device. Claude and Gemini stay available with your own key, and Company Insights keeps using them because it reads the live web.</p>
+      <p>On earlier versions of iOS and macOS everything else works exactly as before.</p>
+    </div>
+  </section>
+
+  <!-- ============================ cards that carry links (2.6) ============================ -->
+  <section class="section">
+    <div class="wrap reveal prose" style="max-width:760px;margin:0 auto;">
+      <div class="kicker">New in 2.6</div>
+      <h2>Their QR code, their NFC card, the back of the card.</h2>
+      <p class="lead">More and more cards carry a QR code that opens a hosted contact page rather than a contact. cardlio recognises those, keeps the printed website as the website, and offers to fetch the contact details &mdash; one tap, and only when you say so, because the visit reaches the card owner's provider.</p>
+      <h3>Tap their NFC business card</h3>
+      <p>On iPhone, More &rarr; Tap NFC Card&hellip; reads a Popl, Linq, Mobilo or cardlio tag. A tag that carries the contact is added on the spot; a tag that links to a contact page is offered first, exactly like a QR link. Two cardlio users need no network at all &mdash; the card is inside the link.</p>
+      <h3>Address on the back? Both sides count</h3>
+      <p>Refine sends the front and the back of the card to Claude, Gemini or Apple's model, so an address printed on the back is read too. The built-in reader handles building names like &ldquo;One JLT&rdquo; and district names like &ldquo;Jumeirah Lakes Towers&rdquo; properly, and files a P.O. Box where it belongs.</p>
+      <h3>E-mail addresses are checked</h3>
+      <p>When an e-mail's domain doesn't exist &mdash; usually one misread letter &mdash; the review sheet says so and offers the corrected address with one tap. Only the domain name leaves your device, to the same resolver every app uses.</p>
     </div>
   </section>
 
