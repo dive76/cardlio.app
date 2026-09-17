@@ -365,6 +365,14 @@ a { color: var(--indigo); }
 .pdf-mini .page:nth-child(3) { width: 56%; }
 .addr-mini .addr-row { display: flex; align-items: center; gap: 12px; margin-top: 10px; }
 .addr-mini svg { width: 30px; height: 30px; color: var(--indigo); flex: none; }
+/* Credit for third-party imagery (the map cell shows an Apple Maps
+   screenshot; Apple asks for attribution on Maps imagery). Sits ABOVE the
+   screenshot because `.stats-img` bleeds off the cell's bottom edge. */
+.cell .img-credit {
+  margin-top: 14px; color: var(--muted);
+  font-size: 12.5px; letter-spacing: 0.01em;
+}
+
 .cell .stats-img {
   margin: 24px -4px -26px; border-radius: 14px 14px 0 0;
   border: 1px solid var(--panel-border); border-bottom: 0;
