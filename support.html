@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Support & FAQ — cardlio Business Card Scanner</title>
-<meta name="description" content="Help and FAQ for cardlio: sync scanned business cards to Outlook & Office 365, NFC tag compatibility, Apple Wallet cards, offline use, and export formats.">
+<meta name="description" content="Help and FAQ for cardlio: sync scanned business cards to Google Contacts and Office 365, the team library, AI providers, Caller ID, backups, NFC tags, Apple Wallet, offline use and export formats.">
 <meta name="theme-color" content="#12101f">
 <link rel="canonical" href="https://cardlio.app/support.html">
 <script type="application/ld+json">
@@ -15,47 +15,162 @@
     {
       "@type": "Question",
       "name": "A card scanned with a wrong name or company — what now?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Tap the field on the review screen and correct it; the fix saves immediately. Recognition improves regularly, and already-saved cards can be re-parsed on the Mac with the wand button next to the address." }
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Tap the field on the review screen and correct it; the fix saves immediately. Fields the app wasn't sure about are flagged, and tapping one zooms the card photo to the spot it was read from. Your corrections carry over: the next card from the same company reuses the company name and office address you saved. Already-saved cards can be re-parsed on the Mac with the wand button next to the address."
+      }
     },
     {
       "@type": "Question",
-      "name": "Which NFC tags work for sharing my card?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Use NTAG216 tags — they have enough memory for your card link. Smaller tags (NTAG213/215) usually don't fit and the app will tell you. A written tag works when tapped by both iPhones (XS and newer) and Android phones." }
+      "name": "Which AI does cardlio use, and do I need a key?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Recognition itself is on-device and needs nothing. Three optional helpers polish hard cards: Apple Intelligence on your device (iOS 27 / macOS 27), Apple Private Cloud Compute — pick it as the provider in Settings, no key, no account, Apple keeps nothing, with a daily allowance per person — and your own Claude or Gemini key for the hardest cards. Company Insights (the news about a company) needs Claude or Gemini, because Apple's model cannot browse the web; with Apple selected, Settings shows a Company Insights row where you choose which of the two fetches it."
+      }
     },
     {
       "@type": "Question",
-      "name": "Someone tapped my tag / opened my link and saw a placeholder avatar instead of my photo.",
-      "acceptedAnswer": { "@type": "Answer", "text": "That's by design: NFC tags and QR codes carry a compact version of your card without the photo (tags are tiny). Links you share from the Share Link button include your photo." }
+      "name": "How do I sync my cards to Google Contacts?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Connect your Google account under Settings → Google (on iPhone/iPad it's in Settings). On Google's permission screen leave the contacts option ticked — without it sign-in completes but nothing can sync. Then choose Sync to Google Contacts from the Export menu. The sync is one-way: new cards are added, edited ones updated, deleted ones removed from Google too. Each contact carries a hidden cardlio identifier, so syncing again never creates duplicates, even after a reinstall. cardlio only ever reads back the contacts it created itself and never touches the rest of your address book."
+      }
     },
     {
       "@type": "Question",
-      "name": "My cards aren't syncing between iPhone and Mac.",
-      "acceptedAnswer": { "@type": "Answer", "text": "Check that both devices are signed into the same Apple ID and that iCloud Drive is enabled in System Settings. Sync usually catches up within a minute of opening the app; pull down on the card list to refresh." }
-    },
-    {
-      "@type": "Question",
-      "name": "How do I get my card into Apple Wallet?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Open My Card, fill in your details, and tap Add to Apple Wallet. Creating the pass needs an internet connection; the pass itself works offline forever after." }
-    },
-    {
-      "@type": "Question",
-      "name": "Which export formats are supported?",
-      "acceptedAnswer": { "@type": "Answer", "text": "vCard (.vcf) for Apple/Google/Outlook contacts, a generic CSV, an Outlook-ready CSV, and a Salesforce-ready CSV that maps automatically in Salesforce's Data Import Wizard. You can also sync directly to Office 365." }
+      "name": "I connected Google but the sync fails with a permission error.",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Google lets you untick contacts on its sign-in screen and still finish signing in, which leaves cardlio with a token that can't reach your contacts. Disconnect Google in Settings, connect again, and leave contacts ticked. If the option is missing or greyed out, a Google Workspace administrator restricts the app and cardlio can't change that."
+      }
     },
     {
       "@type": "Question",
       "name": "How do I sync my cards to Outlook / Office 365?",
-      "acceptedAnswer": { "@type": "Answer", "text": "To scan business cards to Outlook, connect your Microsoft account under Settings → Office 365 (on iPhone/iPad it's in Settings), then choose Sync to Office 365 from the Export menu. cardlio adds new cards, updates changed ones, and removes deleted ones in your own Outlook contacts. Each contact is matched by a hidden identifier, so running the sync again never creates duplicates — even after a reinstall. Your contacts go only to your own Microsoft 365 mailbox; we never see them." }
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Connect your Microsoft account under Settings → Office 365 (on iPhone/iPad it's in Settings), then choose Sync to Office 365 from the Export menu. cardlio adds new cards, updates changed ones, and removes deleted ones in your own Outlook contacts. Each contact is matched by a hidden identifier, so running the sync again never creates duplicates — even after a reinstall. Your contacts go only to your own Microsoft 365 mailbox; we never see them."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which export formats are supported?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "vCard (.vcf) for Apple/Google/Outlook contacts, a generic CSV, an Outlook-ready CSV, and a Salesforce-ready CSV that maps automatically in Salesforce's Data Import Wizard. You can also sync directly to Google Contacts or Office 365, post every saved card to your CRM through a webhook, or back up the whole library as one zip — see below."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can cardlio send cards straight to my CRM?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. cardlio can post every card you save to a web address you choose — a Zapier or Make webhook reaches Salesforce, HubSpot, Pipedrive, Zoho and most other systems, or point it at your own server. Set it up under Settings → CRM (Mac) or Settings (iPhone/iPad), paste the address, and use Send test, which posts a made-up contact so you can map the fields. This is the only place cardlio sends card data off your device by itself, and it is off until you switch it on. The card photo is never sent."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I back up my library?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Mac: File → Library → Back Up Library…. iPhone/iPad: More menu → Library → Back Up Library…. The backup is one .zip with every field, both card photos and a vCard per contact — readable without cardlio. Restore from Backup… in the same menu skips cards already in your library, so restoring twice changes nothing. A backup covers what iCloud can't: a mistaken delete that has already synced everywhere."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the team library, and how do colleagues join?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A team is one shared pile of cards for a fair or a project: everyone on it can add cards, read them in full, and claim the ones they will follow up. It's part of the one unlock. Create a team (Mac: the Team toolbar button; iPhone/iPad: More menu → Team Library…), then add each colleague by the email address or phone number of their Apple Account and send them the invite link. The link only opens for people on the list, so a forwarded link lets nobody else in. Nothing is shared automatically — a card reaches the team only when you send it. Colleagues without an iPhone or Mac can join and work in a browser at team.cardlio.app, on any computer or phone. Everything lives in the team creator's own iCloud; we run no server for it."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "I accepted a team invite but the team doesn't show.",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Apple's shared database can take a few seconds to list a newly joined team; cardlio keeps it on screen from the invite and re-checks for a short while. If it still doesn't appear, tap Refresh in the team library, and check that you accepted the invite with the same Apple Account the team owner added — the invite is tied to that address or number."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does Caller ID work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "When someone whose card you scanned rings your iPhone, their name and company appear on the incoming call — without adding anyone to your Contacts. Two switches are needed: in cardlio, Settings → Caller ID → Name incoming calls; then in iOS, Settings → Apps → Phone → Call Blocking & Identification → switch on cardlio Caller ID. That second step is iOS's own permission and no app can do it for you. Your Contacts always win, so to test it, call from a number that is not in your Contacts. Nothing leaves your iPhone."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What do “Ask your network” and the Siri features need?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Apple Intelligence, i.e. iOS 27 or macOS 27 on a supported device. On an older system the Ask button isn't shown. Ask answers a question in plain language — “who did I meet in Singapore who works in shipping?” — and lists every card it names underneath, because your device does the searching and the answer can only name cards you actually have. Siri knows your cards as people on iOS 27 too: “text the person from Tristar” goes straight to Messages. All of it runs on your device and is free."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I scan an email signature or a screenshot instead of a paper card?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Share a screenshot or a photo of a signature, chat message or contact card into cardlio (iPhone: the share sheet or the Photos import; Mac: drag it in), and it is read like a card. Handwritten notes on a card — “met in Shanghai”, a booth number — are recognised as handwriting and go into Notes rather than being mistaken for the title."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "I forgot to start Event mode at the conference.",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Tag the cards afterwards, in bulk. Mac: select them in the gallery, right-click, Tag Event…. iPhone/iPad: More menu → Select Multiple…, tick the cards, then Tag Event. The tag becomes a search filter, appears in follow-up drafts and goes along to your CRM."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which NFC tags work for sharing my card?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Use NTAG216 tags — they have enough memory for your card link. Smaller tags (NTAG213/215) usually don't fit and the app will tell you. A written tag works when tapped by both iPhones (XS and newer) and Android phones. cardlio can also read a tag or a QR code that someone hands you — More menu → Tap NFC Card…, or scan the code — and adds the contact; a link to a hosted contact page is fetched only after you agree."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Someone tapped my tag / opened my link and saw a placeholder avatar instead of my photo.",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "That's by design: NFC tags and QR codes carry a compact version of your card without the photo (tags are tiny). Links you share from the Share Link button include your photo."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "My cards aren't syncing between iPhone and Mac.",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Check that both devices are signed into the same Apple ID with iCloud switched on for cardlio. Sync usually catches up within a minute of opening the app; a Mac that has been asleep for a while can take a few minutes to receive a day of changes. If it still doesn't move, quit and reopen the app on the device that lags."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I get my card into Apple Wallet?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Open My Card, fill in your details, and tap Add to Apple Wallet. Creating the pass needs an internet connection; the pass itself works offline forever after, and shows on a paired Apple Watch."
+      }
     },
     {
       "@type": "Question",
       "name": "Does cardlio work offline?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Yes — scanning, recognition, and your library are fully offline. Only address verification (Apple Maps), optional cloud AI, sync, and Wallet pass creation need a connection." }
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes — scanning, recognition, and your library are fully offline. Only address verification (Apple Maps), the optional cloud AI and Private Cloud Compute, the Google, Office 365 and iCloud syncs, the team library, and Wallet pass creation need a connection."
+      }
     },
     {
       "@type": "Question",
       "name": "Where is my data stored?",
-      "acceptedAnswer": { "@type": "Answer", "text": "On your devices and in your private iCloud. See the privacy policy — the short version is: we run no servers that ever see your contacts." }
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "On your devices and in your private iCloud. See the privacy policy — the short version is: we run no servers that ever see your contacts."
+      }
     }
   ]
 }
@@ -75,7 +190,7 @@
 
 <main class="doc">
   <h1>Support</h1>
-  <p class="updated">We usually reply within a day.</p>
+  <p class="updated">Updated 23 September 2026 · We usually reply within a day.</p>
 
   <p>Need a hand, found a bug, or have an idea? Email <a href="mailto:support@cardlio.app?subject=cardlio%20support">support@cardlio.app</a> — a screenshot of the card that misbehaved (if you're comfortable sharing it) makes fixes much faster.</p>
 
@@ -84,28 +199,61 @@
   <h2>Frequently asked questions</h2>
 
   <h3 style="font-size:17px;">A card scanned with a wrong name or company — what now?</h3>
-  <p>Tap the field on the review screen and correct it; the fix saves immediately. Recognition improves regularly, and already-saved cards can be re-parsed on the Mac with the wand button next to the address.</p>
+  <p>Tap the field on the review screen and correct it; the fix saves immediately. Fields the app wasn't sure about are flagged, and tapping one zooms the card photo to the spot it was read from. Your corrections carry over: the next card from the same company reuses the company name and office address you saved. Already-saved cards can be re-parsed on the Mac with the wand button next to the address.</p>
+
+  <h3 style="font-size:17px;">Which AI does cardlio use, and do I need a key?</h3>
+  <p>Recognition itself is on-device and needs nothing. Three optional helpers polish hard cards: <b>Apple Intelligence</b> on your device (iOS&nbsp;27 / macOS&nbsp;27), <b>Apple Private Cloud Compute</b> — pick it as the provider in Settings, no key, no account, Apple keeps nothing, with a daily allowance per person — and your own <b>Claude or Gemini key</b> for the hardest cards. Company Insights (the news about a company) needs Claude or Gemini, because Apple's model cannot browse the web; with Apple selected, Settings shows a Company Insights row where you choose which of the two fetches it.</p>
+
+  <h3 style="font-size:17px;">How do I sync my cards to Google Contacts?</h3>
+  <p>Connect your Google account under <b>Settings → Google</b> (on iPhone/iPad it's in Settings). On Google's permission screen leave the <b>contacts</b> option ticked — without it sign-in completes but nothing can sync. Then choose <b>Sync to Google Contacts</b> from the Export menu. The sync is one-way: new cards are added, edited ones updated, deleted ones removed from Google too. Each contact carries a hidden cardlio identifier, so syncing again never creates duplicates, even after a reinstall. cardlio only ever reads back the contacts it created itself and never touches the rest of your address book.</p>
+
+  <h3 style="font-size:17px;">I connected Google but the sync fails with a permission error.</h3>
+  <p>Google lets you untick <b>contacts</b> on its sign-in screen and still finish signing in, which leaves cardlio with a token that can't reach your contacts. Disconnect Google in Settings, connect again, and leave contacts ticked. If the option is missing or greyed out, a Google Workspace administrator restricts the app and cardlio can't change that.</p>
+
+  <h3 style="font-size:17px;">How do I sync my cards to Outlook / Office&nbsp;365?</h3>
+  <p>Connect your Microsoft account under <b>Settings → Office&nbsp;365</b> (on iPhone/iPad it's in Settings), then choose <b>Sync to Office&nbsp;365</b> from the Export menu. cardlio adds new cards, updates changed ones, and removes deleted ones in your own Outlook contacts. Each contact is matched by a hidden identifier, so running the sync again never creates duplicates — even after a reinstall. Your contacts go only to your own Microsoft&nbsp;365 mailbox; we never see them.</p>
+
+  <h3 style="font-size:17px;">Which export formats are supported?</h3>
+  <p>vCard (.vcf) for Apple/Google/Outlook contacts, a generic CSV, an Outlook-ready CSV, and a Salesforce-ready CSV that maps automatically in Salesforce's Data Import Wizard. You can also sync directly to Google Contacts or Office&nbsp;365, post every saved card to your CRM through a webhook, or back up the whole library as one zip — see below.</p>
+
+  <h3 style="font-size:17px;">Can cardlio send cards straight to my CRM?</h3>
+  <p>Yes. cardlio can post every card you save to a web address you choose — a <b>Zapier</b> or <b>Make</b> webhook reaches Salesforce, HubSpot, Pipedrive, Zoho and most other systems, or point it at your own server. Set it up under <b>Settings → CRM</b> (Mac) or Settings (iPhone/iPad), paste the address, and use <b>Send test</b>, which posts a made-up contact so you can map the fields. This is the only place cardlio sends card data off your device by itself, and it is off until you switch it on. The card photo is never sent.</p>
+
+  <h3 style="font-size:17px;">How do I back up my library?</h3>
+  <p>Mac: <b>File → Library → Back Up Library…</b>. iPhone/iPad: More menu → <b>Library → Back Up Library…</b>. The backup is one <b>.zip</b> with every field, both card photos and a vCard per contact — readable without cardlio. <b>Restore from Backup…</b> in the same menu skips cards already in your library, so restoring twice changes nothing. A backup covers what iCloud can't: a mistaken delete that has already synced everywhere.</p>
+
+  <h3 style="font-size:17px;">What is the team library, and how do colleagues join?</h3>
+  <p>A team is one shared pile of cards for a fair or a project: everyone on it can add cards, read them in full, and <b>claim</b> the ones they will follow up. It's part of the one unlock. Create a team (Mac: the <b>Team</b> toolbar button; iPhone/iPad: More menu → <b>Team Library…</b>), then add each colleague by the <b>email address or phone number of their Apple Account</b> and send them the invite link. The link only opens for people on the list, so a forwarded link lets nobody else in. Nothing is shared automatically — a card reaches the team only when you send it. Colleagues without an iPhone or Mac can join and work in a browser at <a href="https://team.cardlio.app">team.cardlio.app</a>, on any computer or phone. Everything lives in the team creator's own iCloud; we run no server for it.</p>
+
+  <h3 style="font-size:17px;">I accepted a team invite but the team doesn't show.</h3>
+  <p>Apple's shared database can take a few seconds to list a newly joined team; cardlio keeps it on screen from the invite and re-checks for a short while. If it still doesn't appear, tap <b>Refresh</b> in the team library, and check that you accepted the invite with the same Apple Account the team owner added — the invite is tied to that address or number.</p>
+
+  <h3 style="font-size:17px;">How does Caller ID work?</h3>
+  <p>When someone whose card you scanned rings your iPhone, their name and company appear on the incoming call — without adding anyone to your Contacts. Two switches are needed: in cardlio, <b>Settings → Caller ID → Name incoming calls</b>; then in iOS, <b>Settings → Apps → Phone → Call Blocking &amp; Identification</b> → switch on <b>cardlio Caller ID</b>. That second step is iOS's own permission and no app can do it for you. Your Contacts always win, so to test it, call from a number that is <em>not</em> in your Contacts. Nothing leaves your iPhone.</p>
+
+  <h3 style="font-size:17px;">What do “Ask your network” and the Siri features need?</h3>
+  <p><b>Apple Intelligence</b>, i.e. iOS&nbsp;27 or macOS&nbsp;27 on a supported device. On an older system the Ask button isn't shown. Ask answers a question in plain language — <i>“who did I meet in Singapore who works in shipping?”</i> — and lists every card it names underneath, because your device does the searching and the answer can only name cards you actually have. Siri knows your cards as people on iOS&nbsp;27 too: <i>“text the person from Tristar”</i> goes straight to Messages. All of it runs on your device and is free.</p>
+
+  <h3 style="font-size:17px;">Can I scan an email signature or a screenshot instead of a paper card?</h3>
+  <p>Yes. Share a screenshot or a photo of a signature, chat message or contact card into cardlio (iPhone: the share sheet or the Photos import; Mac: drag it in), and it is read like a card. Handwritten notes on a card — “met in Shanghai”, a booth number — are recognised as handwriting and go into Notes rather than being mistaken for the title.</p>
+
+  <h3 style="font-size:17px;">I forgot to start Event mode at the conference.</h3>
+  <p>Tag the cards afterwards, in bulk. Mac: select them in the gallery, right-click, <b>Tag Event…</b>. iPhone/iPad: More menu → <b>Select Multiple…</b>, tick the cards, then <b>Tag Event</b>. The tag becomes a search filter, appears in follow-up drafts and goes along to your CRM.</p>
 
   <h3 style="font-size:17px;">Which NFC tags work for sharing my card?</h3>
-  <p>Use <b>NTAG216</b> tags — they have enough memory for your card link. Smaller tags (NTAG213/215) usually don't fit and the app will tell you. A written tag works when tapped by both iPhones (XS and newer) and Android phones.</p>
+  <p>Use <b>NTAG216</b> tags — they have enough memory for your card link. Smaller tags (NTAG213/215) usually don't fit and the app will tell you. A written tag works when tapped by both iPhones (XS and newer) and Android phones. cardlio can also <b>read</b> a tag or a QR code that someone hands you — More menu → <b>Tap NFC Card…</b>, or scan the code — and adds the contact; a link to a hosted contact page is fetched only after you agree.</p>
 
   <h3 style="font-size:17px;">Someone tapped my tag / opened my link and saw a placeholder avatar instead of my photo.</h3>
   <p>That's by design: NFC tags and QR codes carry a compact version of your card without the photo (tags are tiny). Links you share from the Share Link button include your photo.</p>
 
   <h3 style="font-size:17px;">My cards aren't syncing between iPhone and Mac.</h3>
-  <p>Check that both devices are signed into the same Apple&nbsp;ID and that iCloud Drive is enabled in System Settings. Sync usually catches up within a minute of opening the app; pull down on the card list to refresh.</p>
+  <p>Check that both devices are signed into the same Apple&nbsp;ID with iCloud switched on for cardlio. Sync usually catches up within a minute of opening the app; a Mac that has been asleep for a while can take a few minutes to receive a day of changes. If it still doesn't move, quit and reopen the app on the device that lags.</p>
 
   <h3 style="font-size:17px;">How do I get my card into Apple Wallet?</h3>
-  <p>Open <b>My Card</b>, fill in your details, and tap <b>Add to Apple Wallet</b>. Creating the pass needs an internet connection; the pass itself works offline forever after.</p>
-
-  <h3 style="font-size:17px;">Which export formats are supported?</h3>
-  <p>vCard (.vcf) for Apple/Google/Outlook contacts, a generic CSV, an Outlook-ready CSV, and a Salesforce-ready CSV that maps automatically in Salesforce's Data Import Wizard. You can also sync directly to Office&nbsp;365 — see below.</p>
-
-  <h3 style="font-size:17px;">How do I sync my cards to Outlook / Office&nbsp;365?</h3>
-  <p>To scan business cards to Outlook, connect your Microsoft account under <b>Settings → Office&nbsp;365</b> (on iPhone/iPad it's in Settings), then choose <b>Sync to Office&nbsp;365</b> from the Export menu. cardlio adds new cards, updates changed ones, and removes deleted ones in your own Outlook contacts. Each contact is matched by a hidden identifier, so running the sync again never creates duplicates — even after a reinstall. Your contacts go only to your own Microsoft&nbsp;365 mailbox; we never see them.</p>
+  <p>Open <b>My Card</b>, fill in your details, and tap <b>Add to Apple Wallet</b>. Creating the pass needs an internet connection; the pass itself works offline forever after, and shows on a paired Apple Watch.</p>
 
   <h3 style="font-size:17px;">Does cardlio work offline?</h3>
-  <p>Yes — scanning, recognition, and your library are fully offline. Only address verification (Apple&nbsp;Maps), optional cloud AI, sync, and Wallet pass creation need a connection.</p>
+  <p>Yes — scanning, recognition, and your library are fully offline. Only address verification (Apple&nbsp;Maps), the optional cloud AI and Private Cloud Compute, the Google, Office&nbsp;365 and iCloud syncs, the team library, and Wallet pass creation need a connection.</p>
 
   <h3 style="font-size:17px;">Where is my data stored?</h3>
   <p>On your devices and in your private iCloud. See the <a href="privacy.html">privacy policy</a> — the short version is: we run no servers that ever see your contacts.</p>
