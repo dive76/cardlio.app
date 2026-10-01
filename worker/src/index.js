@@ -16,13 +16,9 @@
  *   WWDR_PEM       — Apple WWDR intermediate (G4), PEM
  * Vars (wrangler.toml):
  *   PASS_TYPE_ID, TEAM_ID, ORG_NAME
- *
- * Also: POST /purchase and POST /asn — refund consumption reporting, see
- * refund.js (its own secrets and a KV binding; answers 503 until configured).
  */
 
 import forge from "node-forge";
-import { handlePurchase, handleNotification } from "./refund.js";
 
 const MAX_BODY = 64 * 1024;          // biggest legitimate card ≈ 10 KB
 const ICON_SIDE = { "icon.png": 29, "icon@2x.png": 58, "icon@3x.png": 87 };
@@ -35,12 +31,7 @@ export default {
       "Access-Control-Allow-Headers": "Content-Type, Authorization",
     };
     if (request.method === "OPTIONS") return new Response(null, { headers: cors });
-    // Refund consumption reporting (refund.js): the app registers a purchase,
-    // Apple asks about one. Neither is a browser call, so no CORS.
-    const path = new URL(request.url).pathname;
-    if (request.method === "POST" && path === "/purchase") return handlePurchase(request, env);
-    if (request.method === "POST" && path === "/asn") return handleNotification(request, env);
-    if (request.method !== "POST" || path !== "/sign") {
+    if (request.method !== "POST" || new URL(request.url).pathname !== "/sign") {
       return new Response("cardlio pass signer", { status: 404, headers: cors });
     }
 
