@@ -16,8 +16,8 @@ simple = { limit = 30, period = 60 }
 
 # Refund consumption reporting (src/refund.js). Create the namespace once:
 #     npx wrangler kv namespace create PURCHASES
-# Created 2026-10-01. Without the three IAP_* secrets /purchase and /asn
-# answer 503 and the pass signer is unaffected.
-[[kv_namespaces]]
-binding = "PURCHASES"
-id = "0e6af6ca94cb44bdab90c95066a14f5b"
+# paste the id it prints below and remove the three leading '#'. Until then
+# /purchase and /asn answer 503 and the pass signer is unaffected.
+# [[kv_namespaces]]
+# binding = "PURCHASES"
+# id = "<id from the command above>"
