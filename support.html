@@ -30,6 +30,14 @@
     },
     {
       "@type": "Question",
+      "name": "Which languages can cardlio read?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "cardlio reads the text of a card in 28 languages, all of it on your device, nothing uploaded: English, French, German, Italian, Spanish, Portuguese, Dutch, Danish, Norwegian, Swedish, Finnish, Polish, Czech, Romanian, Turkish, Russian, Ukrainian, Chinese (Simplified and Traditional), Cantonese, Japanese, Korean, Vietnamese, Thai, Indonesian, Malay, Arabic, Hindi and Marathi. A card that mixes two of them, such as English on one side and Japanese on the other, is fine. Sorting the text into name, company and address is best on cards in Latin script, Chinese, Japanese and Korean; on Arabic, Thai and Hindi cards the text is read but the fields may need more correcting. Handwritten notes are recognised in Latin script. The list is Apple's on-device text recognition on iOS 27 and macOS 27."
+      }
+    },
+    {
+      "@type": "Question",
       "name": "How do I sync my cards to Google Contacts?",
       "acceptedAnswer": {
         "@type": "Answer",
@@ -190,7 +198,7 @@
 
 <main class="doc">
   <h1>Support</h1>
-  <p class="updated">Updated 23 September 2026 · We usually reply within a day.</p>
+  <p class="updated">Updated 3 October 2026 · We usually reply within a day.</p>
 
   <p>Need a hand, found a bug, or have an idea? Email <a href="mailto:support@cardlio.app?subject=cardlio%20support">support@cardlio.app</a> — a screenshot of the card that misbehaved (if you're comfortable sharing it) makes fixes much faster.</p>
 
@@ -203,6 +211,9 @@
 
   <h3 style="font-size:17px;">Which AI does cardlio use, and do I need a key?</h3>
   <p>Recognition itself is on-device and needs nothing. Three optional helpers polish hard cards: <b>Apple Intelligence</b> on your device (iOS&nbsp;27 / macOS&nbsp;27), <b>Apple Private Cloud Compute</b> — pick it as the provider in Settings, no key, no account, Apple keeps nothing, with a daily allowance per person — and your own <b>Claude or Gemini key</b> for the hardest cards. Company Insights (the news about a company) needs Claude or Gemini, because Apple's model cannot browse the web; with Apple selected, Settings shows a Company Insights row where you choose which of the two fetches it.</p>
+
+  <h3 id="languages" style="font-size:17px;">Which languages can cardlio read?</h3>
+  <p>cardlio reads the text of a card in <b>28 languages</b>, all of it on your device, nothing uploaded: English, French, German, Italian, Spanish, Portuguese, Dutch, Danish, Norwegian, Swedish, Finnish, Polish, Czech, Romanian, Turkish, Russian, Ukrainian, Chinese (Simplified and Traditional), Cantonese, Japanese, Korean, Vietnamese, Thai, Indonesian, Malay, Arabic, Hindi and Marathi. A card that mixes two of them, such as English on one side and Japanese on the other, is fine. Sorting the text into name, company and address is best on cards in Latin script, Chinese, Japanese and Korean; on Arabic, Thai and Hindi cards the text is read but the fields may need more correcting. Handwritten notes are recognised in Latin script. The list is Apple's on-device text recognition on iOS&nbsp;27 and macOS&nbsp;27.</p>
 
   <h3 style="font-size:17px;">How do I sync my cards to Google Contacts?</h3>
   <p>Connect your Google account under <b>Settings → Google</b> (on iPhone/iPad it's in Settings). On Google's permission screen leave the <b>contacts</b> option ticked — without it sign-in completes but nothing can sync. Then choose <b>Sync to Google Contacts</b> from the Export menu. The sync is one-way: new cards are added, edited ones updated, deleted ones removed from Google too. Each contact carries a hidden cardlio identifier, so syncing again never creates duplicates, even after a reinstall. cardlio only ever reads back the contacts it created itself and never touches the rest of your address book.</p>

@@ -116,6 +116,10 @@ a { color: var(--indigo); }
   margin-top: 18px; font-size: 19px; color: #c6c9dd; max-width: 46ch;
   text-wrap: pretty;
 }
+/* hero: three plain promises under the subhead */
+.promises { list-style: none; padding: 0; margin: 20px 0 0; display: grid; gap: 7px; }
+.promises li { display: flex; gap: 10px; align-items: baseline; color: #dfe1f0; font-size: 15.5px; text-wrap: pretty; }
+.promises li::before { content: "✓"; font-weight: 800; flex: none; color: #a5b4fc; }
 .badges { display: flex; gap: 12px; margin-top: 30px; flex-wrap: wrap; }
 /* Official Apple store badges (local SVGs — no third-party requests).
    Both are rendered at height 50; Apple's artwork differs in width, so
