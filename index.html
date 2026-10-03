@@ -177,6 +177,35 @@
   @media (prefers-color-scheme: dark) {
     .cardview .row a { background: var(--pg-g2); color: #fff; }
   }
+  /* "Send me your details" (2026-10-03): the visitor's own mail or
+     messages app does the sending — nothing goes through a server. */
+  .cardview .back-toggle {
+    display: block; width: 100%; margin-top: 12px; padding: 11px;
+    border: 1px solid var(--pg-g1); border-radius: 12px; background: transparent;
+    color: var(--cv-a1); font-size: 14px; font-weight: 600; cursor: pointer;
+  }
+  .cardview .back-form { margin-top: 12px; text-align: left; }
+  .cardview .back-form input {
+    display: block; width: 100%; box-sizing: border-box; margin-top: 8px;
+    padding: 11px 12px; border-radius: 10px; font-size: 16px;
+    border: 1px solid rgba(0,0,0,0.14); background: transparent; color: inherit;
+  }
+  .cardview .back-form .send { display: flex; gap: 10px; margin-top: 12px; }
+  .cardview .back-form .send button {
+    flex: 1; padding: 12px 6px; border: 0; border-radius: 12px; cursor: pointer;
+    background: linear-gradient(135deg, var(--cv-a1), var(--cv-a2)); color: #fff;
+    font-size: 15px; font-weight: 600;
+  }
+  .cardview .back-form .hint { margin-top: 10px; font-size: 12px; color: var(--cv-muted); }
+  .cardview .back-form .err { margin-top: 8px; font-size: 13px; color: #c2410c; }
+  @media (prefers-color-scheme: dark) {
+    .cardview .back-toggle { border-color: var(--pg-g2); color: #fff; }
+    .cardview .back-form input { border-color: rgba(255,255,255,0.22); }
+  }
+  .cardview.lay-bold .back-toggle { border-color: rgba(255,255,255,0.3); color: #fff; }
+  .cardview.lay-bold .back-form input { border-color: rgba(255,255,255,0.3); }
+  .cardview.lay-bold .back-form .send button { background: #fff; color: #191624; }
+  .cardview.lay-bold .back-form .hint { color: rgba(255,255,255,0.6); }
   .cardview .brand { margin-top: 26px; font-size: 12.5px; color: var(--cv-muted); }
   .cardview .brand a {
     background: linear-gradient(135deg, var(--cv-a1), var(--cv-a2));
@@ -426,7 +455,7 @@
         <div class="tile tile-link reveal">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.2 13.8a4.6 4.6 0 0 0 6.9.5l2.8-2.8a4.6 4.6 0 0 0-6.5-6.5l-1.6 1.6"/><path d="M13.8 10.2a4.6 4.6 0 0 0-6.9-.5l-2.8 2.8a4.6 4.6 0 0 0 6.5 6.5l1.6-1.6"/></svg></div>
           <h3>A link</h3>
-          <p>Your whole card travels inside one link. Opens in any browser — Add to Contacts in one tap.</p>
+          <p>Your whole card travels inside one link. Opens in any browser — Add to Contacts in one tap, and <b>Send me your details</b> lets them write back by email or text.</p>
         </div>
         <div class="tile tile-qr reveal" style="--d:0.1s">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><path d="M13.5 13.5h3.2v3.2h-3.2z"/><path d="M20.5 13.5v3.2"/><path d="M13.5 20.5h3.2"/><path d="M20.5 20.5h.01"/></svg></div>
@@ -770,6 +799,11 @@ function initials(name) {
 function renderCard(root, card, rawVCard) {
   const roleBits = [card.title, card.org].filter(Boolean).join(" · ");
   const tel = card.tels.find(t => t.kind === "mobile") || card.tels[0];
+  // "Send me your details" needs somewhere to send to: the card's email,
+  // or a MOBILE for a text (a landline cannot take one).
+  const mobileTel = card.tels.find(t => t.kind === "mobile");
+  const mobile = mobileTel ? mobileTel.value.replace(/[^\d+]/g, "") : "";
+  const replyTo = !!(card.email || mobile);
   let actions = "";
   if (tel) actions += `<a href="tel:${esc(tel.value.replace(/[^\d+]/g, ""))}">Call</a>`;
   if (card.email) actions += `<a href="mailto:${esc(card.email)}">Email</a>`;
@@ -784,12 +818,28 @@ function renderCard(root, card, rawVCard) {
     ${card.address ? `<div class="addr">${esc(card.address)}</div>` : ""}
     <button class="add" id="addBtn">Add to Contacts</button>
     ${actions ? `<div class="row">${actions}</div>` : ""}
+    ${replyTo ? `
+    <button class="back-toggle" id="backToggle" type="button" aria-expanded="false">Send me your details</button>
+    <form class="back-form" id="backForm" hidden novalidate>
+      <input name="name" autocomplete="name" placeholder="Your name" aria-label="Your name">
+      <input name="title" autocomplete="organization-title" placeholder="Job title" aria-label="Job title">
+      <input name="company" autocomplete="organization" placeholder="Company" aria-label="Company">
+      <input name="email" type="email" autocomplete="email" placeholder="Email" aria-label="Email">
+      <input name="phone" type="tel" autocomplete="tel" placeholder="Phone" aria-label="Phone">
+      <div class="err" id="backErr" hidden></div>
+      <div class="send">
+        ${card.email ? `<button type="button" data-via="email">Send by email</button>` : ""}
+        ${mobile ? `<button type="button" data-via="sms">Send by text</button>` : ""}
+      </div>
+      <div class="hint">Opens your own email or messages app with your details filled in — you send it. Nothing goes through cardlio.</div>
+    </form>` : ""}
     <div class="brand">Shared with <a href="/">cardlio</a> — business cards, done.
       <span class="getit"><a id="getLink" href="/">Make your own card, free →</a></span>
     </div>`;
   // The photo goes in as a CSS property on the rendered element — a value
   // set this way cannot escape into markup, whatever the payload holds.
   if (card.photo) root.querySelector(".avatar").style.backgroundImage = `url("${card.photo}")`;
+  if (replyTo) wireDetailsBack(root, card, mobile);
   // Send them where they can actually act. A visitor on a device with no
   // cardlio app gets the homepage rather than a store page they cannot use.
   const gl = document.getElementById("getLink");
@@ -806,6 +856,54 @@ function renderCard(root, card, rawVCard) {
       document.body.appendChild(a); a.click(); a.remove();
     }
     setTimeout(() => URL.revokeObjectURL(url), 60_000);
+  });
+}
+
+// The message body is laid out like an e-mail signature, because that is
+// what cardlio's Paste Signature reads best — the exact layout is pinned by
+// CardKit's DetailsBackTests in the app repo. Keep the two in step.
+function detailsBody(ownerName, d) {
+  const first = (ownerName || "").trim().split(/\s+/)[0] || "";
+  const lines = [first ? `Hi ${first},` : "Hi,", "", "here are my details:", ""];
+  for (const v of [d.name, d.title, d.company, d.email, d.phone]) if (v) lines.push(v);
+  lines.push("", "Sent from your cardlio card page");
+  return lines.join("\r\n");
+}
+
+function wireDetailsBack(root, card, mobile) {
+  const toggle = root.querySelector("#backToggle");
+  const form = root.querySelector("#backForm");
+  const err = root.querySelector("#backErr");
+  toggle.addEventListener("click", () => {
+    form.hidden = !form.hidden;
+    toggle.setAttribute("aria-expanded", String(!form.hidden));
+    if (!form.hidden) form.querySelector("input").focus();
+  });
+  form.querySelectorAll("button[data-via]").forEach(button => {
+    button.addEventListener("click", () => {
+      const d = {};
+      for (const k of ["name", "title", "company", "email", "phone"]) {
+        d[k] = (form.elements[k].value || "").trim();
+      }
+      if (!d.name || !(d.email || d.phone)) {
+        err.textContent = "Add your name and an email or phone number.";
+        err.hidden = false;
+        return;
+      }
+      err.hidden = true;
+      // Values are only ever URL-encoded into the link — never written
+      // into the page — so nothing typed here can become markup.
+      const body = encodeURIComponent(detailsBody(card.name, d));
+      if (button.dataset.via === "email") {
+        const subject = encodeURIComponent(`My contact details — ${d.name}`);
+        window.location.href = `mailto:${encodeURIComponent(card.email)}?subject=${subject}&body=${body}`;
+      } else {
+        const ua = navigator.userAgent, plat = navigator.platform || "";
+        const isIOS = /iPad|iPhone|iPod/.test(ua) || (plat === "MacIntel" && (navigator.maxTouchPoints || 0) > 1);
+        // iOS takes "sms:NUMBER&body=", everything else "sms:NUMBER?body=".
+        window.location.href = `sms:${mobile}${isIOS ? "&" : "?"}body=${body}`;
+      }
+    });
   });
 }
 
