@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Send cards to your CRM — Zapier &amp; Make recipes for cardlio</title>
+<meta name="description" content="Step-by-step recipes for sending every business card you scan with cardlio to HubSpot, Salesforce, Pipedrive, Google Sheets and more, with Zapier or Make. Every field cardlio sends, explained.">
+<meta name="theme-color" content="#12101f">
+<link rel="canonical" href="https://cardlio.app/crm.html">
+<link rel="stylesheet" href="site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%234F46E5'/%3E%3Cstop offset='1' stop-color='%238B5CF6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='url(%23g)'/%3E%3Crect x='12' y='20' width='40' height='26' rx='5' fill='white' transform='rotate(-6 32 33)'/%3E%3C/svg%3E">
+</head>
+<body class="site-body">
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="wordmark" href="/">cardlio</a>
+    <span class="spacer"></span>
+    <a class="link" href="/">Home</a>
+    <a class="link" href="support.html">Support</a>
+  </div>
+</nav>
+
+<main class="doc">
+  <h1>Send your cards to any CRM</h1>
+  <p class="updated">Recipes for Zapier and Make &middot; cardlio 3.2 and later</p>
+
+  <p>cardlio can post every card you save to a web address you choose. Point that address at <strong>Zapier</strong> or <strong>Make</strong> and each new card can become a contact in HubSpot, a lead in Salesforce, a person in Pipedrive, a row in Google Sheets &mdash; or go to almost any of the thousands of apps those services connect to. No plug-in to install, nothing extra to buy from us, and cardlio needs no account.</p>
+  <p class="note">The webhook itself costs nothing extra in cardlio. Zapier and Make have their own free and paid plans; a simple two-step Zap or Make scenario usually fits a free plan.</p>
+
+  <h2>1. In cardlio</h2>
+  <ol>
+    <li>Open <strong>Settings &rarr; CRM</strong> on the Mac, or <strong>Settings</strong> on iPhone and iPad, and find <strong>Send new cards to a webhook</strong>.</li>
+    <li>Paste the address Zapier or Make gives you (below) and switch the toggle on.</li>
+    <li>Tap <strong>Send test</strong>. cardlio posts a <strong>made-up contact</strong> &mdash; never one of yours &mdash; so you can map the fields before any real card goes out.</li>
+  </ol>
+  <p>From then on every card you <em>save</em> is posted once, as it is saved. Switching the webhook on does not send your existing library. The card photo is never sent.</p>
+
+  <h2>2a. With Zapier</h2>
+  <ol>
+    <li>In Zapier, create a Zap. For the trigger choose <strong>Webhooks by Zapier</strong> and the event <strong>Catch Hook</strong>. Copy the URL it shows (it starts with <code>https://hooks.zapier.com/hooks/catch/</code>) into cardlio.</li>
+    <li>Tap <strong>Send test</strong> in cardlio, then <strong>Test trigger</strong> in Zapier. It finds the test contact, &ldquo;Wei Ming Tan, Meridian Shipping&rdquo;, with every field listed.</li>
+    <li>Add a <strong>Filter</strong> step: <em>Only continue if</em> <code>Is Test</code> &rarr; <em>(Boolean) Is false</em>. Your test contact then never reaches your CRM.</li>
+    <li>Add the action for your system and map the fields &mdash; see the tables below. Turn the Zap on.</li>
+  </ol>
+
+  <h2>2b. With Make</h2>
+  <ol>
+    <li>In Make, create a scenario. Add the <strong>Webhooks</strong> app, trigger <strong>Custom webhook</strong>, click <strong>Add</strong>, name it &ldquo;cardlio&rdquo;, and copy the address into cardlio.</li>
+    <li>While Make shows <em>&ldquo;waiting for data&rdquo;</em>, tap <strong>Send test</strong> in cardlio. Make reports <em>Successfully determined</em> and now knows every field.</li>
+    <li>Between the webhook and the next module, set a <strong>filter</strong>: <code>isTest</code> &rarr; <em>Equal to</em> &rarr; <code>false</code>.</li>
+    <li>Add the module for your system and map the fields &mdash; see below. Switch scheduling to <strong>Immediately</strong> and turn the scenario on.</li>
+  </ol>
+  <p class="note">Two fields are lists: <code>emails</code> and <code>leadInterests</code>. In Make, use <code>get(emails; 1)</code> for the first address and <code>join(leadInterests; ", ")</code> for the interests. Zapier shows them as text you can map directly.</p>
+
+  <h2>3. Mapping for popular systems</h2>
+  <p>The field names on the left are exactly what cardlio sends. Map only what your system has a place for; empty fields arrive as empty text.</p>
+
+  <h3><span class="tag">HubSpot</span>Create contact</h3>
+  <p>Zapier: action <em>Create Contact</em> &mdash; or <em>Create or Update Contact</em>, which uses the email to avoid duplicates. Make: <em>HubSpot CRM &rarr; Create a Contact</em>.</p>
+  <div class="table-wrap"><table>
+    <tr><th>cardlio</th><th>HubSpot</th></tr>
+    <tr><td><code>firstName</code>, <code>lastName</code></td><td>First name, Last name</td></tr>
+    <tr><td><code>emails</code> (first)</td><td>Email</td></tr>
+    <tr><td><code>title</code></td><td>Job title</td></tr>
+    <tr><td><code>company</code></td><td>Company name</td></tr>
+    <tr><td><code>phone</code>, <code>mobile</code></td><td>Phone number, Mobile phone number</td></tr>
+    <tr><td><code>website</code></td><td>Website URL</td></tr>
+    <tr><td><code>street</code>, <code>city</code>, <code>postalCode</code>, <code>country</code></td><td>Street address, City, Postal code, Country/Region</td></tr>
+    <tr><td><code>leadRating</code></td><td>Lead status, or a custom property</td></tr>
+    <tr><td><code>eventTag</code>, <code>notes</code></td><td>a custom &ldquo;Met at&rdquo; property, or a note</td></tr>
+  </table></div>
+
+  <h3><span class="tag">Salesforce</span>Create lead</h3>
+  <p>Zapier: action <em>Create Record</em>, object <em>Lead</em>. Make: <em>Salesforce &rarr; Create a Record</em>, type <em>Lead</em>. Salesforce requires <em>Last Name</em> and <em>Company</em> on a lead &mdash; for cards without one, set a default (Zapier: in the field&rsquo;s options; Make: <code>ifempty(company; "Unknown")</code>).</p>
+  <div class="table-wrap"><table>
+    <tr><th>cardlio</th><th>Salesforce Lead</th></tr>
+    <tr><td><code>firstName</code>, <code>lastName</code>, <code>honorific</code></td><td>First Name, Last Name, Salutation</td></tr>
+    <tr><td><code>title</code>, <code>company</code></td><td>Title, Company</td></tr>
+    <tr><td><code>emails</code> (first), <code>phone</code>, <code>mobile</code>, <code>fax</code></td><td>Email, Phone, Mobile, Fax</td></tr>
+    <tr><td><code>website</code>, <code>industry</code></td><td>Website, Industry</td></tr>
+    <tr><td><code>street</code>, <code>city</code>, <code>postalCode</code>, <code>country</code></td><td>Street, City, Zip/Postal Code, Country</td></tr>
+    <tr><td><code>leadRating</code></td><td><strong>Rating</strong> &mdash; cardlio&rsquo;s Hot / Warm / Cold are Salesforce&rsquo;s own values</td></tr>
+    <tr><td>&ldquo;Business Card&rdquo; (typed)</td><td>Lead Source</td></tr>
+    <tr><td><code>eventTag</code>, <code>leadInterests</code>, <code>notes</code></td><td>Description</td></tr>
+  </table></div>
+
+  <h3><span class="tag">Pipedrive</span>Create person</h3>
+  <p>Zapier: <em>Create Person</em> (optionally first <em>Find or Create Organization</em> with <code>company</code>, then link it). Make: <em>Pipedrive CRM &rarr; Create a Person</em>. To start a lead as well, add <em>Create Lead</em> with the person you just created.</p>
+  <div class="table-wrap"><table>
+    <tr><th>cardlio</th><th>Pipedrive</th></tr>
+    <tr><td><code>firstName</code> + <code>lastName</code></td><td>Name</td></tr>
+    <tr><td><code>emails</code> (first), <code>mobile</code> or <code>phone</code></td><td>Email, Phone</td></tr>
+    <tr><td><code>company</code></td><td>Organization</td></tr>
+    <tr><td><code>leadRating</code>, <code>eventTag</code></td><td>custom fields, or a label</td></tr>
+  </table></div>
+
+  <h3><span class="tag">Google Sheets</span>One row per card</h3>
+  <p>Make a sheet with a header row &mdash; for example <em>Scanned, First name, Last name, Title, Company, Email, Phone, Mobile, City, Country, Event, Lead rating, Interests, Notes</em>. Zapier: <em>Google Sheets &rarr; Create Spreadsheet Row</em>. Make: <em>Google Sheets &rarr; Add a Row</em>. Map one cardlio field to each column.</p>
+
+  <h3>Anything else</h3>
+  <p>Zoho CRM, Microsoft Dynamics, Airtable, Notion, monday.com, Slack, Microsoft Teams, Mailchimp &mdash; the steps are the same: the cardlio trigger above, then that app&rsquo;s &ldquo;create contact&rdquo; or &ldquo;create record&rdquo; action. A Slack or Teams message (&ldquo;New hot lead from SMM: Wei Ming Tan, Meridian Shipping&rdquo;) is a nice way to tell the team at the stand.</p>
+
+  <h2>4. Every field cardlio sends</h2>
+  <p>One JSON object per card, sent as an HTTP <code>POST</code> with <code>Content-Type: application/json</code>. Every key is always present; a field the card does not have is an empty string (or an empty list).</p>
+  <div class="table-wrap"><table>
+    <tr><th>Field</th><th>What it holds</th></tr>
+    <tr><td><code>id</code></td><td>The card&rsquo;s permanent identifier. Stays the same for the life of the card &mdash; useful to recognise a card you have already received.</td></tr>
+    <tr><td><code>scannedAt</code></td><td>When it was saved, ISO 8601 in UTC (<code>2026-10-03T08:15:00Z</code>).</td></tr>
+    <tr><td><code>honorific</code>, <code>firstName</code>, <code>lastName</code></td><td>The name as printed: &ldquo;Capt.&rdquo;, &ldquo;Dr.&rdquo; go in <code>honorific</code>.</td></tr>
+    <tr><td><code>title</code>, <code>company</code></td><td>Job title and company, as printed on the card.</td></tr>
+    <tr><td><code>emails</code></td><td>A list of every address on the card, the main one first.</td></tr>
+    <tr><td><code>phone</code>, <code>mobile</code>, <code>fax</code></td><td>In international format (<code>+65 9123 4567</code>).</td></tr>
+    <tr><td><code>website</code>, <code>linkedin</code>, <code>wechat</code></td><td>As found on the card or in its QR code.</td></tr>
+    <tr><td><code>building</code>, <code>street</code>, <code>unit</code>, <code>postalCode</code>, <code>city</code>, <code>country</code></td><td>The address in parts. A district or ward stays in <code>street</code>; <code>city</code> is the city alone.</td></tr>
+    <tr><td><code>industry</code></td><td>The industry tag, from your own list if you set one up.</td></tr>
+    <tr><td><code>eventTag</code></td><td>Where you met (Event mode), e.g. &ldquo;SMM 2026&rdquo;.</td></tr>
+    <tr><td><code>leadRating</code></td><td><code>Hot</code>, <code>Warm</code>, <code>Cold</code> or empty &mdash; as you rated the card when you saved it.</td></tr>
+    <tr><td><code>leadInterests</code></td><td>A list of the interest chips you ticked (&ldquo;Demo requested&rdquo;, &ldquo;Pricing&rdquo;).</td></tr>
+    <tr><td><code>notes</code></td><td>The card&rsquo;s notes, including a voice note you recorded.</td></tr>
+    <tr><td><code>translatedTitle</code>, <code>translatedCompany</code>, <code>translatedAddress</code></td><td>Only if you translated a foreign-language card; otherwise empty.</td></tr>
+    <tr><td><code>isTest</code></td><td><code>true</code> only for the made-up contact from <strong>Send test</strong>.</td></tr>
+    <tr><td><code>source</code></td><td>Always <code>cardlio</code>.</td></tr>
+  </table></div>
+
+  <h3>The test contact, as sent (spaced out here for reading)</h3>
+<pre><code>{
+  "building" : "Asia Square Tower 2",
+  "city" : "Singapore",
+  "company" : "Meridian Shipping Pte Ltd",
+  "country" : "Singapore",
+  "emails" : [ "weiming.tan@example.com" ],
+  "eventTag" : "Sea Asia 2026",
+  "fax" : "",
+  "firstName" : "Wei Ming",
+  "honorific" : "",
+  "id" : "00000000-0000-0000-0000-000000000000",
+  "industry" : "",
+  "isTest" : true,
+  "lastName" : "Tan",
+  "leadInterests" : [ "Bunkering", "Demo requested" ],
+  "leadRating" : "Hot",
+  "linkedin" : "",
+  "mobile" : "+65 9123 4567",
+  "notes" : "",
+  "phone" : "",
+  "postalCode" : "018961",
+  "scannedAt" : "2026-10-03T08:15:00Z",
+  "source" : "cardlio",
+  "street" : "12 Marina View",
+  "title" : "Fleet Operations Manager",
+  "translatedAddress" : "",
+  "translatedCompany" : "",
+  "translatedTitle" : "",
+  "unit" : "#25-06",
+  "website" : "",
+  "wechat" : ""
+}</code></pre>
+
+  <h2>Good to know</h2>
+  <ul>
+    <li><strong>Sent once, when you save.</strong> Editing a card later, or changing its rating, does not post it again.</li>
+    <li><strong>No automatic retries.</strong> A duplicate lead is more annoying than a missing one. If a post fails, cardlio shows a banner with <strong>Send again</strong>, so nothing is lost silently.</li>
+    <li><strong>Avoid duplicates</strong> in your CRM with a &ldquo;find or create&rdquo; action matched on the email, or by storing cardlio&rsquo;s <code>id</code> in a custom field.</li>
+    <li><strong>https only.</strong> The address must begin with <code>https://</code>. Zapier and Make put a secret token in the address itself &mdash; treat the whole address like a password.</li>
+    <li><strong>Where your cards go.</strong> This is the only cardlio feature that sends your cards to a destination you choose, and it is off until you switch it on. Once a card reaches your Zapier or Make address, it is handled by that service under its terms &mdash; not by cardlio. No server of ours is in the path. See the <a href="privacy.html">privacy policy</a>.</li>
+  </ul>
+  <p>Questions or a system that doesn&rsquo;t fit? <a href="mailto:support@cardlio.app">support@cardlio.app</a></p>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <span>© 2026 cardlio</span>
+    <span class="spacer"></span>
+    <a href="crm.html">CRM recipes</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="support.html">Support</a>
+  </div>
+</footer>
+</body>
+</html>

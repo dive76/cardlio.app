@@ -457,6 +457,21 @@ a { color: var(--indigo); }
 .doc ul { padding-left: 22px; }
 .doc p + p, .doc p + ul, .doc ul + p { margin-top: 12px; }
 .doc .note { color: var(--muted); }
+/* Recipe pages (crm.html): numbered steps, field tables, code. */
+.doc ol { padding-left: 22px; }
+.doc li + li { margin-top: 6px; }
+.doc p + ol, .doc ol + p, .doc table + p, .doc p + table, .doc pre + p, .doc p + pre { margin-top: 12px; }
+.doc code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.9em;
+  background: var(--bg-alt); border: 1px solid var(--panel-border); border-radius: 6px; padding: 1px 5px; }
+.doc pre { background: var(--bg-alt); border: 1px solid var(--panel-border); border-radius: 12px;
+  padding: 14px 16px; overflow-x: auto; font-size: 13px; line-height: 1.5; }
+.doc pre code { background: none; border: 0; padding: 0; font-size: inherit; }
+.doc .table-wrap { overflow-x: auto; margin-top: 12px; }
+.doc table { width: 100%; border-collapse: collapse; font-size: 15px; }
+.doc th, .doc td { text-align: left; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid var(--panel-border); }
+.doc th { font-family: var(--font-display); font-weight: 600; color: var(--muted); font-size: 13px; }
+.doc .tag { display: inline-block; font-size: 12px; font-weight: 600; color: var(--indigo);
+  background: var(--bg-alt); border-radius: 999px; padding: 2px 9px; margin-right: 6px; }
 
 /* ================================================================
    v2 motion system — all effects are transform/opacity/filter only,
