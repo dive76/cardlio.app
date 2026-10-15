@@ -954,7 +954,10 @@ function storeLinkForThisDevice() {
   const ua = navigator.userAgent, plat = navigator.platform || "";
   const touch = navigator.maxTouchPoints || 0;
   const isIOS = /iPad|iPhone|iPod/.test(ua) || (plat === "MacIntel" && touch > 1);
-  if (isIOS) return "https://apps.apple.com/app/id6773151080";
+  // iPhone and iPad: the "Digital card" custom product page — someone who
+  // just received a card link sees that side of cardlio first (QR, NFC,
+  // Wallet, signature). Approved by Apple 2026-10-15.
+  if (isIOS) return "https://apps.apple.com/app/id6773151080?ppid=21d1ca13-c39b-4e00-810c-d1bd505c7df1";
   if (/Mac/.test(plat) && touch <= 1) return "https://apps.apple.com/app/id6786612800";
   return "/";
 }
