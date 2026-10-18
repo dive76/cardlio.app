@@ -100,7 +100,28 @@
   <h3>Anything else</h3>
   <p>Zoho CRM, Microsoft Dynamics, Airtable, Notion, monday.com, Slack, Microsoft Teams, Mailchimp &mdash; the steps are the same: the cardlio trigger above, then that app&rsquo;s &ldquo;create contact&rdquo; or &ldquo;create record&rdquo; action. A Slack or Teams message (&ldquo;New hot lead from SMM: Wei Ming Tan, Meridian Shipping&rdquo;) is a nice way to tell the team at the stand.</p>
 
-  <h2>4. Every field cardlio sends</h2>
+  <h2>4. Formatting fields the way your CRM wants</h2>
+  <p>cardlio sends every card in one consistent shape. If your CRM keeps its own conventions &mdash; surnames in capitals, a particular phone format &mdash; reshape the fields in Zapier or Make on the way, before the &ldquo;create contact&rdquo; step. Nothing changes in cardlio, and every card is formatted the same way.</p>
+
+  <h3>Names and companies in capitals</h3>
+  <ul>
+    <li><strong>Make:</strong> in the field mapping, wrap the value: <code>upper(lastName)</code>, <code>upper(company)</code>.</li>
+    <li><strong>Zapier:</strong> add a <strong>Formatter by Zapier</strong> step &rarr; <em>Text</em> &rarr; <em>Uppercase</em>, with <code>Last Name</code> as the input. Do the same for <code>Company</code>, then map the Formatter&rsquo;s output instead of the original field.</li>
+  </ul>
+
+  <h3>Phone numbers in your CRM&rsquo;s format</h3>
+  <p>cardlio sends phone, mobile and fax numbers in international format with a space after the country code (<code>+39 030 231 0794</code>); a number it could not read fully is sent as printed. To turn that into, say, <code>+39-0302310794</code> &mdash; a dash after the country code, no other spaces:</p>
+  <ul>
+    <li><strong>Make:</strong> map the phone field as <code>replace(replace(phone; "/^(\+\d+) /"; "$1-"); "/ /g"; "")</code>. The inner <code>replace</code> puts the dash after the country code, the outer one removes the remaining spaces. Use the same formula for <code>mobile</code> and <code>fax</code>.</li>
+    <li><strong>Zapier:</strong> add a <strong>Code by Zapier</strong> step (<em>Run JavaScript</em>), with an input field <code>phone</code> mapped to cardlio&rsquo;s phone, and this code:
+      <pre>const p = inputData.phone || "";
+const dashed = p.replace(/^(\+\d+) /, "$1-");
+return { phone: dashed.replace(/ /g, "") };</pre>
+      Then map the step&rsquo;s <code>phone</code> output. For the other common shapes &mdash; <code>+390302310794</code> with no spaces at all &mdash; <em>Formatter &rarr; Numbers &rarr; Format Phone Number</em> with the E.164 format does it without code.</li>
+  </ul>
+  <p class="note">Try a formula on cardlio&rsquo;s test contact first (<strong>Send test</strong> under the webhook setting): it uses the same format as a real card.</p>
+
+  <h2>5. Every field cardlio sends</h2>
   <p>One JSON object per card, sent as an HTTP <code>POST</code> with <code>Content-Type: application/json</code>. Every key is always present; a field the card does not have is an empty string (or an empty list).</p>
   <div class="table-wrap"><table>
     <tr><th>Field</th><th>What it holds</th></tr>
