@@ -2,7 +2,8 @@
  * cardlio pass signer — Cloudflare Worker.
  *
  * POST /sign  { name, title?, company?, email?, phone?, mobile?, website?,
- *               addressLines?: string[], notes?, barcodeMessage, photoBase64? }
+ *               addressLines?: string[], notes?, barcodeMessage, photoBase64?,
+ *               backgroundColor?: "rgb(r,g,b)" }
  *   → application/vnd.apple.pkpass
  *
  * Builds a Wallet "generic" pass for the caller's business card, signs the
@@ -110,16 +111,27 @@ function field(key, label, value) {
   return { key, label, value };
 }
 
+/** "rgb(r,g,b)" with 0–255 components, or null. */
+function passColor(v) {
+  const m = /^rgb\((\d{1,3}),(\d{1,3}),(\d{1,3})\)$/.exec(String(v || "").replace(/\s+/g, ""));
+  if (!m || [m[1], m[2], m[3]].some(x => Number(x) > 255)) return null;
+  return `rgb(${m[1]},${m[2]},${m[3]})`;
+}
+
 function buildPassJSON(card, env) {
   const name = card.name.trim();
   const secondary = [];
   if (card.title) secondary.push(field("title", "TITLE", card.title));
   if (card.company) secondary.push(field("company", "COMPANY", card.company));
+  // Mobile on the FRONT, first: it used to be on the back only, so the
+  // pass showed just the office number (2026-10-21, a client).
   const auxiliary = [];
+  if (card.mobile) auxiliary.push(field("mobile", "MOBILE", card.mobile));
   if (card.phone) auxiliary.push(field("phone", "PHONE", card.phone));
   const back = [];
   if (card.email) back.push(field("email", "Email", card.email));
   if (card.mobile) back.push(field("mobile", "Mobile", card.mobile));
+  if (card.phone) back.push(field("phone", "Phone", card.phone));
   if (card.website) back.push(field("website", "Website", card.website));
   const address = (card.addressLines || []).map(s => String(s).trim()).filter(Boolean).join("\n");
   if (address) back.push(field("address", "Address", address));
@@ -139,8 +151,10 @@ function buildPassJSON(card, env) {
     description: `Contact card for ${name}`,
     logoText: name,
     foregroundColor: "rgb(255,255,255)",
-    backgroundColor: "rgb(64,58,180)",     // cardlio indigo, slightly deepened
-    labelColor: "rgb(199,189,255)",
+    // The card's own colour when the app sends one (3.2.21+), else the
+    // cardlio indigo. Only a plain "rgb(r,g,b)" is accepted.
+    backgroundColor: passColor(card.backgroundColor) || "rgb(64,58,180)",
+    labelColor: "rgba(255,255,255,0.72)",
     generic,
   };
   if (card.barcodeMessage) {
