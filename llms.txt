@@ -1,0 +1,28 @@
+# cardlio
+
+> cardlio is a business card scanner and digital business card app for iPhone, iPad and Mac. It reads business cards into complete contacts on the device — name, title, company, every phone and e-mail, the website and the full street address — in 28 languages, several cards from one photo. It is a free download with the first 10 cards free; one purchase, not a subscription, unlocks unlimited cards and every export. No account; no cardlio server stores your cards; App Store privacy label: Data Not Collected.
+
+Key facts:
+
+- Platforms: iPhone and iPad (App Store id 6773151080) and Mac (App Store id 6786612800). The two apps are unlocked separately; the library syncs between them through the user's private iCloud.
+- Recognition runs on the device and works offline. Network is used only for the Apple Maps address check, optional cloud AI, Google / Office 365 / iCloud sync, the team library and creating an Apple Wallet pass.
+- Exports: vCard, CSV, Outlook-ready CSV, Salesforce-ready CSV; one-click sync to Google Contacts and Office 365; save to Apple Contacts; a webhook to Zapier or Make for HubSpot, Salesforce, Pipedrive and other CRMs.
+- Trade shows: Event mode tags each scan, Hot / Warm / Cold lead rating, Event Report (PDF / CSV), Follow-Up Run with drafted e-mails sent from the user's own mail app, and a shared team library (also in any browser at team.cardlio.app).
+- Your own card: share as a link, QR code, NFC tag or Apple Wallet pass; e-mail signature and video-call background.
+- cardlio never contacts the people you scan.
+
+## Guides
+
+- [A business card scanner without a subscription](https://cardlio.app/no-subscription.html): what the one purchase unlocks and what is free
+- [Scan a whole stack of business cards at once](https://cardlio.app/scan-a-stack.html): several cards from one photo, PDFs and folders of scans
+- [A business card scanner for trade shows and conferences](https://cardlio.app/trade-shows.html): Event mode, lead rating, Event Report, follow-ups, team library
+- [Business cards into HubSpot, Salesforce or Pipedrive](https://cardlio.app/business-cards-to-crm.html): webhook, CSV files, address-book sync
+- [A private business card scanner that works offline](https://cardlio.app/private-offline.html): what stays on the device and what needs a connection
+
+## Reference
+
+- [Home](https://cardlio.app/): features overview
+- [Support & FAQ](https://cardlio.app/support.html): 22 answered questions
+- [CRM recipes for Zapier and Make](https://cardlio.app/crm.html): every field cardlio sends
+- [Privacy policy](https://cardlio.app/privacy.html)
+- [Handbook (PDF)](https://cardlio.app/cardlio-handbook.pdf)
