@@ -218,3 +218,6 @@ directory listings under the app's name (AlternativeTo, SaaSHub,
 MacUpdate); a monthly check of whether ChatGPT / Gemini name cardlio
 (first ~late November), and App Store Connect → Analytics → web
 referrers for chatgpt.com / gemini.google.com.
+FIRST SIGNAL (owner, 2026-10-22): a customer found the app via ChatGPT —
+before the guide pages went live, so through the home page / FAQ / App
+Store listing as they were. Worth asking such customers what they typed.
