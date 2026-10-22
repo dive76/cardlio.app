@@ -201,3 +201,20 @@ in review). Verified live: POST /sign with no token → 401, wrong token →
 than 2.6.2 now get 401 on Add to Wallet — expected. The token is the
 constant `WalletPassService.signToken` in the app; to rotate, change
 both and set the secret AFTER the new build is what users run.
+
+## 2026-10-22 — guide pages for AI / classic search, search consoles
+
+Five answer-first guide pages (`no-subscription`, `scan-a-stack`,
+`trade-shows`, `business-cards-to-crm`, `private-offline`) + `llms.txt`,
+live (0fa5c7f). Each opens with one quotable sentence, carries a visible
+Q&A mirrored in FAQPage JSON-LD, and states only RELEASED features — keep
+them in step when a feature changes, like the home page. Built from a
+scratch generator; edit the HTML directly from now on.
+Search consoles (owner, 2026-10-22): Google Search Console property
+`https://cardlio.app/` — sitemap submitted (first showed "Couldn't
+fetch", live test OK), indexing requested for all five pages; Bing
+Webmaster Tools set up (ChatGPT search leans on Bing). Still open:
+directory listings under the app's name (AlternativeTo, SaaSHub,
+MacUpdate); a monthly check of whether ChatGPT / Gemini name cardlio
+(first ~late November), and App Store Connect → Analytics → web
+referrers for chatgpt.com / gemini.google.com.
