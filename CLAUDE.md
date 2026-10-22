@@ -226,8 +226,12 @@ Store listing as they were. Worth asking such customers what they typed.
 
 INDEXNOW: key file `d28bddd1c6eefd93fdbe24e1c295ef42.txt` at the root
 (493f410) — the key is public by design. Home, the five guides, support,
-crm, privacy and llms.txt submitted the same day (HTTP 202). After a site
-push that adds or changes pages, notify Bing / Yandex / Seznam with:
+crm, privacy and llms.txt submitted the same day (HTTP 202).
+AUTOMATIC since d162af0: `.github/workflows/indexnow.yml` runs on every
+push to main, waits 2 min for Pages, and submits the public files the push
+added or changed (internal files skipped; nothing sent when none changed).
+"Run workflow" on GitHub (or `gh workflow run indexnow.yml`) resubmits
+every sitemap URL — first run 2026-10-22, HTTP 200. Manual equivalent:
 
     curl -X POST https://api.indexnow.org/indexnow \
       -H 'Content-Type: application/json; charset=utf-8' \
