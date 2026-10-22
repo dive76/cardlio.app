@@ -1,0 +1,7 @@
+# GitHub Pages (Jekyll) settings. Only `exclude` is set: internal files in
+# this public repo are not published on cardlio.app. README.md stays
+# public on purpose (it documents how other apps read a cardlio link).
+exclude:
+  - CLAUDE.md
+  - worker
+  - node_modules
