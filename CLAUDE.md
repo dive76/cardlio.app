@@ -221,3 +221,23 @@ referrers for chatgpt.com / gemini.google.com.
 FIRST SIGNAL (owner, 2026-10-22): a customer found the app via ChatGPT —
 before the guide pages went live, so through the home page / FAQ / App
 Store listing as they were. Worth asking such customers what they typed.
+
+## 2026-10-22 — IndexNow, and internal files no longer published
+
+INDEXNOW: key file `d28bddd1c6eefd93fdbe24e1c295ef42.txt` at the root
+(493f410) — the key is public by design. Home, the five guides, support,
+crm, privacy and llms.txt submitted the same day (HTTP 202). After a site
+push that adds or changes pages, notify Bing / Yandex / Seznam with:
+
+    curl -X POST https://api.indexnow.org/indexnow \
+      -H 'Content-Type: application/json; charset=utf-8' \
+      -d '{"host":"cardlio.app","key":"d28bddd1c6eefd93fdbe24e1c295ef42",
+           "keyLocation":"https://cardlio.app/d28bddd1c6eefd93fdbe24e1c295ef42.txt",
+           "urlList":["https://cardlio.app/<page>"]}'
+
+⚠️ GITHUB PAGES PUBLISHES EVERY FILE IN THIS REPO unless `_config.yml`
+excludes it. Until b978228 `cardlio.app/CLAUDE.md` (these notes) and
+`worker/src/index.js` + `wrangler.toml` were served on the site. Now
+excluded: CLAUDE.md, worker/, node_modules. README.md stays public on
+purpose. A NEW internal file must be added to `exclude`. The repo itself
+is public on GitHub, so nothing here is private — never put a secret in it.
