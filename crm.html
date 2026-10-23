@@ -33,7 +33,12 @@
     <li>Paste the address Zapier or Make gives you (below) and switch the toggle on.</li>
     <li>Tap <strong>Send test</strong>. cardlio posts a <strong>made-up contact</strong> &mdash; never one of yours &mdash; so you can map the fields before any real card goes out.</li>
   </ol>
-  <p>From then on every card you <em>save</em> is posted once, as it is saved. Switching the webhook on does not send your existing library. The card photo is never sent.</p>
+  <p>From then on every card you <em>save</em> is posted as it is saved. The card photo is never sent. Two more switches sit in the same place (cardlio 3.2.23 and later):</p>
+  <ul>
+    <li><strong>Send All Cards&hellip;</strong> posts the cards you already have, one after another (about two a second, with a Stop button), each marked <code>"event": "sync"</code>. Switching the webhook on by itself never sends your existing library.</li>
+    <li><strong>Also send when a card is edited</strong> (off unless you switch it on) posts a card again after you change it &mdash; a corrected name, a new rating &mdash; marked <code>"event": "updated"</code>. cardlio waits until you have finished editing (about 20 seconds after the last change) so a card is not sent for every keystroke.</li>
+  </ul>
+  <p>Every post carries the card&rsquo;s <code>id</code>, which never changes, so your Zap or scenario can update the contact it already has instead of adding it twice &mdash; see <a href="#good-to-know">Good to know</a>.</p>
 
   <h2>2a. With Zapier</h2>
   <ol>
@@ -125,8 +130,10 @@ return { phone: dashed.replace(/ /g, "") };</pre>
   <p>One JSON object per card, sent as an HTTP <code>POST</code> with <code>Content-Type: application/json</code>. Every key is always present; a field the card does not have is an empty string (or an empty list).</p>
   <div class="table-wrap"><table>
     <tr><th>Field</th><th>What it holds</th></tr>
-    <tr><td><code>id</code></td><td>The card&rsquo;s permanent identifier. Stays the same for the life of the card &mdash; useful to recognise a card you have already received.</td></tr>
+    <tr><td><code>id</code></td><td>The card&rsquo;s permanent identifier. Stays the same for the life of the card &mdash; match on it to update a contact you already received.</td></tr>
+    <tr><td><code>event</code></td><td>Why this post was sent: <code>created</code> (the card was just saved), <code>updated</code> (it was edited &mdash; only with &ldquo;Also send when a card is edited&rdquo; on) or <code>sync</code> (from Send All Cards).</td></tr>
     <tr><td><code>scannedAt</code></td><td>When it was saved, ISO 8601 in UTC (<code>2026-10-03T08:15:00Z</code>).</td></tr>
+    <tr><td><code>modifiedAt</code></td><td>When the card was last changed, same format. Empty in the test contact.</td></tr>
     <tr><td><code>honorific</code>, <code>firstName</code>, <code>lastName</code></td><td>The name as printed: &ldquo;Capt.&rdquo;, &ldquo;Dr.&rdquo; go in <code>honorific</code>.</td></tr>
     <tr><td><code>title</code>, <code>company</code></td><td>Job title and company, as printed on the card.</td></tr>
     <tr><td><code>emails</code></td><td>A list of every address on the card, the main one first.</td></tr>
@@ -136,7 +143,7 @@ return { phone: dashed.replace(/ /g, "") };</pre>
     <tr><td><code>industry</code></td><td>The industry tag, from your own list if you set one up.</td></tr>
     <tr><td><code>vatNumber</code></td><td>The company&rsquo;s VAT or tax number when the card prints one, with its country prefix and no spaces (<code>IT01234567890</code>).</td></tr>
     <tr><td><code>eventTag</code></td><td>Where you met (Event mode), e.g. &ldquo;SMM 2026&rdquo;.</td></tr>
-    <tr><td><code>leadRating</code></td><td><code>Hot</code>, <code>Warm</code>, <code>Cold</code> or empty &mdash; as you rated the card when you saved it.</td></tr>
+    <tr><td><code>leadRating</code></td><td><code>Hot</code>, <code>Warm</code>, <code>Cold</code> or empty &mdash; your current rating of the card.</td></tr>
     <tr><td><code>leadInterests</code></td><td>A list of the interest chips you ticked (&ldquo;Demo requested&rdquo;, &ldquo;Pricing&rdquo;).</td></tr>
     <tr><td><code>notes</code></td><td>The card&rsquo;s notes, including a voice note you recorded.</td></tr>
     <tr><td><code>translatedTitle</code>, <code>translatedCompany</code>, <code>translatedAddress</code></td><td>Only if you translated a foreign-language card; otherwise empty.</td></tr>
@@ -151,6 +158,7 @@ return { phone: dashed.replace(/ /g, "") };</pre>
   "company" : "Meridian Shipping Pte Ltd",
   "country" : "Singapore",
   "emails" : [ "weiming.tan@example.com" ],
+  "event" : "created",
   "eventTag" : "Sea Asia 2026",
   "fax" : "",
   "firstName" : "Wei Ming",
@@ -163,6 +171,7 @@ return { phone: dashed.replace(/ /g, "") };</pre>
   "leadRating" : "Hot",
   "linkedin" : "",
   "mobile" : "+65 9123 4567",
+  "modifiedAt" : "",
   "notes" : "",
   "phone" : "",
   "postalCode" : "018961",
@@ -179,11 +188,11 @@ return { phone: dashed.replace(/ /g, "") };</pre>
   "wechat" : ""
 }</code></pre>
 
-  <h2>Good to know</h2>
+  <h2 id="good-to-know">Good to know</h2>
   <ul>
-    <li><strong>Sent once, when you save.</strong> Editing a card later, or changing its rating, does not post it again.</li>
-    <li><strong>No automatic retries.</strong> A duplicate lead is more annoying than a missing one. If a post fails, cardlio shows a banner with <strong>Send again</strong>, so nothing is lost silently.</li>
-    <li><strong>Avoid duplicates</strong> in your CRM with a &ldquo;find or create&rdquo; action matched on the email, or by storing cardlio&rsquo;s <code>id</code> in a custom field.</li>
+    <li><strong>When a card is sent.</strong> Once when you save it; again after an edit only if &ldquo;Also send when a card is edited&rdquo; is on; and on demand with Send All Cards.</li>
+    <li><strong>Update instead of duplicating.</strong> Store cardlio&rsquo;s <code>id</code> in a custom field and use a &ldquo;find or create&rdquo; (Zapier) or &ldquo;search, then update or create&rdquo; (Make) step matched on it &mdash; or on the email address. Then an <code>updated</code> or <code>sync</code> post changes the contact you have instead of adding a second one.</li>
+    <li><strong>Failures are retried &mdash; the right ones.</strong> If a post fails because of the network or the receiving server (no connection, a timeout, &ldquo;too many requests&rdquo;, a 5xx error), cardlio tries it again by itself the next times you open it: after about 1 minute, 5 minutes, 30 minutes, 2 hours and 12 hours. Any other failure &mdash; a wrong or expired address &mdash; is not retried; a banner with <strong>Send again</strong> keeps it until you act, so nothing is lost silently. (Before 3.2.23 no post was retried automatically.)</li>
     <li><strong>https only.</strong> The address must begin with <code>https://</code>. Zapier and Make put a secret token in the address itself &mdash; treat the whole address like a password.</li>
     <li><strong>Where your cards go.</strong> This is the only cardlio feature that sends your cards to a destination you choose, and it is off until you switch it on. Once a card reaches your Zapier or Make address, it is handled by that service under its terms &mdash; not by cardlio. No server of ours is in the path. See the <a href="privacy.html">privacy policy</a>.</li>
   </ul>
