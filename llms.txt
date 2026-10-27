@@ -22,6 +22,7 @@ Key facts:
 ## Reference
 
 - [Home](https://cardlio.app/): features overview
+- [What's new](https://cardlio.app/whats-new.html): every feature added, newest first
 - [Support & FAQ](https://cardlio.app/support.html): 22 answered questions
 - [CRM recipes for Zapier and Make](https://cardlio.app/crm.html): every field cardlio sends
 - [Privacy policy](https://cardlio.app/privacy.html)

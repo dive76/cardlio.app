@@ -706,3 +706,111 @@ a { color: var(--indigo); }
   }
 }
 
+
+/* ---------- home page, 2026-10 tidy: tiles, feature list, drawn mock-ups ----------
+   The release-note prose moved to whats-new.html; the home page keeps one
+   lead per section and short tiles. Everything below is plain CSS, no images,
+   no third-party requests. */
+.section-head { text-align: center; max-width: 680px; margin: 0 auto; }
+.section-head p.lead { margin-left: auto; margin-right: auto; }
+.tiles.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 860px) { .tiles.three { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .tiles, .tiles.three { grid-template-columns: minmax(0, 1fr); } }
+.tile p b { color: var(--ink); font-weight: 650; }
+
+.more-links {
+  margin-top: 30px; display: flex; flex-wrap: wrap; gap: 10px 28px;
+  justify-content: center; font-size: 15.5px; font-weight: 600;
+}
+.more-links a { text-decoration: none; }
+.more-links a:hover { text-decoration: underline; }
+.more-links .arr { display: inline-block; transition: transform 0.3s var(--ease-out); }
+.more-links a:hover .arr { transform: translateX(3px); }
+.fine { margin-top: 18px; color: var(--muted); font-size: 13.5px; }
+
+.feature-list { list-style: none; padding: 0; margin: 26px 0 0; display: grid; gap: 18px; }
+.feature-list li { display: flex; gap: 14px; align-items: flex-start; }
+.fl-icon {
+  flex: none; width: 36px; height: 36px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center; color: #fff;
+  background: linear-gradient(135deg, var(--indigo), var(--violet));
+}
+.fl-icon svg { width: 19px; height: 19px; }
+.feature-list h3 { font-family: var(--font-display); font-weight: 600; font-size: 17px; }
+.feature-list p { margin-top: 3px; color: var(--muted); font-size: 15px; text-wrap: pretty; }
+
+/* drawn panels: an answer from your network, a team list */
+.ask-mock, .team-mock {
+  background: var(--panel); border: 1px solid var(--panel-border);
+  border-radius: var(--radius); padding: 22px;
+  box-shadow: 0 30px 70px rgba(20, 16, 70, 0.14);
+}
+.am-q {
+  margin-left: auto; max-width: 82%; width: fit-content;
+  padding: 11px 15px; border-radius: 18px 18px 5px 18px;
+  color: #fff; font-size: 15px; line-height: 1.4;
+  background: linear-gradient(120deg, var(--indigo), var(--violet));
+}
+.am-a {
+  margin-top: 14px; padding: 16px; border-radius: 16px;
+  background: var(--bg-alt); border: 1px solid var(--panel-border);
+}
+.am-a p { font-size: 15px; color: var(--ink); line-height: 1.45; }
+.am-cites { margin-top: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.am-card {
+  display: flex; flex-direction: column; gap: 2px;
+  padding: 10px 12px; border-radius: 12px; background: var(--panel);
+  border: 1px solid var(--panel-border); border-left: 3px solid var(--indigo);
+}
+.am-card b { font-size: 14px; }
+.am-card i { font-style: normal; color: var(--muted); font-size: 12.5px; }
+.am-from { display: block; margin-top: 10px; color: var(--muted); font-size: 12.5px; }
+.am-from::before { content: "✓ "; color: #22a06b; font-weight: 800; }
+
+.tm-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 0 4px 12px; }
+.tm-head b { font-family: var(--font-display); font-size: 17px; }
+.tm-head span { color: var(--muted); font-size: 13px; }
+.tm-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 4px; border-top: 1px solid var(--panel-border);
+}
+.tm-row > div { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.tm-row b { font-size: 15px; }
+.tm-row i { font-style: normal; color: var(--muted); font-size: 13px; }
+.tm-mark { flex: none; width: 10px; height: 10px; border-radius: 50%; }
+.tm-mark.hot { background: #e5484d; }
+.tm-mark.warm { background: #f5a524; }
+.tm-mark.cold { background: #4c9fe8; }
+.tm-pill {
+  flex: none; font-size: 12.5px; font-weight: 650; padding: 5px 12px; border-radius: 999px;
+  color: #fff; background: linear-gradient(120deg, var(--indigo), var(--violet));
+}
+.tm-pill.taken { color: var(--muted); background: var(--bg-alt); border: 1px solid var(--panel-border); }
+
+/* guides: internal links to the long pages */
+.guides-section { padding: 72px 0; }
+.guides-title { text-align: center; font-size: clamp(24px, 3vw, 30px) !important; }
+.guides { margin-top: 26px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+@media (max-width: 860px) { .guides { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .guides { grid-template-columns: minmax(0, 1fr); } }
+.guide {
+  display: flex; flex-direction: column; gap: 4px; text-decoration: none;
+  padding: 18px 20px; border-radius: 16px; background: var(--panel);
+  border: 1px solid var(--panel-border); color: var(--ink);
+  transition: transform 0.35s var(--ease-out), border-color 0.35s ease;
+}
+.guide b { font-family: var(--font-display); font-weight: 600; font-size: 16.5px; }
+.guide b::after { content: " →"; color: var(--indigo); }
+.guide span { color: var(--muted); font-size: 14px; }
+.guide:hover { transform: translateY(-3px); border-color: rgba(79, 70, 229, 0.4); }
+
+/* whats-new.html: one block per release */
+.whats-new .release { padding-top: 10px; }
+.whats-new .release + .release { margin-top: 34px; padding-top: 30px; border-top: 1px solid var(--panel-border); }
+.whats-new .release-tag {
+  display: inline-block; margin: 0; font-family: var(--font-display);
+  font-size: 12.5px; font-weight: 650; letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 5px 12px; border-radius: 999px; color: #fff;
+  background: linear-gradient(120deg, var(--indigo), var(--violet));
+}
+.whats-new .release h2 { margin-top: 12px; font-size: 24px; }

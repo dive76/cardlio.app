@@ -492,153 +492,223 @@
     </div>
   </section>
 
-  <!-- ============================ ask your network (2.5.11) ============================ -->
-  <section class="section">
-    <div class="wrap reveal prose" style="max-width:760px;margin:0 auto;">
-      <div class="kicker">Ask</div>
-      <h2>Ask your network a question.</h2>
-      <p class="lead">&ldquo;Who did I meet in Singapore who works in shipping?&rdquo; Ask it the way you'd say it out loud, and cardlio answers &mdash; and lists the cards the answer came from, so you can check it rather than take its word.</p>
-      <p>It never asks a model to <em>find</em> the person. The model only decides what to search for, your own device does the searching, and the answer may name only cards that search actually found. An invented colleague has no card to attach to, so one can't appear. Names, job titles, companies, cities, industries, event tags and the notes you wrote yourself are all searched.</p>
-      <p>No account and nothing to pay per question. With Apple&rsquo;s Private Cloud Compute as your AI provider, Apple&rsquo;s larger model writes the answer from the few cards the search found; otherwise it runs on your device and works on a plane. Included with the app rather than sold as an extra. Needs Apple Intelligence.</p>
-
-      <h3>Straight into your CRM</h3>
-      <p>Every card you save can be posted to a web address you choose. Point it at a Zapier or Make hook and cards land in Salesforce, HubSpot, Pipedrive and most other systems; point it at your own server and do as you like with them. It stays off until you switch it on, the address is one you enter, and the card photo is never sent. It is the only feature that sends your cards to a destination you choose &mdash; and only because you told it to. <a href="crm.html">Step-by-step recipes for Zapier and Make &rarr;</a></p>
-
-      <h3>Tag the event afterwards</h3>
-      <p>Most people scan the stack on the flight home, long after the moment to switch on Event mode has gone. Now you can select a pile of cards and tag them all at once &mdash; on the Mac from the right-click menu, on iPhone and iPad from Select Multiple.</p>
+  <!-- ============================ ask: network, Siri, camera, PCC ============================ -->
+  <section class="section" id="ask">
+    <div class="wrap split">
+      <div class="reveal">
+        <div class="kicker">Ask</div>
+        <h2>Ask your network a question.</h2>
+        <p class="lead">&ldquo;Who did I meet in Singapore who works in shipping?&rdquo; Ask it the way you'd say it, and cardlio answers with the cards the answer came from &mdash; so you can check it rather than take its word. Your own device does the searching, so an invented colleague can't appear.</p>
+        <ul class="feature-list">
+          <li>
+            <span class="fl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h1.5M7.5 8v8M11 5v14M14.5 8.5v7M18 10.5v3M20.5 12h.01"/></svg></span>
+            <div><h3>Ask Siri about the people you met</h3><p>&ldquo;Text the person from Tristar&rdquo; &mdash; Siri knows your cards as people, from the index already on your device.</p></div>
+          </li>
+          <li>
+            <span class="fl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8.5A2.5 2.5 0 0 1 6.5 6h1.6l1.4-2h5l1.4 2h1.6A2.5 2.5 0 0 1 20 8.5v8a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 16.5z"/><circle cx="12" cy="12.5" r="3.4"/></svg></span>
+            <div><h3>Point the camera at a card</h3><p>Camera Control or visual intelligence, tap Search, and cardlio opens with the name and company already read.</p></div>
+          </li>
+          <li>
+            <span class="fl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 18.5a4.5 4.5 0 0 1-.6-9 6 6 0 0 1 11.4 1.6 3.8 3.8 0 0 1-.8 7.4z"/><path d="m9.5 13.5 1.8 1.8 3.2-3.3"/></svg></span>
+            <div><h3>Apple's Private Cloud Compute, no key needed</h3><p>Apple's larger model polishes names, titles and companies and reads the address from the photo &mdash; no account, and Apple keeps nothing.</p></div>
+          </li>
+        </ul>
+        <p class="fine">Siri, the camera hand-off and Private Cloud Compute need iOS&nbsp;27 or macOS&nbsp;27 and Apple Intelligence.</p>
+      </div>
+      <div class="visual reveal" style="--d:0.1s">
+        <div class="ask-mock" aria-hidden="true">
+          <div class="am-q">Who did I meet in Singapore who works in shipping?</div>
+          <div class="am-a">
+            <p>Two people: <b>Anna Lim</b>, chartering manager at Lumen Shipping, and <b>Ravi Menon</b>, operations at Kestrel Bulk.</p>
+            <div class="am-cites">
+              <span class="am-card"><b>Anna Lim</b><i>Lumen Shipping &middot; Singapore</i></span>
+              <span class="am-card"><b>Ravi Menon</b><i>Kestrel Bulk &middot; Singapore</i></span>
+            </div>
+            <span class="am-from">From 2 cards in your library</span>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- ============================ iOS 27 / macOS 27 (2.6) ============================ -->
-  <section class="section alt">
-    <div class="wrap reveal prose" style="max-width:760px;margin:0 auto;">
-      <div class="kicker">Made for iOS&nbsp;27 and macOS&nbsp;27</div>
-      <h2>Ask Siri about the people you met.</h2>
-      <p class="lead">Siri now knows your cards as people. Ask &ldquo;who did I meet at the expo who does logistics?&rdquo; and it answers from your library; say &ldquo;text the person from Tristar&rdquo; and the card goes straight to Messages, or to Mail on the Mac. It's the same index Spotlight already keeps &mdash; nothing leaves your device.</p>
-      <h3>Point the camera at a card</h3>
-      <p>On iPhone, hold the Camera Control or open visual intelligence, tap Search, and cardlio appears with the name and company already read. Tap it and the review sheet opens with every card on that frame &mdash; nothing is saved until you've looked at it.</p>
-      <h3>Apple's Private Cloud Compute, no key needed</h3>
-      <p>Refine name, title and company with Apple's much larger model &mdash; no API key, no account, and Apple's servers keep nothing: the request is encrypted to the machines that answer it and erased when they're done. Pick it as the provider in Settings and it runs the Refine button, the pronunciation guide, industry tags and the automatic polish. Apple sets a daily allowance per person; cardlio shows where you stand, and when it's reached the polish simply carries on on your device. Claude and Gemini stay available with your own key, and Company Insights keeps using them because it reads the live web.</p>
-      <p>On earlier versions of iOS and macOS everything else works exactly as before.</p>
+  <!-- ============================ after the fair ============================ -->
+  <section class="section alt" id="after-the-fair">
+    <div class="wrap">
+      <div class="reveal section-head">
+        <div class="kicker">Trade shows</div>
+        <h2>After the fair, in fewer steps.</h2>
+        <p class="lead">The days after a fair decide whether a stack of cards turns into business. Rate people while you scan, hand on one report, and work through the follow-up emails in one sitting.</p>
+      </div>
+      <div class="tiles three" id="leads">
+        <div class="tile reveal">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21c-3.6 0-6-2.5-6-5.8 0-3.4 2.6-5.2 3.4-8.2.9 1.6 1.6 2.6 2.9 3.3.3-1.7 1-3.5 2.2-5.3 1.7 2.7 3.5 5.3 3.5 9.4 0 3.9-2.6 6.6-6 6.6z"/></svg></div>
+          <h3>Hot, Warm or Cold &mdash; at the stand</h3>
+          <p>One tap at the top of every scanned card, before the next person walks up. Add your own interest tags for what they asked about.</p>
+        </div>
+        <div class="tile reveal" style="--d:0.06s">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg></div>
+          <h3>Tag the event &mdash; even afterwards</h3>
+          <p>Event mode stamps every scan. Forgot to switch it on? Select the pile on the flight home and tag them all at once.</p>
+        </div>
+        <div class="tile reveal" style="--d:0.12s">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3.5h7l4.5 4.5v12.5H7z"/><path d="M14 3.5V8h4.5M9.5 12.5h6M9.5 16h6"/></svg></div>
+          <h3>One report per fair</h3>
+          <p><b>Event Report</b> lists everyone you met, hot leads first, with ratings, interests and who still needs a follow-up &mdash; as a PDF or a CSV.</p>
+        </div>
+        <div class="tile reveal" style="--d:0.18s">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="13" rx="2.5"/><path d="m4 7 8 6 8-6"/></svg></div>
+          <h3>The follow-ups, one after another</h3>
+          <p><b>Follow-Up Run</b> drafts an email for each person on your device; you read, change and send it from your own mail app. cardlio sends nothing.</p>
+        </div>
+        <div class="tile reveal" style="--d:0.24s">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4.5v4h-4"/></svg></div>
+          <h3>Keep in touch</h3>
+          <p>Say how often you want to be in touch with someone; cardlio shows who is due and drafts a short note. No notifications, no pipeline.</p>
+        </div>
+        <div class="tile reveal" style="--d:0.3s">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4.5h5.5V10"/><path d="M19.5 4.5 11 13"/><path d="M18 14v4.5a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 4 18.5v-11A1.5 1.5 0 0 1 5.5 6H10"/></svg></div>
+          <h3>Straight into your CRM</h3>
+          <p>Post each card to a Zapier or Make hook and it lands in Salesforce, HubSpot or Pipedrive. Off until you switch it on; the photo is never sent.</p>
+        </div>
+      </div>
+      <p class="more-links reveal"><a href="trade-shows.html">The trade-show guide <span class="arr">&rarr;</span></a><a href="crm.html">CRM recipes for Zapier and Make <span class="arr">&rarr;</span></a></p>
     </div>
   </section>
 
-  <!-- ============================ 3.2.13 ============================ -->
-  <section class="section" id="after-the-fair">
-    <div class="wrap reveal prose" style="max-width:760px;margin:0 auto;">
-      <div class="kicker">New since 3.2.13</div>
-      <h2>After the fair, in fewer steps.</h2>
-      <p class="lead">The days after a fair decide whether a stack of cards turns into business. cardlio now carries you through them: rate people while you scan, hand on one report, and work through the follow-up emails in one sitting.</p>
-      <h3>Rate while the conversation is fresh</h3>
-      <p>In Event mode, <b>Hot</b>, <b>Warm</b> or <b>Cold</b> now sits at the top of each scanned card in the review &mdash; one tap, before the next person walks up to the stand.</p>
-      <h3>One report per fair</h3>
-      <p><b>Event Report</b> puts everyone you met at one event in one document, hot leads first, with your rating, what they were interested in and whether you still owe them a follow-up. Export it as a PDF for whoever you report your leads to, or as a CSV for a spreadsheet or CRM.</p>
-      <h3>The follow-ups, one after another &mdash; now on iPhone too</h3>
-      <p><b>Follow-Up Run</b> takes you through everyone from one event: a drafted email for each, written on your device by Apple Intelligence where it is available, which you read, change and send from your own mail app &mdash; then on to the next. People you have already followed up are left out. cardlio itself sends nothing.</p>
-      <h3>Your cards in Contacts</h3>
-      <p>On iPhone and iPad, switch on <b>Show cards in Contacts</b> and your scanned cards appear in the Contacts app as cardlio's own read-only list, so Phone, Mail and Messages find them by name. Nothing is copied into your iCloud, Google or Outlook contacts, your ratings and notes stay in cardlio, and switching it off removes the list at once.</p>
-      <h3>Check a VAT number</h3>
-      <p>cardlio reads a company's VAT or tax number &mdash; P.IVA, USt-IdNr., TVA, BTW, VAT No. &mdash; into a field of its own. Tap <b>Check in VIES</b> and the European Commission confirms an EU number is valid, with the registered name and address. Only the number is sent, and only when you tap.</p>
-      <h3>Get a ride to the address</h3>
-      <p>On iPhone, <b>Get a Ride</b> under a card's address opens your ride app or Maps with the destination filled in where the app allows it. The address is copied too, for apps that can't take it.</p>
-      <h3>Two offices on one card</h3>
-      <p>When a card prints a second office, the first one fills the address and the other goes into the notes under <b>Other locations</b>, word for word, instead of being mixed into one street.</p>
-      <h3>Phone numbers the way your CRM wants them</h3>
-      <p><b>Contact format</b> in Settings chooses how numbers are stored &mdash; International (+39 030 231 0794), Compact or Plain, always the full international number &mdash; how an extension is written, and whether surname, company and city go in capitals. <b>Apply to All Cards</b> brings the existing library in line after telling you how many cards change.</p>
-      <h3>The registered name, one tap away</h3>
-      <p>After a VIES check, <b>Apply to card</b> copies the registered company name and address into the fields you tick &mdash; a card from a branch office can keep its own address and still take the registered name.</p>
-      <h3>Your CRM stays up to date</h3>
-      <p>The webhook can now send the cards you already have with <b>Send All Cards</b>, send a card again after you edit it, and retry a post that failed because of the network. Every post says whether the card is new or updated, so your CRM can update the contact instead of adding it twice. <a href="crm.html">How to set it up &rarr;</a></p>
+  <!-- ============================ team library ============================ -->
+  <section class="section" id="team">
+    <div class="wrap split">
+      <div class="reveal">
+        <div class="kicker">Team library</div>
+        <h2>One pile of cards for the whole stand.</h2>
+        <p class="lead">At a fair you are rarely scanning alone. A team is a shared library for one event: everyone adds cards, reads them in full, and claims the ones they will follow up &mdash; so two people never chase the same lead.</p>
+        <ul class="checks">
+          <li><span><b>Invite by Apple Account</b> &mdash; only the people on the list can open it, and nothing is shared until someone sends it</span></li>
+          <li><span><b>Claim a lead, or all of them</b> &mdash; your own copy lands in your library and the team sees it is taken</span></li>
+          <li><span><b>Colleagues on Windows or Android</b> &mdash; they join at <a href="https://team.cardlio.app">team.cardlio.app</a> in any browser, straight to Apple's iCloud</span></li>
+        </ul>
+      </div>
+      <div class="visual reveal" style="--d:0.1s">
+        <div class="team-mock" aria-hidden="true">
+          <div class="tm-head"><b>Hamburg fair</b><span>24 cards &middot; 3 people</span></div>
+          <div class="tm-row"><span class="tm-mark hot"></span><div><b>Elena Vargas</b><i>Solstice Design Co.</i></div><span class="tm-pill taken">Claimed &middot; Tom</span></div>
+          <div class="tm-row"><span class="tm-mark hot"></span><div><b>Yuki Hamasaki</b><i>Kaito Marine K.K.</i></div><span class="tm-pill">Claim</span></div>
+          <div class="tm-row"><span class="tm-mark warm"></span><div><b>Jonas Berg</b><i>Nordlys Freight AS</i></div><span class="tm-pill">Claim</span></div>
+          <div class="tm-row"><span class="tm-mark cold"></span><div><b>Priya Nair</b><i>Coral Health</i></div><span class="tm-pill taken">Claimed &middot; you</span></div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- ============================ cards that carry links (2.6) ============================ -->
-  <!-- ============================ team library (3.0) ============================ -->
-  <!-- ============================ 3.2.2 + 3.2.4 ============================ -->
+  <!-- ============================ the contact sheet ============================ -->
   <section class="section alt" id="contact-sheet">
-    <div class="wrap reveal prose" style="max-width:760px;margin:0 auto;">
-      <div class="kicker">New in 3.2.2 and 3.2.4</div>
-      <h2>Every card opens as a clean contact sheet.</h2>
-      <p class="lead">Open a saved card and it reads like a contact, not a form. Where you met, the lead rating, the follow-up and keep in touch sit as chips at the top &mdash; tap one to set it. Each e-mail and number has its own row with a call or write button beside it, and the address reads the way an envelope does, in the order its country writes it, with the local time there.</p>
-      <img class="shot" src="assets/editor.png" width="1600" height="1128" style="display:block;width:100%;height:auto;margin-top:28px;" alt="A saved card in cardlio on iPhone: chips for where you met, lead rating, follow-up and keep in touch at the top; one row per e-mail and number with a call or write button; the address as an envelope reads it, found on Apple Maps, with Edit and More" loading="lazy">
-      <p>Change the address, tap Done, and cardlio checks the new one on Apple Maps straight away. Check again, open in Maps and remove from the map are one tap away in the &ctdot; menu.</p>
-      <h3>Your card, wherever people look</h3>
-      <p>Turn your own card into an e-mail signature with a <b>Save my contact</b> link and an optional QR code, or into a background for Zoom, Teams and Meet with a QR code the people on the call can scan to save you. Both are free.</p>
-      <h3>Voice notes that spell names right</h3>
-      <p>Say what you talked about while it is fresh &mdash; hold the microphone, or tap to start and tap to stop, now on the Mac too. cardlio already knows whose card it is, so the name and company come out as printed on the card, not as speech recognition guessed them. It all runs on your device.</p>
-      <h3>Lock the library</h3>
-      <p>An optional Face&nbsp;ID, Touch&nbsp;ID or passcode lock, in Settings. On the Mac it also locks when the Mac sleeps. Off unless you switch it on.</p>
-      <h3>Coming from another card app?</h3>
-      <p>cardlio reads the vCard, CSV and Excel exports of other scanner apps, Outlook and Google, skips anyone already in your library and tidies the phone numbers on the way in. Your old app's work is not lost, and nothing has to be retyped.</p>
+    <div class="wrap split rev">
+      <div class="reveal">
+        <div class="kicker">Every card</div>
+        <h2>Every card opens as a clean contact sheet.</h2>
+        <p class="lead">Where you met, the rating and the follow-up sit as chips at the top; every email and number has its own row with a call or write button.</p>
+        <ul class="checks">
+          <li><span><b>The address as its country writes it</b> &mdash; checked on Apple Maps, with the local time there</span></li>
+          <li><span><b>Voice notes that spell names right</b> &mdash; say what you talked about; the name comes out as printed on the card</span></li>
+          <li><span><b>Chinese and Japanese cards translated</b> &mdash; on your device, kept with the card and searchable</span></li>
+          <li><span><b>VAT numbers checked in VIES</b> &mdash; and the registered name copied in with one tap</span></li>
+          <li><span><b>Two offices kept apart</b> &mdash; and on iPhone, Get a Ride to the address</span></li>
+        </ul>
+      </div>
+      <div class="visual reveal" style="--d:0.1s">
+        <img class="shot" src="assets/editor.png" width="1600" height="1128" style="width:100%;height:auto;" alt="A saved card in cardlio on iPhone: chips for where you met, lead rating, follow-up and keep in touch at the top; one row per e-mail and number with a call or write button; the address as an envelope reads it, found on Apple Maps" loading="lazy">
+      </div>
     </div>
   </section>
 
-  <section class="section" id="leads">
-    <div class="wrap reveal prose" style="max-width:760px;margin:0 auto;">
-      <div class="kicker">New in 3.2</div>
-      <h2>Two hundred cards. Which five do you call first?</h2>
-      <p class="lead">A stack of cards is not a list of leads until someone says which ones matter. Rate a card <b>Hot</b>, <b>Warm</b> or <b>Cold</b> while the conversation is still in your head &mdash; in the review right after the scan, or later on the card &mdash; and add your own interest tags for what they asked about.</p>
-      <h3>Ratings that travel</h3>
-      <p>A flame, a sun or a snowflake marks each card in the library, and you can search by rating or by interest. The rating goes where your leads go: into the CSV for Salesforce or Outlook, to your CRM webhook, and to the team library so the stand sees who is worth a call. It is never written into a vCard &mdash; a vCard is also how you share a contact, and your opinion of someone is not part of it.</p>
-      <h3>Keep in touch</h3>
-      <p>For the people worth more than one email, tell cardlio how often you want to be in touch. It shows who is due, drafts a short note on your own device, and can hand a repeating reminder to Reminders. cardlio sends no notifications of its own and tracks no pipeline &mdash; it only remembers what you asked it to.</p>
-      <h3>Who is this?</h3>
-      <p>Before the call, one tap in Company Insights looks the person up on the web with your own Claude or Gemini key, and shows what it found together with its sources. It runs only when you tap, sends the name, company, title, website and city &mdash; never an e-mail address or a phone number &mdash; and saves nothing to the card unless you say so.</p>
+  <!-- ============================ more ways in ============================ -->
+  <section class="section" id="more-ways-in">
+    <div class="wrap">
+      <div class="reveal section-head">
+        <div class="kicker">Not only paper</div>
+        <h2>Their QR code, their NFC card, a screenshot, the back of the card.</h2>
+      </div>
+      <div class="tiles">
+        <div class="tile tile-qr reveal">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><path d="M13.5 13.5h3.2v3.2h-3.2z"/><path d="M20.5 13.5v3.2"/><path d="M13.5 20.5h3.2"/><path d="M20.5 20.5h.01"/></svg></div>
+          <h3>A QR contact page</h3>
+          <p>Hosted contact pages are recognised, the printed website stays the website, and the details are fetched only when you tap.</p>
+        </div>
+        <div class="tile tile-nfc reveal" style="--d:0.08s">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M8.6 15.4a4.8 4.8 0 0 1 0-6.8"/><path d="M5.8 18.2a8.8 8.8 0 0 1 0-12.4"/><path d="M15.4 8.6a4.8 4.8 0 0 1 0 6.8"/><path d="M18.2 5.8a8.8 8.8 0 0 1 0 12.4"/><circle cx="12" cy="12" r="1.3" fill="currentColor" stroke="none"/></svg></div>
+          <h3>Their NFC card</h3>
+          <p>On iPhone, tap a Popl, Linq, Mobilo or cardlio tag: a contact is added on the spot, a link to a contact page is offered first.</p>
+        </div>
+        <div class="tile reveal" style="--d:0.16s">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6.5" y="3" width="11" height="18" rx="2.5"/><path d="M10.5 18h3"/><path d="M9.5 7.5h5M9.5 10.5h5M9.5 13.5h3"/></svg></div>
+          <h3>A screenshot</h3>
+          <p>Share a screenshot of an email signature or a chat; cardlio keeps the contact block and leaves the rest of the screen out.</p>
+        </div>
+        <div class="tile reveal" style="--d:0.24s">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="6.5" width="13" height="9" rx="2"/><path d="M7.5 18.5h11a2 2 0 0 0 2-2v-7"/></svg></div>
+          <h3>Both sides of the card</h3>
+          <p>An address on the back is read too, and an email whose domain doesn't exist is caught, with the fix one tap away.</p>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="section alt" id="team">
-    <div class="wrap reveal prose" style="max-width:760px;margin:0 auto;">
-      <div class="kicker">New in 3.0 &middot; more in 3.1</div>
-      <h2>One pile of cards for the whole stand.</h2>
-      <p class="lead">At a fair you are rarely scanning alone. A <b>team</b> is a shared library for one event or project: everyone on it adds cards, reads them in full, and claims the ones they will follow up &mdash; so two people never chase the same lead.</p>
-      <h3>Invite by Apple Account, nothing shared by accident</h3>
-      <p>Create a team, add each colleague by the e-mail address or phone number of their Apple Account, and send them the invite link. The link opens the team only for people on the list. Nothing you scan is shared automatically: a card reaches the team when someone deliberately sends it there &mdash; a selection on the Mac, Select Multiple on iPhone, or the whole day's cards from the event chip.</p>
-      <h3>Claim a lead &mdash; or all of them</h3>
-      <p>Tap a team card to read it in full &mdash; photo, every field, who shared it and when. Claiming it puts your own copy in your library and shows the team it is taken; <b>Add all unclaimed</b> takes every open lead in one go, and a card a colleague already claimed can still be added to your library as a copy. Pull down, or press Refresh, to see what the stand added since. The team keeps a smaller photo than your original, so it stays light on everyone's iCloud.</p>
-      <h3>Colleagues on Windows or Android</h3>
-      <p><a href="https://team.cardlio.app">team.cardlio.app</a> opens the team in any browser, and it works both ways. Colleagues sign in with their Apple Account, join from the invite, search the cards, claim leads &mdash; one or all &mdash; and download them as vCard, CSV, or everything as one ZIP with the photos. They can add people they met by typing them in or dropping a vCard file, and fix a typo for the whole team. New cards arrive while the page is open, and it installs like an app on a Windows PC or an Android phone. Like the app, it talks to Apple's iCloud directly &mdash; there is no server of ours in between, and we never see a team.</p>
+  <!-- ============================ everyday ============================ -->
+  <section class="section alt" id="caller-id">
+    <div class="wrap">
+      <div class="reveal section-head">
+        <div class="kicker">On iPhone</div>
+        <h2>The phone rings, and you already know who it is.</h2>
+        <p class="lead">Scan someone's card and their name and company appear on the incoming-call screen. Other caller-ID apps look your calls up on a server; cardlio hands your cards' numbers to iOS and nothing leaves the phone.</p>
+      </div>
+      <div class="tiles three">
+        <div class="tile reveal">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5c3-1 4-4 6-4s1 3 3 3 2.5-2 4-2 2 1.5 3 1.5"/><path d="m14.5 4.5 3 3-7 7H7.5v-3z"/></svg></div>
+          <h3>Your card in every email</h3>
+          <p>An email signature with a Save my contact link, and a Zoom, Teams or Meet background with your QR code. Both free.</p>
+        </div>
+        <div class="tile reveal" style="--d:0.06s">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3.5" width="14" height="17" rx="2.5"/><circle cx="12" cy="10" r="2.6"/><path d="M8 16.5c.8-1.6 2.3-2.4 4-2.4s3.2.8 4 2.4"/></svg></div>
+          <h3>Your cards in Contacts</h3>
+          <p>Phone, Mail and Messages find scanned cards by name, as cardlio's own read-only list. Nothing is copied into your address book.</p>
+        </div>
+        <div class="tile reveal" style="--d:0.12s">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7.5 10.5 12 15l4.5-4.5"/><path d="M4.5 16v2a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-2"/></svg></div>
+          <h3>Coming from another card app?</h3>
+          <p>cardlio reads their vCard, CSV and Excel exports, skips anyone you already have and tidies the phone numbers on the way in.</p>
+        </div>
+        <div class="tile reveal" style="--d:0.18s">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4.5h3.2l1.6 4-2 1.3a10 10 0 0 0 6.4 6.4l1.3-2 4 1.6V19a1.5 1.5 0 0 1-1.6 1.5C10.4 20 4 13.6 3.5 6.1A1.5 1.5 0 0 1 5 4.5z"/></svg></div>
+          <h3>Numbers the way your CRM wants them</h3>
+          <p>Choose International, Compact or Plain, how extensions are written and which fields go in capitals &mdash; then apply it to every card.</p>
+        </div>
+        <div class="tile reveal" style="--d:0.24s">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></svg></div>
+          <h3>Lock the library</h3>
+          <p>An optional Face&nbsp;ID, Touch&nbsp;ID or passcode lock; on the Mac it also locks when the Mac sleeps.</p>
+        </div>
+        <div class="tile reveal" style="--d:0.3s">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="4.5" rx="1.5"/><path d="M5 9v9a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V9M10 13h4"/></svg></div>
+          <h3>A backup that's yours</h3>
+          <p>The whole library in one zip &mdash; photos, both sides, every field and a vCard per contact &mdash; in open formats.</p>
+        </div>
+      </div>
+      <p class="more-links reveal"><a href="whats-new.html">Everything that's new, in detail <span class="arr">&rarr;</span></a></p>
     </div>
   </section>
 
-  <section class="section">
-    <div class="wrap reveal prose" style="max-width:760px;margin:0 auto;">
-      <div class="kicker">New in 2.6</div>
-      <h2>Their QR code, their NFC card, a screenshot, the back of the card.</h2>
-      <p class="lead">More and more cards carry a QR code that opens a hosted contact page rather than a contact. cardlio recognises those, keeps the printed website as the website, and offers to fetch the contact details &mdash; one tap, and only when you say so, because the visit reaches the card owner's provider.</p>
-      <h3>A screenshot works too</h3>
-      <p>Share a screenshot of an e-mail signature, a chat message or a profile into cardlio and it reads the whole screen, keeping the block that carries the contact &mdash; name, title, company, phones, e-mail, address. The subject line and the rest of the screen are left out. On iPhone the system's text reader sometimes misses small grey type and links outright; cardlio spots the gap and re-reads those lines close up, and marks anything it could only read the quick way for a check.</p>
-      <h3>Tap their NFC business card</h3>
-      <p>On iPhone, More &rarr; Tap NFC Card&hellip; reads a Popl, Linq, Mobilo or cardlio tag. A tag that carries the contact is added on the spot; a tag that links to a contact page is offered first, exactly like a QR link. Two cardlio users need no network at all &mdash; the card is inside the link.</p>
-      <h3>Address on the back? Both sides count</h3>
-      <p>Refine sends the front and the back of the card to Claude, Gemini or Apple's model, so an address printed on the back is read too. The built-in reader handles building names like &ldquo;One JLT&rdquo; and district names like &ldquo;Jumeirah Lakes Towers&rdquo; properly, and files a P.O. Box where it belongs.</p>
-      <h3>E-mail addresses are checked</h3>
-      <p>When an e-mail's domain doesn't exist &mdash; usually one misread letter &mdash; the review sheet says so and offers the corrected address with one tap. Only the domain name leaves your device, to the same resolver every app uses.</p>
-    </div>
-  </section>
-
-  <!-- ============================ follow-ups (2.5) ============================ -->
-  <!-- ============================ caller ID ============================ -->
-  <section class="section alt">
-    <div class="wrap reveal prose" style="max-width:760px;margin:0 auto;">
-      <div class="kicker">On iPhone</div>
-      <h2>The phone rings, and you already know who it is.</h2>
-      <p class="lead">Scan someone's card and their number stops arriving as a stranger. When they call, iPhone shows their name and company right on the incoming-call screen &mdash; the same place a saved contact would appear, without adding anyone to your address book.</p>
-      <p>Every caller-ID app you have ever installed did this by sending your calls to a server to be looked up. cardlio doesn't. The numbers from your own cards are handed to iOS through Apple's own Call&nbsp;Directory and stay on the phone: nothing is uploaded, and no lookup service ever learns who is calling you.</p>
-      <p>Switch it on in cardlio's settings and once in iOS Settings, and every card you scan from then on joins it. Switch it off whenever you like. iPhone only &mdash; macOS has no equivalent to hook into.</p>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="wrap reveal prose" style="max-width:760px;margin:0 auto;">
-      <div class="kicker">New in 2.5</div>
-      <h2>The card was never the point. The email after it was.</h2>
-      <p class="lead">Mark the people you owe an email while you're still reviewing the scan &mdash; one tap, and only for the ones that mattered. cardlio never guesses who was important; you decide, at the one moment you still remember the conversation.</p>
-      <p>Afterwards a dot marks them in your library and a single filter shows you everyone still waiting. Hand any of them to Reminders and the person, the company and where you met come along. cardlio doesn't read your mail and never claims a message was sent &mdash; the list is yours to clear.</p>
-      <h3>Cards you couldn't read before</h3>
-      <p>Tap Translate on a Chinese or Japanese card and the job title, company and address arrive in your language &mdash; on your own device, with the card keeping exactly what was printed on it. The translation <b>stays with the card</b>: it syncs to your other devices, exports with the contact, and you can search it &mdash; typing &ldquo;Yusen Building&rdquo; finds the card that prints &#37109;&#33337;&#12499;&#12523;. Names stay as they were written, and become searchable in the Latin alphabet too: typing &ldquo;shiquan&rdquo; finds &#40658;&#22763;&#37795;.</p>
-      <h3>A copy that's yours</h3>
-      <p>Back up your whole library to one zip &mdash; photos, both sides, every field, plus a vCard per contact &mdash; and restore it on any Mac or iPhone. Open formats, so even without cardlio the photos are photos and the contacts are contacts.</p>
+  <!-- ============================ guides ============================ -->
+  <section class="section guides-section">
+    <div class="wrap reveal">
+      <h2 class="guides-title">Guides</h2>
+      <div class="guides">
+        <a class="guide" href="trade-shows.html"><b>Trade shows</b><span>Event mode, ratings, one report, the follow-ups</span></a>
+        <a class="guide" href="scan-a-stack.html"><b>Scan a stack</b><span>Several cards read from one photo</span></a>
+        <a class="guide" href="business-cards-to-crm.html"><b>Cards into your CRM</b><span>Salesforce, HubSpot, Pipedrive and more</span></a>
+        <a class="guide" href="private-offline.html"><b>Private &amp; offline</b><span>What stays on your device, and what doesn't</span></a>
+        <a class="guide" href="no-subscription.html"><b>No subscription</b><span>One purchase, every export included</span></a>
+        <a class="guide" href="whats-new.html"><b>What's new</b><span>Everything added to cardlio, newest first</span></a>
+      </div>
     </div>
   </section>
 
@@ -713,6 +783,7 @@
       <a href="trade-shows.html">Trade shows</a>
       <a href="business-cards-to-crm.html">CRM</a>
       <a href="no-subscription.html">No subscription</a>
+      <a href="whats-new.html">What's new</a>
     </div>
   </footer>
 </div>
