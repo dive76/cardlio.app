@@ -154,6 +154,24 @@
     box-shadow: 0 6px 18px var(--pg-g1);
   }
   .cardview h1 { font-size: 24px; letter-spacing: -0.02em; margin: 0; }
+  /* No photo: an accent rule and the company as a small heading take the
+     photo's place, so the card is balanced without it. */
+  .cardview.no-photo { padding-top: 30px; }
+  .cardview.no-photo::before {
+    content: ""; display: block; width: 44px; height: 4px; border-radius: 2px;
+    margin: 0 auto 18px;
+    background: linear-gradient(90deg, var(--cv-a1), var(--cv-a2));
+  }
+  .cardview .org {
+    font-size: 12.5px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--cv-a1); margin-bottom: 8px;
+  }
+  .cardview.no-photo h1 { font-size: 27px; }
+  .cardview.no-photo .role { margin-top: 6px; }
+  @media (prefers-color-scheme: dark) {
+    .cardview .org { color: var(--cv-a2); }
+  }
+
   .cardview .role { color: var(--cv-muted); font-size: 15px; margin-top: 4px; }
   .cardview .addr { color: var(--cv-muted); font-size: 13px; margin-top: 14px; white-space: pre-line; }
   .cardview .add {
@@ -238,6 +256,8 @@
     border: 3px solid var(--cv-card-bg);
   }
   .cardview.lay-banner .brand { text-align: center; }
+  .cardview.lay-banner.no-photo { padding-top: 0; }
+  .cardview.lay-banner.no-photo::before { width: auto; height: 92px; border-radius: 0; margin: 0 -26px 22px; }
 
   /* Minimal: typographic, monochrome — accent-independent on purpose. */
   .cardview.lay-mono { border: 1px solid rgba(0,0,0,0.09); box-shadow: 0 8px 24px rgba(0,0,0,0.05); }
@@ -246,6 +266,8 @@
     background: var(--cv-ink); box-shadow: none;
     font-weight: 600;
   }
+  .cardview.lay-mono .org { color: var(--cv-ink); }
+  .cardview.lay-mono.no-photo::before { background: var(--cv-ink); }
   .cardview.lay-mono .role {
     text-transform: uppercase; letter-spacing: 0.09em; font-size: 12px; margin-top: 8px;
   }
@@ -278,6 +300,8 @@
     box-shadow: 0 18px 44px rgba(0,0,0,0.55), inset 0 0 0 1px rgba(255,255,255,0.12);
   }
   .cardview.lay-bold .role { color: rgba(255,255,255,0.78); }
+  .cardview.lay-bold .org { color: rgba(255,255,255,0.85); }
+  .cardview.lay-bold.no-photo::before { background: rgba(255,255,255,0.7); }
   .cardview.lay-bold .addr { color: rgba(255,255,255,0.62); }
   .cardview.lay-bold .avatar {
     background: rgba(255,255,255,0.14);
@@ -920,11 +944,6 @@ function esc(s) {
     c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 }
 
-function initials(name) {
-  return (name || "").split(/\s+/).filter(Boolean).slice(0, 2)
-    .map(w => w[0].toUpperCase()).join("") || "☺";
-}
-
 function renderCard(root, card, rawVCard) {
   const roleBits = [card.title, card.org].filter(Boolean).join(" · ");
   const tel = card.tels.find(t => t.kind === "mobile") || card.tels[0];
@@ -940,10 +959,22 @@ function renderCard(root, card, rawVCard) {
     const href = /^https?:\/\//i.test(card.url) ? card.url : "https://" + card.url;
     actions += `<a href="${esc(href)}" target="_blank" rel="noopener">Website</a>`;
   }
-  root.innerHTML = `
-    <div class="avatar">${card.photo ? "" : esc(initials(card.name))}</div>
+  // No photo (every QR code, NFC tag and widget link — a photo would make
+  // the code too dense): no empty circle with initials, which read as a
+  // missing picture (2026-11-10, a client). The page is laid out without
+  // one instead — the company heads the card, the title sits under the
+  // name — so it looks designed that way.
+  const photoLess = !card.photo;
+  root.classList.toggle("no-photo", photoLess);
+  const head = photoLess
+    ? `${card.org ? `<div class="org">${esc(card.org)}</div>` : ""}
     <h1>${esc(card.name || "Contact")}</h1>
-    ${roleBits ? `<div class="role">${esc(roleBits)}</div>` : ""}
+    ${card.title ? `<div class="role">${esc(card.title)}</div>` : ""}`
+    : `<div class="avatar"></div>
+    <h1>${esc(card.name || "Contact")}</h1>
+    ${roleBits ? `<div class="role">${esc(roleBits)}</div>` : ""}`;
+  root.innerHTML = `
+    ${head}
     ${card.address ? `<div class="addr">${esc(card.address)}</div>` : ""}
     <button class="add" id="addBtn">Add to Contacts</button>
     ${actions ? `<div class="row">${actions}</div>` : ""}
