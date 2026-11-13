@@ -154,8 +154,8 @@
     box-shadow: 0 6px 18px var(--pg-g1);
   }
   .cardview h1 { font-size: 24px; letter-spacing: -0.02em; margin: 0; }
-  /* No photo: an accent rule and the company as a small heading take the
-     photo's place, so the card is balanced without it. */
+  /* No photo: an accent rule takes the photo's place, so the card is
+     balanced without it. The company sits under the role (2026-11-13). */
   .cardview.no-photo { padding-top: 30px; }
   .cardview.no-photo::before {
     content: ""; display: block; width: 44px; height: 4px; border-radius: 2px;
@@ -163,14 +163,11 @@
     background: linear-gradient(90deg, var(--cv-a1), var(--cv-a2));
   }
   .cardview .org {
-    font-size: 12.5px; font-weight: 700; letter-spacing: 0.1em;
-    text-transform: uppercase; color: var(--cv-a1); margin-bottom: 8px;
+    font-size: 15px; font-weight: 600; color: var(--cv-ink);
+    margin-top: 8px; line-height: 1.35; overflow-wrap: anywhere;
   }
   .cardview.no-photo h1 { font-size: 27px; }
   .cardview.no-photo .role { margin-top: 6px; }
-  @media (prefers-color-scheme: dark) {
-    .cardview .org { color: var(--cv-a2); }
-  }
 
   .cardview .role { color: var(--cv-muted); font-size: 15px; margin-top: 4px; }
   .cardview .addr { color: var(--cv-muted); font-size: 13px; margin-top: 14px; white-space: pre-line; }
@@ -945,7 +942,6 @@ function esc(s) {
 }
 
 function renderCard(root, card, rawVCard) {
-  const roleBits = [card.title, card.org].filter(Boolean).join(" · ");
   const tel = card.tels.find(t => t.kind === "mobile") || card.tels[0];
   // "Send me your details" needs somewhere to send to: the card's email,
   // or a MOBILE for a text (a landline cannot take one).
@@ -964,15 +960,15 @@ function renderCard(root, card, rawVCard) {
   // missing picture (2026-11-10, a client). The page is laid out without
   // one instead — the company heads the card, the title sits under the
   // name — so it looks designed that way.
+  // Person first, then the role, then the company on its own line
+  // (2026-11-13, the same client: a long company name read badly as a
+  // small all-caps heading above the name).
   const photoLess = !card.photo;
   root.classList.toggle("no-photo", photoLess);
-  const head = photoLess
-    ? `${card.org ? `<div class="org">${esc(card.org)}</div>` : ""}
+  const head = `${photoLess ? "" : `<div class="avatar"></div>`}
     <h1>${esc(card.name || "Contact")}</h1>
-    ${card.title ? `<div class="role">${esc(card.title)}</div>` : ""}`
-    : `<div class="avatar"></div>
-    <h1>${esc(card.name || "Contact")}</h1>
-    ${roleBits ? `<div class="role">${esc(roleBits)}</div>` : ""}`;
+    ${card.title ? `<div class="role">${esc(card.title)}</div>` : ""}
+    ${card.org ? `<div class="org">${esc(card.org)}</div>` : ""}`;
   root.innerHTML = `
     ${head}
     ${card.address ? `<div class="addr">${esc(card.address)}</div>` : ""}
