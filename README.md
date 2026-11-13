@@ -9,7 +9,7 @@ https://cardlio.app/#1.<base64url(deflate-raw(vCard))>
 ```
 
 `index.html` decodes it entirely client-side (fragments are never sent to any
-server) and offers **Add to Contacts**. No backend, no storage, no analytics.
+server) and offers **Add to Contacts**. No backend, no storage, no analytics on a card page.
 
 ## Reading a cardlio link without a browser
 

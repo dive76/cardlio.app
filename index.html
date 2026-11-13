@@ -330,6 +330,19 @@
     color: #fff;
   }
 </style>
+<!-- Cloudflare Web Analytics — the home page only, NEVER a shared card:
+     a card link carries the whole contact after "#1.", and the beacon must
+     not see it. "spa": false so an in-page jump sends no second page view. -->
+<script>
+if (!location.hash.startsWith("#1.")) {
+  const cf = document.createElement("script");
+  cf.type = "module";
+  cf.src = "https://static.cloudflareinsights.com/beacon.min.js";
+  cf.setAttribute("data-cf-beacon", '{"token": "a3f789c432b246ab9681e67c9d929237", "spa": false}');
+  document.head.appendChild(cf);
+}
+</script>
+<!-- End Cloudflare Web Analytics -->
 </head>
 <body class="site-body">
 
@@ -761,7 +774,7 @@
           <li><span><b>Links with nothing behind them</b> — a shared card lives inside the link itself, never on a server</span></li>
           <li><span><b>No signal, no problem</b> — scanning is fully offline, so it works exactly the same in a conference basement as on your desk</span></li>
           <li><span><b>Built to outlive us</b> — your library lives on your devices and in your iCloud, in Apple's own contact formats; nothing about it depends on our servers existing</span></li>
-          <li><span><b>No analytics</b> — not in the app, not on this website</span></li>
+          <li><span><b>No analytics in the app</b> — and this website only counts visits, with no cookies and nothing that follows you; a shared card's page counts nothing</span></li>
         </ul>
         <p class="lead" style="margin-top:22px;"><a href="privacy.html" style="color:#c7bdff;">Read the full privacy policy →</a></p>
       </div>

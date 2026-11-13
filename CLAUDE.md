@@ -19,9 +19,12 @@ Static site, no build step, deployed via GitHub Pages on `main`
   (`--hero-bg #12101f`). Owner explicitly wants to KEEP this palette.
 - Display type: Space Grotesk (self-hosted variable font, weight 300–700,
   `--font-display`); body stays system font.
-- HARD RULE: no third-party requests of any kind (no Google Fonts, no CDNs,
-  no analytics) — the privacy section promises "no analytics, not on this
-  website" and the app's brand is privacy.
+- HARD RULE: no third-party requests (no Google Fonts, no CDNs) — the one
+  exception is Cloudflare Web Analytics (owner, 2026-11-13): cookieless,
+  in the <head> of every page, and on index.html loaded ONLY when there is no
+  "#1." card fragment (a card link carries the whole contact). "spa": false.
+  privacy.html "This website" and the home-page privacy list say so; keep them
+  true if this changes. Never add it to a card page or to team.cardlio.app.
 - Motion: everything gated on `prefers-reduced-motion`; entrance effects
   must never hide content when JS is off (see `noscript` block + `.reveal`).
 

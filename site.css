@@ -3,7 +3,7 @@
    dark-mode aware; motion respects prefers-reduced-motion. */
 
 /* Display face: Space Grotesk (variable, self-hosted — no third-party
-   requests, keeping the "no analytics, not on this website" promise). */
+   requests for fonts; the only third-party script is Cloudflare Web Analytics). */
 @font-face {
   font-family: "Space Grotesk";
   font-style: normal;
