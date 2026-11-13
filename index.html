@@ -167,6 +167,18 @@
     margin-top: 8px; line-height: 1.35; overflow-wrap: anywhere;
   }
   .cardview.no-photo h1 { font-size: 27px; }
+  /* The company's own icon, when its website has one (loadCompanyLogo). It
+     takes the accent rule's place. */
+  .cardview .logo {
+    display: block; width: 64px; height: 64px; object-fit: contain;
+    margin: 0 auto 16px; border-radius: 14px; background: #fff; padding: 6px;
+    box-sizing: border-box; box-shadow: 0 4px 14px rgba(20, 16, 70, 0.12);
+  }
+  .cardview.no-photo.has-logo::before { display: none; }
+  /* The card's own text keeps its own direction on an Arabic page — an
+     address like "20457 Hamburg" must not be reordered. */
+  .cardview h1, .cardview .role, .cardview .org, .cardview .addr { unicode-bidi: plaintext; }
+  .cardview[dir="rtl"].lay-banner :is(h1, .role, .org, .addr) { text-align: right; }
   .cardview.no-photo .role { margin-top: 6px; }
 
   .cardview .role { color: var(--cv-muted); font-size: 15px; margin-top: 4px; }
@@ -239,7 +251,7 @@
 
   /* Banner: colored band + overlapping avatar, left-aligned. The dot
      texture is CSS — the payload only NAMES the layout. */
-  .cardview.lay-banner { text-align: left; padding-top: 0; overflow: hidden; }
+  .cardview.lay-banner { text-align: start; padding-top: 0; overflow: hidden; }
   .cardview.lay-banner::before {
     content: ""; display: block; height: 92px;
     margin: 0 -26px 0;
@@ -255,6 +267,8 @@
   .cardview.lay-banner .brand { text-align: center; }
   .cardview.lay-banner.no-photo { padding-top: 0; }
   .cardview.lay-banner.no-photo::before { width: auto; height: 92px; border-radius: 0; margin: 0 -26px 22px; }
+  .cardview.lay-banner.no-photo.has-logo::before { display: block; margin-bottom: 0; }
+  .cardview.lay-banner .logo { margin: -32px 0 12px; border: 3px solid var(--cv-card-bg); }
 
   /* Minimal: typographic, monochrome — accent-independent on purpose. */
   .cardview.lay-mono { border: 1px solid rgba(0,0,0,0.09); box-shadow: 0 8px 24px rgba(0,0,0,0.05); }
@@ -941,6 +955,198 @@ function esc(s) {
     c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 }
 
+// ==================== card page language ====================
+// The page speaks the VISITOR's language (2026-11-13, a client: an Italian
+// recipient met "Add to Contacts" and "Call" in English). The languages of
+// the App Store listing, plus Traditional Chinese. The card itself is never
+// translated, and the "Send me your details" message stays in English: it
+// goes to the card's owner, whose app reads it (CardKit DetailsBackTests).
+// Not read by native speakers.
+const CARD_TEXT = {
+  en: { add: "Add to Contacts", call: "Call", email: "Email", website: "Website",
+        back: "Send me your details", name: "Your name", title: "Job title", company: "Company",
+        mail: "Email", phone: "Phone", byEmail: "Send by email", byText: "Send by text",
+        hint: "Opens your own email or messages app with your details filled in — you send it. Nothing goes through cardlio.",
+        err: "Add your name and an email or phone number.",
+        shared: "Shared with {b} — business cards, done.", make: "Make your own card, free →",
+        noCard: "This link doesn't contain a card.", unreadable: "This link couldn't be read.",
+        about: "About cardlio", contact: "Contact" },
+  es: { add: "Añadir a Contactos", call: "Llamar", email: "Correo", website: "Sitio web",
+        back: "Envíame tus datos", name: "Tu nombre", title: "Cargo", company: "Empresa",
+        mail: "Correo electrónico", phone: "Teléfono", byEmail: "Enviar por correo", byText: "Enviar por SMS",
+        hint: "Abre tu propia app de correo o de mensajes con tus datos ya escritos; el envío lo haces tú. Nada pasa por cardlio.",
+        err: "Añade tu nombre y un correo o un número de teléfono.",
+        shared: "Compartido con {b} — tarjetas de visita, sin complicaciones.", make: "Crea tu propia tarjeta, gratis →",
+        noCard: "Este enlace no contiene ninguna tarjeta.", unreadable: "No se pudo leer este enlace.",
+        about: "Acerca de cardlio", contact: "Contacto" },
+  de: { add: "Zu Kontakten hinzufügen", call: "Anrufen", email: "E-Mail", website: "Website",
+        back: "Senden Sie mir Ihre Kontaktdaten", name: "Ihr Name", title: "Position", company: "Firma",
+        mail: "E-Mail", phone: "Telefon", byEmail: "Per E-Mail senden", byText: "Per SMS senden",
+        hint: "Öffnet Ihre eigene Mail- oder Nachrichten-App mit Ihren Daten – Sie senden selbst. Nichts läuft über cardlio.",
+        err: "Bitte Ihren Namen und eine E-Mail-Adresse oder Telefonnummer angeben.",
+        shared: "Geteilt mit {b} – Visitenkarten, erledigt.", make: "Eigene Karte erstellen, kostenlos →",
+        noCard: "Dieser Link enthält keine Karte.", unreadable: "Dieser Link konnte nicht gelesen werden.",
+        about: "Über cardlio", contact: "Kontakt" },
+  fr: { add: "Ajouter aux contacts", call: "Appeler", email: "E-mail", website: "Site web",
+        back: "Envoyez-moi vos coordonnées", name: "Votre nom", title: "Fonction", company: "Entreprise",
+        mail: "E-mail", phone: "Téléphone", byEmail: "Envoyer par e-mail", byText: "Envoyer par SMS",
+        hint: "Ouvre votre propre app de messagerie avec vos coordonnées déjà remplies — c'est vous qui envoyez. Rien ne passe par cardlio.",
+        err: "Indiquez votre nom et un e-mail ou un numéro de téléphone.",
+        shared: "Partagé avec {b} — les cartes de visite, simplement.", make: "Créez votre propre carte, gratuitement →",
+        noCard: "Ce lien ne contient pas de carte.", unreadable: "Ce lien n'a pas pu être lu.",
+        about: "À propos de cardlio", contact: "Contact" },
+  it: { add: "Aggiungi ai contatti", call: "Chiama", email: "E-mail", website: "Sito web",
+        back: "Inviami i tuoi dati", name: "Il tuo nome", title: "Ruolo", company: "Azienda",
+        mail: "E-mail", phone: "Telefono", byEmail: "Invia per e-mail", byText: "Invia per SMS",
+        hint: "Apre la tua app di posta o di messaggi con i tuoi dati già inseriti: sei tu a inviarli. Nulla passa da cardlio.",
+        err: "Inserisci il tuo nome e un'e-mail o un numero di telefono.",
+        shared: "Condiviso con {b} — biglietti da visita, senza pensieri.", make: "Crea il tuo biglietto, gratis →",
+        noCard: "Questo link non contiene un biglietto.", unreadable: "Impossibile leggere questo link.",
+        about: "Informazioni su cardlio", contact: "Contatto" },
+  nl: { add: "Toevoegen aan contacten", call: "Bellen", email: "E-mail", website: "Website",
+        back: "Stuur mij je gegevens", name: "Je naam", title: "Functie", company: "Bedrijf",
+        mail: "E-mail", phone: "Telefoon", byEmail: "Versturen per e-mail", byText: "Versturen per sms",
+        hint: "Opent je eigen mail- of berichtenapp met je gegevens al ingevuld — jij verstuurt het. Niets loopt via cardlio.",
+        err: "Vul je naam en een e-mailadres of telefoonnummer in.",
+        shared: "Gedeeld met {b} — visitekaartjes, geregeld.", make: "Maak je eigen kaart, gratis →",
+        noCard: "Deze link bevat geen kaart.", unreadable: "Deze link kon niet worden gelezen.",
+        about: "Over cardlio", contact: "Contact" },
+  no: { add: "Legg til i kontakter", call: "Ring", email: "E-post", website: "Nettsted",
+        back: "Send meg opplysningene dine", name: "Navnet ditt", title: "Stilling", company: "Firma",
+        mail: "E-post", phone: "Telefon", byEmail: "Send på e-post", byText: "Send som SMS",
+        hint: "Åpner din egen e-post- eller meldingsapp med opplysningene dine fylt ut — du sender selv. Ingenting går via cardlio.",
+        err: "Fyll inn navnet ditt og en e-postadresse eller et telefonnummer.",
+        shared: "Delt med {b} — visittkort, enkelt.", make: "Lag ditt eget kort, gratis →",
+        noCard: "Denne lenken inneholder ikke et kort.", unreadable: "Denne lenken kunne ikke leses.",
+        about: "Om cardlio", contact: "Kontakt" },
+  ja: { add: "連絡先に追加", call: "電話", email: "メール", website: "Webサイト",
+        back: "あなたの連絡先を送ってください", name: "お名前", title: "役職", company: "会社名",
+        mail: "メール", phone: "電話番号", byEmail: "メールで送信", byText: "SMSで送信",
+        hint: "ご自身のメールまたはメッセージアプリが、入力した内容で開きます。送信するのはご自身です。cardlio を経由するものはありません。",
+        err: "お名前と、メールアドレスまたは電話番号を入力してください。",
+        shared: "{b} で共有 — 名刺を、もっと手軽に。", make: "自分の名刺を無料で作成 →",
+        noCard: "このリンクには名刺が含まれていません。", unreadable: "このリンクを読み取れませんでした。",
+        about: "cardlio について", contact: "連絡先" },
+  ko: { add: "연락처에 추가", call: "전화", email: "이메일", website: "웹사이트",
+        back: "연락처를 보내 주세요", name: "이름", title: "직함", company: "회사",
+        mail: "이메일", phone: "전화번호", byEmail: "이메일로 보내기", byText: "문자로 보내기",
+        hint: "내 메일 또는 메시지 앱이 입력한 정보가 채워진 상태로 열립니다. 보내는 것은 본인입니다. cardlio를 거치는 정보는 없습니다.",
+        err: "이름과 이메일 또는 전화번호를 입력하세요.",
+        shared: "{b}(으)로 공유됨 — 명함 관리, 간편하게.", make: "내 명함 무료로 만들기 →",
+        noCard: "이 링크에는 명함이 없습니다.", unreadable: "이 링크를 읽을 수 없습니다.",
+        about: "cardlio 정보", contact: "연락처" },
+  "zh-Hans": { add: "添加到通讯录", call: "拨打", email: "邮件", website: "网站",
+        back: "请把您的联系方式发给我", name: "您的姓名", title: "职位", company: "公司",
+        mail: "邮箱", phone: "电话", byEmail: "通过邮件发送", byText: "通过短信发送",
+        hint: "将打开您自己的邮件或信息应用，并已填好您的信息——由您自己发送。不经过 cardlio。",
+        err: "请填写您的姓名，以及邮箱或电话号码。",
+        shared: "通过 {b} 分享 — 名片，轻松搞定。", make: "免费制作您自己的名片 →",
+        noCard: "此链接不包含名片。", unreadable: "无法读取此链接。",
+        about: "关于 cardlio", contact: "联系人" },
+  "zh-Hant": { add: "加入聯絡人", call: "撥打", email: "郵件", website: "網站",
+        back: "請把您的聯絡方式傳給我", name: "您的姓名", title: "職稱", company: "公司",
+        mail: "電子郵件", phone: "電話", byEmail: "透過郵件傳送", byText: "透過簡訊傳送",
+        hint: "將開啟您自己的郵件或訊息 App，並已填好您的資料——由您自己傳送。不經過 cardlio。",
+        err: "請填寫您的姓名，以及電子郵件或電話號碼。",
+        shared: "透過 {b} 分享 — 名片，輕鬆搞定。", make: "免費製作您自己的名片 →",
+        noCard: "此連結不包含名片。", unreadable: "無法讀取此連結。",
+        about: "關於 cardlio", contact: "聯絡人" },
+  ar: { add: "إضافة إلى جهات الاتصال", call: "اتصال", email: "بريد إلكتروني", website: "الموقع",
+        back: "أرسل لي بياناتك", name: "اسمك", title: "المسمى الوظيفي", company: "الشركة",
+        mail: "البريد الإلكتروني", phone: "الهاتف", byEmail: "إرسال بالبريد الإلكتروني", byText: "إرسال برسالة نصية",
+        hint: "يفتح تطبيق البريد أو الرسائل لديك مع تعبئة بياناتك — وأنت من يرسلها. لا يمر شيء عبر cardlio.",
+        err: "أضف اسمك وبريدًا إلكترونيًا أو رقم هاتف.",
+        shared: "تمت المشاركة عبر {b} — بطاقات العمل، بكل سهولة.", make: "أنشئ بطاقتك الخاصة مجانًا ←",
+        noCard: "هذا الرابط لا يحتوي على بطاقة.", unreadable: "تعذّرت قراءة هذا الرابط.",
+        about: "حول cardlio", contact: "جهة اتصال" },
+};
+
+// The first of the visitor's languages the page has. "?lang=xx" in the
+// URL overrides it (for checking a translation).
+function cardLanguage() {
+  const forced = new URLSearchParams(location.search).get("lang");
+  const prefs = [forced, ...(navigator.languages || [navigator.language])].filter(Boolean);
+  for (const raw of prefs) {
+    const tag = raw.toLowerCase();
+    const base = tag.split("-")[0];
+    if (base === "zh") {
+      return /hant|-tw|-hk|-mo/.test(tag) ? "zh-Hant" : "zh-Hans";
+    }
+    if (base === "nb" || base === "nn" || base === "no") return "no";
+    if (CARD_TEXT[base]) return base;
+  }
+  return "en";
+}
+const CARD_LANG = cardLanguage();
+const T = CARD_TEXT[CARD_LANG];
+
+// ==================== company logo ====================
+// A card without a photo (every QR code and NFC tag) shows the company's
+// icon instead, loaded by the visitor's browser straight from the
+// company's OWN website — nothing is added to the link and no third-party
+// icon service is asked (2026-11-13). The company's server sees the
+// visitor's address, as for any visit to that site; no referrer is sent.
+// Free-mail domains never stand for a company.
+// Families by their first label (yahoo.co.uk, hotmail.fr…), the rest by
+// exact domain — "orange" or "free" alone would also hide real companies.
+const FREE_MAIL_FAMILY = /^(gmail|googlemail|yahoo|ymail|hotmail|outlook|msn|icloud|aol|protonmail|gmx|yandex|qq|163|126|sina|naver|hanmail|daum|libero|virgilio|tiscali|wanadoo|laposte|rediffmail|zoho)$/;
+const FREE_MAIL_DOMAINS = new Set(["live.com", "me.com", "mac.com", "proton.me", "pm.me", "mail.com",
+  "web.de", "t-online.de", "freenet.de", "orange.fr", "free.fr", "sfr.fr", "seznam.cz", "wp.pl",
+  "o2.pl", "mail.ru", "daum.net", "outlook.com"]);
+
+function companyDomain(card) {
+  const clean = h => {
+    h = (h || "").toLowerCase().replace(/^www\./, "");
+    return /^[a-z0-9-]+(\.[a-z0-9-]+)+$/.test(h) && /\.[a-z]{2,}$/.test(h) ? h : "";
+  };
+  if (card.url) {
+    try {
+      const u = new URL(/^https?:\/\//i.test(card.url) ? card.url : "https://" + card.url);
+      const host = clean(u.hostname);
+      if (host) return host;
+    } catch (e) { /* not a URL */ }
+  }
+  const at = (card.email || "").lastIndexOf("@");
+  if (at > 0) {
+    const host = clean(card.email.slice(at + 1));
+    if (host && !FREE_MAIL_FAMILY.test(host.split(".")[0]) && !FREE_MAIL_DOMAINS.has(host)) return host;
+  }
+  return "";
+}
+
+// Tries the large touch icon first (sharp at this size), then the favicon.
+// An icon smaller than 32 px would only look blurred, so it is not shown.
+function loadCompanyLogo(root, card) {
+  const domain = companyDomain(card);
+  if (!domain) return;
+  const candidates = [
+    `https://${domain}/apple-touch-icon.png`,
+    `https://www.${domain}/apple-touch-icon.png`,
+    `https://${domain}/favicon.ico`,
+    `https://www.${domain}/favicon.ico`,
+  ];
+  const tryNext = i => {
+    if (i >= candidates.length) return;
+    const img = new Image();
+    img.referrerPolicy = "no-referrer";
+    img.alt = "";
+    let done = false;
+    const timer = setTimeout(() => { if (!done) { done = true; img.src = ""; tryNext(i + 1); } }, 4000);
+    img.onload = () => {
+      if (done) return; done = true; clearTimeout(timer);
+      if (img.naturalWidth < 32 || img.naturalHeight < 32) { tryNext(i + 1); return; }
+      img.className = "logo";
+      const h1 = root.querySelector("h1");
+      if (!h1 || !root.isConnected) return;
+      h1.before(img);
+      root.classList.add("has-logo");
+    };
+    img.onerror = () => { if (done) return; done = true; clearTimeout(timer); tryNext(i + 1); };
+    img.src = candidates[i];
+  };
+  tryNext(0);
+}
+
 function renderCard(root, card, rawVCard) {
   const tel = card.tels.find(t => t.kind === "mobile") || card.tels[0];
   // "Send me your details" needs somewhere to send to: the card's email,
@@ -949,11 +1155,11 @@ function renderCard(root, card, rawVCard) {
   const mobile = mobileTel ? mobileTel.value.replace(/[^\d+]/g, "") : "";
   const replyTo = !!(card.email || mobile);
   let actions = "";
-  if (tel) actions += `<a href="tel:${esc(tel.value.replace(/[^\d+]/g, ""))}">Call</a>`;
-  if (card.email) actions += `<a href="mailto:${esc(card.email)}">Email</a>`;
+  if (tel) actions += `<a href="tel:${esc(tel.value.replace(/[^\d+]/g, ""))}">${esc(T.call)}</a>`;
+  if (card.email) actions += `<a href="mailto:${esc(card.email)}">${esc(T.email)}</a>`;
   if (card.url) {
     const href = /^https?:\/\//i.test(card.url) ? card.url : "https://" + card.url;
-    actions += `<a href="${esc(href)}" target="_blank" rel="noopener">Website</a>`;
+    actions += `<a href="${esc(href)}" target="_blank" rel="noopener">${esc(T.website)}</a>`;
   }
   // No photo (every QR code, NFC tag and widget link — a photo would make
   // the code too dense): no empty circle with initials, which read as a
@@ -966,35 +1172,36 @@ function renderCard(root, card, rawVCard) {
   const photoLess = !card.photo;
   root.classList.toggle("no-photo", photoLess);
   const head = `${photoLess ? "" : `<div class="avatar"></div>`}
-    <h1>${esc(card.name || "Contact")}</h1>
+    <h1>${esc(card.name || T.contact)}</h1>
     ${card.title ? `<div class="role">${esc(card.title)}</div>` : ""}
     ${card.org ? `<div class="org">${esc(card.org)}</div>` : ""}`;
   root.innerHTML = `
     ${head}
     ${card.address ? `<div class="addr">${esc(card.address)}</div>` : ""}
-    <button class="add" id="addBtn">Add to Contacts</button>
+    <button class="add" id="addBtn">${esc(T.add)}</button>
     ${actions ? `<div class="row">${actions}</div>` : ""}
     ${replyTo ? `
-    <button class="back-toggle" id="backToggle" type="button" aria-expanded="false">Send me your details</button>
+    <button class="back-toggle" id="backToggle" type="button" aria-expanded="false">${esc(T.back)}</button>
     <form class="back-form" id="backForm" hidden novalidate>
-      <input name="name" autocomplete="name" placeholder="Your name" aria-label="Your name">
-      <input name="title" autocomplete="organization-title" placeholder="Job title" aria-label="Job title">
-      <input name="company" autocomplete="organization" placeholder="Company" aria-label="Company">
-      <input name="email" type="email" autocomplete="email" placeholder="Email" aria-label="Email">
-      <input name="phone" type="tel" autocomplete="tel" placeholder="Phone" aria-label="Phone">
+      <input name="name" autocomplete="name" placeholder="${esc(T.name)}" aria-label="${esc(T.name)}">
+      <input name="title" autocomplete="organization-title" placeholder="${esc(T.title)}" aria-label="${esc(T.title)}">
+      <input name="company" autocomplete="organization" placeholder="${esc(T.company)}" aria-label="${esc(T.company)}">
+      <input name="email" type="email" autocomplete="email" placeholder="${esc(T.mail)}" aria-label="${esc(T.mail)}">
+      <input name="phone" type="tel" autocomplete="tel" placeholder="${esc(T.phone)}" aria-label="${esc(T.phone)}">
       <div class="err" id="backErr" hidden></div>
       <div class="send">
-        ${card.email ? `<button type="button" data-via="email">Send by email</button>` : ""}
-        ${mobile ? `<button type="button" data-via="sms">Send by text</button>` : ""}
+        ${card.email ? `<button type="button" data-via="email">${esc(T.byEmail)}</button>` : ""}
+        ${mobile ? `<button type="button" data-via="sms">${esc(T.byText)}</button>` : ""}
       </div>
-      <div class="hint">Opens your own email or messages app with your details filled in — you send it. Nothing goes through cardlio.</div>
+      <div class="hint">${esc(T.hint)}</div>
     </form>` : ""}
-    <div class="brand">Shared with <a href="/">cardlio</a> — business cards, done.
-      <span class="getit"><a id="getLink" href="/">Make your own card, free →</a></span>
+    <div class="brand">${esc(T.shared).replace("{b}", `<a href="/">cardlio</a>`)}
+      <span class="getit"><a id="getLink" href="/">${esc(T.make)}</a></span>
     </div>`;
   // The photo goes in as a CSS property on the rendered element — a value
   // set this way cannot escape into markup, whatever the payload holds.
   if (card.photo) root.querySelector(".avatar").style.backgroundImage = `url("${card.photo}")`;
+  else loadCompanyLogo(root, card);
   if (replyTo) wireDetailsBack(root, card, mobile);
   // Send them where they can actually act. A visitor on a device with no
   // cardlio app gets the homepage rather than a store page they cannot use.
@@ -1042,7 +1249,7 @@ function wireDetailsBack(root, card, mobile) {
         d[k] = (form.elements[k].value || "").trim();
       }
       if (!d.name || !(d.email || d.phone)) {
-        err.textContent = "Add your name and an email or phone number.";
+        err.textContent = T.err;
         err.hidden = false;
         return;
       }
@@ -1080,7 +1287,7 @@ function renderCardError(root, message) {
     <div class="avatar">!</div>
     <h1>cardlio</h1>
     <div class="role">${esc(message)}</div>
-    <a class="add" href="/">About cardlio</a>`;
+    <a class="add" href="/">${esc(T.about)}</a>`;
 }
 
 // ==================== entry ====================
@@ -1096,6 +1303,9 @@ function renderCardError(root, message) {
     document.body.classList.add("card-mode");
     site.hidden = true;
     cardRoot.hidden = false;
+    // The card page speaks the visitor's language (see CARD_TEXT).
+    document.documentElement.lang = CARD_LANG;
+    if (CARD_LANG === "ar") cardRoot.dir = "rtl";
     try {
       const vcard = await decodeFragment(location.hash);
       if (vcard && /BEGIN:VCARD/i.test(vcard)) {
@@ -1105,11 +1315,11 @@ function renderCardError(root, message) {
         if (card.name) document.title = `${card.name} — cardlio`;
         window.__cardlio = { state: "card", name: card.name || "", hasPhoto: !!card.photo };
       } else {
-        renderCardError(cardRoot, "This link doesn't contain a card.");
+        renderCardError(cardRoot, T.noCard);
         window.__cardlio = { state: "error" };
       }
     } catch (e) {
-      renderCardError(cardRoot, "This link couldn't be read.");
+      renderCardError(cardRoot, T.unreadable);
       window.__cardlio = { state: "error", detail: String(e) };
     }
     return;
