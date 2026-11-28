@@ -16,6 +16,8 @@ Key facts:
 - [A business card scanner without a subscription](https://cardlio.app/no-subscription.html): what the one purchase unlocks and what is free
 - [Scan a whole stack of business cards at once](https://cardlio.app/scan-a-stack.html): several cards from one photo, PDFs and folders of scans
 - [A business card scanner for trade shows and conferences](https://cardlio.app/trade-shows.html): Event mode, lead rating, Event Report, follow-ups, team library
+- [A business card scanner for Mac](https://cardlio.app/business-card-scanner-mac.html): drag in photos or a PDF of scans, table view, Apple Contacts, Google Contacts and Office 365
+- [Business cards from shipping and maritime fairs](https://cardlio.app/maritime.html): Japanese, Chinese and Korean cards, two-sided cards, several offices, your own sectors, Event mode
 - [Business cards into HubSpot, Salesforce or Pipedrive](https://cardlio.app/business-cards-to-crm.html): webhook, CSV files, address-book sync
 - [A private business card scanner that works offline](https://cardlio.app/private-offline.html): what stays on the device and what needs a connection
 
