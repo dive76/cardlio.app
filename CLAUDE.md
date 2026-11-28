@@ -162,6 +162,15 @@ verification rounds.
 - Mac badge DONE (2026-07-25): official Apple SVG (self-hosted at
   `assets/mac-app-store-badge.svg`, `.store-badge` in site.css) links to
   https://apps.apple.com/app/id6786612800 in hero + platforms section.
+- Campaign links (2026-11-28): every visible store link carries
+  `pt=2165232&ct=<label>&mt=8` — `site-hero`, `site-platforms`,
+  `shared-card` (storeLinkForThisDevice, keeps the iOS `ppid=`),
+  `site-whats-new`, and per guide `guide-no-subscription`,
+  `guide-scan-a-stack`, `guide-trade-shows`, `guide-crm`,
+  `guide-private-offline`. JSON-LD downloadUrl/installUrl stay untagged.
+  A new page or badge gets its own `ct=` (≤ 40 chars). Read in App Store
+  Connect → Analytics → Sources → Campaigns (Apple totals only, so "Data
+  Not Collected" stays true).
   When iOS ships: same treatment for the iOS "coming soon" pill; consider
   promoting the hero demo link to a secondary button.
 - Idea (not committed to): email waitlist while badges are disabled.

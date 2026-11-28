@@ -377,10 +377,10 @@ if (!location.hash.startsWith("#1.")) {
           <li>No account, and no cardlio server that stores your cards.</li>
         </ul>
         <div class="badges rise" style="--d:0.3s">
-          <a class="store-badge" href="https://apps.apple.com/app/id6786612800" target="_blank" rel="noopener" aria-label="Download cardlio on the Mac App Store">
+          <a class="store-badge" href="https://apps.apple.com/app/id6786612800?pt=2165232&amp;ct=site-hero&amp;mt=8" target="_blank" rel="noopener" aria-label="Download cardlio on the Mac App Store">
             <img src="assets/mac-app-store-badge.svg" alt="Download on the Mac App Store" width="197" height="50">
           </a>
-          <a class="store-badge" href="https://apps.apple.com/app/id6773151080" target="_blank" rel="noopener" aria-label="Download cardlio on the App Store">
+          <a class="store-badge" href="https://apps.apple.com/app/id6773151080?pt=2165232&amp;ct=site-hero&amp;mt=8" target="_blank" rel="noopener" aria-label="Download cardlio on the App Store">
             <img src="assets/app-store-badge.svg" alt="Download on the App Store" width="150" height="50">
           </a>
         </div>
@@ -792,10 +792,10 @@ if (!location.hash.startsWith("#1.")) {
       <p class="lead" style="margin-left:auto;margin-right:auto;">Scan on your iPhone at the conference, tidy up on your Mac at your desk. Same cards, everywhere, instantly.</p>
       <p style="margin:14px auto 0;max-width:600px;">And on a Windows PC, an Android phone or a borrowed screen: sign in at <a href="https://team.cardlio.app">team.cardlio.app</a> with your Apple Account to search all your cards, with their photos. Rate a lead, add a note after a call or mark a follow-up done, and it is back on your iPhone and Mac a moment later. Downloading them as vCard, CSV or ZIP comes with the unlock. Your browser talks to your own iCloud &mdash; there is no server of ours in between.</p>
       <div class="badges" style="justify-content:center;">
-        <a class="store-badge" href="https://apps.apple.com/app/id6786612800" target="_blank" rel="noopener" aria-label="Download cardlio on the Mac App Store">
+        <a class="store-badge" href="https://apps.apple.com/app/id6786612800?pt=2165232&amp;ct=site-platforms&amp;mt=8" target="_blank" rel="noopener" aria-label="Download cardlio on the Mac App Store">
           <img src="assets/mac-app-store-badge.svg" alt="Download on the Mac App Store" width="197" height="50">
         </a>
-        <a class="store-badge" href="https://apps.apple.com/app/id6773151080" target="_blank" rel="noopener" aria-label="Download cardlio on the App Store">
+        <a class="store-badge" href="https://apps.apple.com/app/id6773151080?pt=2165232&amp;ct=site-platforms&amp;mt=8" target="_blank" rel="noopener" aria-label="Download cardlio on the App Store">
           <img src="assets/app-store-badge.svg" alt="Download on the App Store" width="150" height="50">
         </a>
       </div>
@@ -1290,8 +1290,8 @@ function storeLinkForThisDevice() {
   // iPhone and iPad: the "Digital card" custom product page — someone who
   // just received a card link sees that side of cardlio first (QR, NFC,
   // Wallet, signature). Approved by Apple 2026-10-15.
-  if (isIOS) return "https://apps.apple.com/app/id6773151080?ppid=21d1ca13-c39b-4e00-810c-d1bd505c7df1";
-  if (/Mac/.test(plat) && touch <= 1) return "https://apps.apple.com/app/id6786612800";
+  if (isIOS) return "https://apps.apple.com/app/id6773151080?ppid=21d1ca13-c39b-4e00-810c-d1bd505c7df1&pt=2165232&ct=shared-card&mt=8";
+  if (/Mac/.test(plat) && touch <= 1) return "https://apps.apple.com/app/id6786612800?pt=2165232&ct=shared-card&mt=8";
   return "/";
 }
 
